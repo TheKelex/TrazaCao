@@ -1,0 +1,28 @@
+# Entornos Virtuales y Dependencias Python
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Base de datos SQLite local (para evitar conflictos de merge binarios)
+*.db-wal
+*.db-shm
+cacao_dev.db
+
+# Node / React / Vite
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Logs y Archivos temporales
+*.log
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
