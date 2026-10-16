@@ -230,13 +230,6 @@ def ejecutar_compra_directa(payload: CompraDirectaRequest, db: Session = Depends
         es_simulacion=payload.es_simulacion,
         referencia_simulacion=codigo_orden if payload.es_simulacion else None,
     )
-        precio_kg_cop=nueva_orden.precio_kg_cop,
-        total_cop=nueva_orden.total_cop,
-        estado=nueva_orden.estado,
-        direccion_entrega=nueva_orden.direccion_entrega,
-        fecha_orden=nueva_orden.fecha_orden,
-        kg_restantes_lote=kg_restantes,
-    )
 
 
 @router.get("/comprador/{comprador_id}", response_model=List[OrdenVentaResponse])
