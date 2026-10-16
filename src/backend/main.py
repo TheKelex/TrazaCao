@@ -16,6 +16,7 @@ from routers.transformaciones import router as trans_router
 from routers.pasaporte import router as pasaporte_router
 from routers.auditoria import router as auditoria_router
 from routers.export import router as export_router
+from routers.auth import router as auth_router
 
 # Inicialización de la aplicación FastAPI
 app = FastAPI(
@@ -61,6 +62,7 @@ app.include_router(trans_router)
 app.include_router(pasaporte_router)
 app.include_router(auditoria_router)
 app.include_router(export_router)
+app.include_router(auth_router)
 
 
 @app.get("/", tags=["Health Check"])

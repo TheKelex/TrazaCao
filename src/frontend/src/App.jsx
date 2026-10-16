@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { PackagePlus, Flame, ShieldAlert, QrCode, History, CheckCircle2, ChevronRight, Cpu, GitBranch, Compass } from 'lucide-react';
+import { PackagePlus, Flame, ShieldAlert, QrCode, History, GitBranch } from 'lucide-react';
 import { api } from './api/client';
 import { TopRoleBar } from './components/TopRoleBar';
+import { LoginView } from './components/LoginView';
 import { RecepcionView } from './components/RecepcionView';
 import { TransformacionView } from './components/TransformacionView';
 import { TrazabilidadView } from './components/TrazabilidadView';
@@ -12,9 +13,13 @@ import { TrazaCaoLogo } from './components/TrazaCaoLogo';
 import { CacaoExperienceLanding } from './components/landing/CacaoExperienceLanding';
 
 export function App() {
-  const [auth, setAuth] = useState({
-    role: 'OPERADOR',
-    user: 'Operador Rivera',
+  const [auth, setAuth] = useState(() => {
+    try {
+      const stored = localStorage.getItem('trazacao_auth');
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
   });
 
   const [modoVista, setModoVista] = useState('landing'); // 'landing' | 'gestion'
@@ -27,7 +32,7 @@ export function App() {
   const fetchLotes = async () => {
     setLoadingLotes(true);
     try {
-      const data = await api.getLotes({}, auth);
+      const data = await api.getLotes({}, auth || { role: 'OPERADOR', user: 'Invitado' });
       setLotes(data);
     } catch (err) {
       console.error('Error al cargar lotes:', err);
@@ -38,13 +43,39 @@ export function App() {
 
   useEffect(() => {
     fetchLotes();
-  }, [auth.role]);
+  }, [auth?.role]);
 
-  // Autocompletar Demo Happy Path (< 120s para el jurado)
-  const handleAutocompletarDemo = () => {
-    // Si estamos en recepcion, cambia a transformacion con CAC001 listo para ejecutar
-    setActiveTab('transformacion');
-    setLotePasaporteId('CAC001');
+  // Aislamiento estricto de rutas: redirigir a recepcion si el operador intenta ver pantallas admin
+  useEffect(() => {
+    if (auth?.role === 'OPERADOR' && (activeTab === 'admin' || activeTab === 'auditoria')) {
+      setActiveTab('recepcion');
+    }
+  }, [auth?.role, activeTab]);
+
+  const handleLoginSuccess = (usuario) => {
+    const sesion = {
+      role: usuario.rol,
+      user: usuario.nombre_completo,
+      username: usuario.username,
+      id: usuario.id,
+    };
+    setAuth(sesion);
+    try {
+      localStorage.setItem('trazacao_auth', JSON.stringify(sesion));
+    } catch (e) {
+      console.warn('No se pudo guardar la sesión en localStorage:', e);
+    }
+    setModoVista('gestion');
+  };
+
+  const handleLogout = () => {
+    try {
+      localStorage.removeItem('trazacao_auth');
+    } catch (e) {
+      console.warn('No se pudo limpiar localStorage:', e);
+    }
+    setAuth(null);
+    setActiveTab('recepcion');
   };
 
   const handleLoteCreado = async (nuevoLote) => {
@@ -65,15 +96,22 @@ export function App() {
     setActiveTab('pasaporte');
   };
 
-  const pestañas = [
-    { id: 'recepcion', label: '1. Recepción y Compra', icon: PackagePlus },
-    { id: 'transformacion', label: '2. Transformación y Beneficio', icon: Flame },
-    { id: 'trazabilidad', label: '3. Cadena de Custodia', icon: GitBranch },
-    { id: 'admin', label: '4. Calidad y Administración', icon: ShieldAlert },
-    { id: 'pasaporte', label: '5. Pasaporte Digital QR', icon: QrCode },
-    { id: 'auditoria', label: '6. Bitácora de Operaciones', icon: History },
+  // Definición de pestañas con control estricto de roles permitidos
+  const catalogoPestañas = [
+    { id: 'recepcion', label: '1. Recepción y Compra', icon: PackagePlus, roles: ['OPERADOR', 'ADMINISTRADOR'] },
+    { id: 'transformacion', label: '2. Transformación y Beneficio', icon: Flame, roles: ['OPERADOR', 'ADMINISTRADOR'] },
+    { id: 'trazabilidad', label: '3. Cadena de Custodia', icon: GitBranch, roles: ['OPERADOR', 'ADMINISTRADOR'] },
+    { id: 'admin', label: '4. Calidad y Administración', icon: ShieldAlert, roles: ['ADMINISTRADOR'] },
+    { id: 'pasaporte', label: '5. Pasaporte Digital QR', icon: QrCode, roles: ['OPERADOR', 'ADMINISTRADOR'] },
+    { id: 'auditoria', label: '6. Bitácora de Operaciones', icon: History, roles: ['ADMINISTRADOR'] },
   ];
 
+  // Pestañas visibles según el rol autenticado
+  const pestañasVisibles = catalogoPestañas.filter(
+    (p) => auth && p.roles.includes(auth.role)
+  );
+
+  // 1. Si está en modo landing pública
   if (modoVista === 'landing') {
     return (
       <CacaoExperienceLanding
@@ -88,42 +126,61 @@ export function App() {
     );
   }
 
+  // 2. Si está en modo gestión pero aún no se ha autenticado
+  if (!auth) {
+    return (
+      <LoginView
+        onLoginSuccess={handleLoginSuccess}
+        onVolverLanding={() => setModoVista('landing')}
+      />
+    );
+  }
+
+  // 3. Consola Operativa para usuarios autenticados
   return (
     <div className="min-h-screen bg-stone-950 text-stone-100 flex flex-col font-sans selection:bg-amber-500 selection:text-stone-950">
-      {/* Barra Superior con Selector de Rol y Conexión */}
+      {/* Barra Superior con Identidad y Cierre de Sesión */}
       <TopRoleBar
         auth={auth}
-        setAuth={setAuth}
-        onAutocompletarDemo={handleAutocompletarDemo}
+        onLogout={handleLogout}
         onRefreshAll={fetchLotes}
         onVolverLanding={() => setModoVista('landing')}
       />
 
-      {/* Navegación por Pestañas Comerciales */}
+      {/* Navegación por Pestañas Exclusivas para el Rol */}
       <nav className="bg-stone-900 border-b border-stone-800 px-2 sm:px-4 py-2 sticky top-[57px] z-40 backdrop-blur-md bg-stone-900/95">
-        <div className="max-w-7xl mx-auto flex items-center gap-1.5 overflow-x-auto py-1">
-          {pestañas.map((p) => {
-            const Icon = p.icon;
-            const esActiva = activeTab === p.id;
-            return (
-              <button
-                key={p.id}
-                onClick={() => setActiveTab(p.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
-                  esActiva
-                    ? 'bg-amber-600 text-stone-950 shadow-md font-bold'
-                    : 'text-stone-400 hover:text-stone-200 hover:bg-stone-800'
-                }`}
-              >
-                <Icon className={`w-4 h-4 ${esActiva ? 'text-stone-950' : 'text-amber-500/80'}`} />
-                <span>{p.label}</span>
-              </button>
-            );
-          })}
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+          <div className="flex items-center gap-1.5 overflow-x-auto py-1">
+            {pestañasVisibles.map((p) => {
+              const Icon = p.icon;
+              const esActiva = activeTab === p.id;
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => setActiveTab(p.id)}
+                  className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                    esActiva
+                      ? 'bg-amber-600 text-stone-950 shadow-md font-bold'
+                      : 'text-stone-400 hover:text-stone-200 hover:bg-stone-800'
+                  }`}
+                >
+                  <Icon className={`w-4 h-4 ${esActiva ? 'text-stone-950' : 'text-amber-500/80'}`} />
+                  <span>{p.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="hidden lg:flex items-center gap-2 text-[11px] text-stone-500 font-mono">
+            <span>Acceso:</span>
+            <span className={auth.role === 'ADMINISTRADOR' ? 'text-emerald-400 font-semibold' : 'text-amber-400 font-semibold'}>
+              {auth.role === 'ADMINISTRADOR' ? 'Control Total (6 Módulos)' : 'Planta y Acopio (4 Módulos)'}
+            </span>
+          </div>
         </div>
       </nav>
 
-      {/* Contenedor Principal de Vista */}
+      {/* Contenedor Principal de Vista Aislada */}
       <main className="max-w-7xl mx-auto w-full px-4 py-6 flex-1">
         {activeTab === 'recepcion' && (
           <RecepcionView
@@ -150,7 +207,8 @@ export function App() {
           />
         )}
 
-        {activeTab === 'admin' && (
+        {/* Pantalla Exclusiva: Calidad y Administración (Solo Administrador) */}
+        {activeTab === 'admin' && auth.role === 'ADMINISTRADOR' && (
           <AdminDashboard
             auth={auth}
             lotes={lotes}
@@ -166,7 +224,8 @@ export function App() {
           />
         )}
 
-        {activeTab === 'auditoria' && (
+        {/* Pantalla Exclusiva: Bitácora de Operaciones (Solo Administrador) */}
+        {activeTab === 'auditoria' && auth.role === 'ADMINISTRADOR' && (
           <AuditLogView auth={auth} />
         )}
       </main>

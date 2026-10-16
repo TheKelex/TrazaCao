@@ -11,7 +11,8 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from infra.database import init_db, SessionLocal
-from models import Lote, Transformacion, AuditoriaLog
+from models import Lote, Transformacion, AuditoriaLog, Usuario
+from security.hashing import hash_password
 from domain.calculos import balance_agroindustrial_completo
 from decimal import Decimal
 
@@ -28,6 +29,40 @@ def seed():
         Base.metadata.drop_all(bind=engine)
         init_db()
         db = SessionLocal()
+
+        # 1.1 Carga de Usuarios Oficiales con Contraseñas Encriptadas PBKDF2
+        usuarios_base = [
+            Usuario(
+                id="usr-admin-01",
+                username="admin",
+                password_hash=hash_password("AdminTrazaCao2026!"),
+                nombre_completo="Dirección Técnica y Calidad",
+                rol="ADMINISTRADOR",
+                activo=True,
+            ),
+            Usuario(
+                id="usr-operador-01",
+                username="operador",
+                password_hash=hash_password("OperadorCacao2026!"),
+                nombre_completo="Operador de Acopio y Planta",
+                rol="OPERADOR",
+                activo=True,
+            ),
+        ]
+        for u in usuarios_base:
+            db.add(u)
+            db.add(
+                AuditoriaLog(
+                    usuario="sistema_seed",
+                    accion="CREACION",
+                    lote_id="SISTEMA",
+                    valor_anterior=None,
+                    valor_nuevo=f"Usuario: {u.username}, Rol: {u.rol}, Nombre: {u.nombre_completo}",
+                    motivo="Carga inicial de usuario con contraseña encriptada (PBKDF2-SHA256)",
+                )
+            )
+        db.commit()
+        print("[OK] Usuarios 'admin' y 'operador' creados con contraseñas encriptadas.")
 
         # 2. Lotes Oficiales de la Guía DEVURITY / USCO
         lotes_base = [

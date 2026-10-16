@@ -63,6 +63,15 @@ async function request(endpoint, options = {}, authState = { role: 'OPERADOR', u
 }
 
 export const api = {
+  // Autenticación y Sesión
+  login: (username, password) =>
+    request('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ username, password }),
+    }),
+
+  getAuthProfile: (auth) => request('/auth/me', { method: 'GET' }, auth),
+
   // Gestión de Lotes e Inventario
   getLotes: (filtro = {}, auth) => {
     const params = new URLSearchParams();

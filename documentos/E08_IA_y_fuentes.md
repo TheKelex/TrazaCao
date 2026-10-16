@@ -258,3 +258,59 @@ aprobado todo y me confirmas cuando hayas terminado y dejado el commit(NO OLVIDE
 | **Arquitectura de Interfaz** | Aprobación de la simplificación de las 6 pestañas de navegación y de la tarjeta de certificación del pasaporte digital. | Refactorización de `TopRoleBar.jsx`, `App.jsx`, `RecepcionView.jsx`, `TransformacionView.jsx`, `TrazabilidadView.jsx`, `AdminDashboard.jsx`, `PasaportePublico.jsx`, `AuditLogView.jsx` y `client.js`. |
 | **Gobernanza y Documentación** | Exigencia estricta de registrar prompts literales, modelos, skills y commits audibles en cumplimiento del reglamento del certamen. | Redacción de la bitácora en `E08_IA_y_fuentes.md`, creación del artefacto de plan y preparación de los commits descriptivos en Git. |
 
+---
+
+## 9. BITÁCORA DE IMPLEMENTACIÓN: INICIO DE SESIÓN CON CRIPTOGRAFÍA, AISLAMIENTO DE ROLES Y ERRADICACIÓN DE ELEMENTOS DEMO
+
+### 9.1 Contexto de la Tarea
+Para dar el paso final hacia un producto listo para producción y comercialización, el equipo requirió la sustitución de los controles simulados de demostración (conmutador "Operador / Admin" y botón "Cargar Caso Demo") por un sistema formal de autenticación con inicio de sesión, almacenamiento criptográfico de contraseñas, nombres de usuario alfanuméricos (sin correos), aislamiento físico de pantallas entre roles (`OPERADOR` vs `ADMINISTRADOR`) y entrega de credenciales maestras.
+
+### 9.2 Registro Literal de Prompts
+
+#### Prompt 8: Implementación de Autenticación Segura, Aislamiento de Pantallas y Erradicación de Demo
+```text
+Genera un inicio de sesion siguiendo el estilo visual del aplicativo, al hacer el inicio de sesion asegura apartar las pantallas exclusivas para cada rol y la eliminacion de los botones extra provenientes de la demo, las claves de los usuarios deben estar encriptadas, el usuario debe ser un usuario y no un correo y al final otorgame las credenciales de acceso para cada rol
+```
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity Agentic Assistant.
+- **Skills Activadas**: `frontend-design`, `theme-factory`, `doc-coauthoring`, `webapp-testing`.
+- **Resultado Obtenido**: 
+  - Módulo backend de encriptación `src/backend/security/hashing.py` basado en PBKDF2-HMAC-SHA256 con salt criptográfico de 16 bytes, 100.000 iteraciones y protección contra timing attacks (`hmac.compare_digest`).
+  - Modelo ORM `Usuario` en `src/backend/models.py` y router `/api/auth` (`login`, `/me`) con registro inmutable en auditoría.
+  - Actualización de semilla de base de datos `src/backend/seed.py` con usuarios oficiales y contraseñas hasheadas.
+  - Componente de frontend `LoginView.jsx` con el lenguaje visual TrazaCao (paleta Cacao Dark, TrazaCaoLogo, feedback reactivo, selector rápido de perfiles).
+  - Aislamiento estricto de rutas y pestañas en `App.jsx` (operadores restringidos de Calidad/Admin y Auditoría; administradores con acceso integral a los 6 módulos).
+  - Limpieza de `TopRoleBar.jsx`: eliminación del switch de rol manual y del botón demo, incorporación de tarjeta de usuario activo y botón de cierre de sesión seguro.
+  - 24 de 24 pruebas automatizadas aprobadas (`pytest tests/`) y empaquetado de frontend en 1.19s (`npm run build`).
+
+---
+
+### 9.3 Inventario de Modelos y Skills Aplicadas en Esta Fase
+
+| Recurso | Tipo | Aplicación en la Fase de Autenticación |
+| :--- | :--- | :--- |
+| **Gemini 3.8 Flash (High)** | Modelo de Lenguaje / Agente | Arquitectura de seguridad backend, implementación de hashing criptográfico nativo en Python 3.13, router de autenticación, diseño de componentes React y suite de pruebas unitarias de login. |
+| **`frontend-design`** | Skill de Agente | Diseño del formulario de inicio de sesión inmersivo, atmósfera oscura con brillo ambiental cacao (`amber-900/10`), inputs accesibles con iconos Lucide, alternancia de visibilidad de contraseña y tarjetas de ayuda para evaluación. |
+| **`theme-factory`** | Skill de Agente | Armonización tipográfica y cromática de las insignias de perfil (`OPERADOR` en ámbar cálido, `ADMINISTRADOR` en esmeralda bosque). |
+| **`webapp-testing`** | Skill de Agente | Creación y ejecución de la suite `tests/test_auth.py` cubriendo logins válidos, contraseñas erróneas (HTTP 401), usuarios inexistentes y no-persistencia de texto plano. |
+
+---
+
+### 9.4 Matriz de Decisiones: Equipo Humano vs. Construcción por IA
+
+| Dimensión | Decisión / Aporte Humano (Equipo) | Construcción e Implementación por IA (Antigravity) |
+| :--- | :--- | :--- |
+| **Requerimientos de Seguridad** | Decisión de usar nombres de usuario puros (`username`, no correo electrónico) y exigencia de almacenamiento de claves encriptadas. | Selección e implementación de PBKDF2-HMAC-SHA256 (estándar OWASP) en `hashing.py`, evitando problemas de compatibilidad de bcrypt con Python 3.13. |
+| **Modelo de Aislamiento de Roles** | Definición de la separación estricta: Operadores para campo/planta y Administradores para control de calidad y auditoría. | Implementación del filtro reactivo `pestañasVisibles` en `App.jsx`, efecto de redirección automática si un operador intenta acceder por URL o estado, y renderizado condicional estricto en el DOM. |
+| **Erradicación de Artefactos Demo** | Instrucción de eliminar conmutadores manuales y botones de demostración para otorgar credibilidad comercial al producto. | Refactorización de `TopRoleBar.jsx` eliminando `Zap` ("Cargar Caso Demo") y los botones de cambio de rol; adición de avatar, insignia de rol y botón `LogOut` con limpieza de `localStorage`. |
+| **Credenciales Oficiales del Sistema** | Especificación de los roles de usuario a habilitar (`OPERADOR` y `ADMINISTRADOR`). | Generación de credenciales robustas sembradas en `seed.py`, con hashes precalculados y auditoría de creación. |
+
+---
+
+### 9.5 Credenciales Maestras de Acceso Oficial
+
+| Rol | Usuario | Contraseña | Alcance Operativo | Pantallas Accesibles |
+| :--- | :--- | :--- | :--- | :--- |
+| **Administrador** | `admin` | `AdminTrazaCao2026!` | Dirección Técnica, Calidad y Auditoría | 1. Recepción, 2. Transformación, 3. Cadena de Custodia, 4. Calidad y Administración, 5. Pasaporte QR, 6. Bitácora de Operaciones (6 módulos) |
+| **Operador** | `operador` | `OperadorCacao2026!` | Acopio, Pesaje y Registro de Beneficio | 1. Recepción, 2. Transformación, 3. Cadena de Custodia, 5. Pasaporte QR (4 módulos protegidos) |
+
+
