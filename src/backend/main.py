@@ -157,6 +157,7 @@ def root_spa(request: Request):
     }
 
 
+@app.get("/health", tags=["Health Check"])
 @app.get("/api", tags=["Health Check"])
 @app.get("/api/", tags=["Health Check"])
 @app.get("/api/health", tags=["Health Check"])
