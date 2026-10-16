@@ -47,14 +47,20 @@ class LoteBase(BaseModel):
             unidad = str(data.get("unidad_medida") or "kg").lower().strip()
             factores = {
                 "kg": Decimal("1.0"),
+                "kilogramo": Decimal("1.0"),
                 "kilogramos": Decimal("1.0"),
                 "lb": Decimal("0.5"),
+                "libra": Decimal("0.5"),
                 "libras": Decimal("0.5"),
                 "@": Decimal("12.5"),
+                "arroba": Decimal("12.5"),
                 "arrobas": Decimal("12.5"),
                 "qq": Decimal("50.0"),
+                "quintal": Decimal("50.0"),
                 "quintales": Decimal("50.0"),
+                "saco": Decimal("50.0"),
                 "sacos": Decimal("50.0"),
+                "carga": Decimal("125.0"),
                 "cargas": Decimal("125.0"),
             }
             factor = factores.get(unidad, Decimal("1.0"))

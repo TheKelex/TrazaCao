@@ -17,11 +17,11 @@ router = APIRouter(prefix="/api/admin/export", tags=["Exportación CSV (Admin)"]
 
 
 def sanitizar_celda_csv(valor) -> str:
-    """Previene inyección de fórmulas CSV (ej. =CMD o + o - o @) ante caracteres maliciosos."""
+    """Previene inyección de fórmulas CSV (ej. =CMD, +, -, @, \t, \r) ante caracteres maliciosos."""
     if valor is None:
         return ""
     txt = str(valor).strip()
-    if txt and txt[0] in ("=", "+", "-", "@"):
+    if txt and txt[0] in ("=", "+", "-", "@", "\t", "\r"):
         return "'" + txt
     return txt
 

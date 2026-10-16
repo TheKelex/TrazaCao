@@ -64,6 +64,8 @@ app.include_router(export_router)
 
 
 @app.get("/", tags=["Health Check"])
+@app.get("/api", tags=["Health Check"])
+@app.get("/api/", tags=["Health Check"])
 def health_check():
     """Endpoint de salud del backend."""
     return {
