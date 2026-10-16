@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { QrCode, Smartphone, Copy, Check, ExternalLink, ShieldCheck, AlertOctagon, Sparkles, MapPin, Calendar, Award } from 'lucide-react';
 import { api } from '../api/client';
+import { TrazaCaoLogo } from './TrazaCaoLogo';
 
 export function PasaportePublico({ loteIdSeleccionado, lotes }) {
   const [loteId, setLoteId] = useState(loteIdSeleccionado || (lotes[0]?.id || 'CAC001'));
@@ -87,8 +88,8 @@ export function PasaportePublico({ loteIdSeleccionado, lotes }) {
             <QrCode className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-stone-100">Pasaporte Digital de Cacao (Ficha QR - RF06)</h2>
-            <p className="text-xs text-stone-400">DTO sanitizado para compradores internacionales (sin fuga de costos internos)</p>
+            <h2 className="text-base font-bold text-stone-100">Pasaporte Digital de Cacao Fino de Aroma</h2>
+            <p className="text-xs text-stone-400">Ficha técnica oficial de origen, calidad y cumplimiento normativo (EUDR / NTC 1252)</p>
           </div>
         </div>
 
@@ -170,8 +171,11 @@ export function PasaportePublico({ loteIdSeleccionado, lotes }) {
 
             {/* Contenido del Pasaporte */}
             <div className="bg-stone-900 border border-amber-950/80 rounded-2xl overflow-hidden shadow-2xl">
-              {/* Encabezado con Denominación de Origen Huila */}
-              <div className="bg-gradient-to-r from-amber-950 via-stone-900 to-amber-900 p-5 border-b border-amber-800/40 text-center relative">
+              {/* Encabezado con Denominación de Origen Huila y Marca Oficial */}
+              <div className="bg-gradient-to-r from-amber-950 via-stone-900 to-amber-900 p-5 border-b border-amber-800/40 text-center relative flex flex-col items-center">
+                <div className="mb-2">
+                  <TrazaCaoLogo variant="dark" size="lg" showSubtitle={false} />
+                </div>
                 <span className="text-[10px] uppercase font-bold tracking-widest text-amber-400 block mb-1">
                   República de Colombia · Denominación de Origen
                 </span>

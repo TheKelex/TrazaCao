@@ -6,6 +6,7 @@ import {
 import { ScrollySceneViewer } from './ScrollySceneViewer';
 import { CatalogoLotesPublico } from './CatalogoLotesPublico';
 import { VerificadorTrazabilidadRapida } from './VerificadorTrazabilidadRapida';
+import { TrazaCaoLogo } from '../TrazaCaoLogo';
 
 export function CacaoExperienceLanding({ lotes, onEntrarGestion, onVerPasaporte }) {
   // Estado del motor de Scrollytelling híbrido
@@ -162,23 +163,14 @@ export function CacaoExperienceLanding({ lotes, onEntrarGestion, onVerPasaporte 
       {/* Barra de Navegación Editorial Superior */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#16120E]/80 backdrop-blur-md border-b border-[#FAF7F0]/10 px-6 sm:px-12 py-3.5 transition-all">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          {/* Marca Editorial */}
+          {/* Marca Editorial TrazaCao */}
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-[#234737] border border-[#D4AF37]/50 flex items-center justify-center p-1.5 shadow">
-              <svg viewBox="0 0 64 64" fill="none" className="w-full h-full">
-                <path d="M32 6C18 14 10 30 16 48C20 60 30 62 32 62C34 62 44 60 48 48C54 30 46 14 32 6Z" fill="#B77A3C" stroke="#D4AF37" strokeWidth="2.5"/>
-                <path d="M32 6V62" stroke="#FAF7F0" strokeWidth="2" strokeDasharray="3 3"/>
-                <circle cx="32" cy="6" r="3" fill="#234737"/>
-              </svg>
-            </div>
-            <div>
-              <span className="font-serif-editorial text-lg sm:text-xl font-bold tracking-tight text-[#FAF7F0] block leading-none">
-                TrazaCao Huila
-              </span>
-              <span className="font-mono text-[10px] text-[#D4AF37] tracking-widest uppercase">
-                Denominación de Origen
-              </span>
-            </div>
+            <TrazaCaoLogo 
+              variant="dark" 
+              size="md" 
+              showSubtitle={true} 
+              subtitleText="Huila · Denominación de Origen" 
+            />
           </div>
 
           {/* Menú Editorial de Enlaces */}

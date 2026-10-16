@@ -37,7 +37,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
     }
   }, [loteInicial]);
 
-  // Cargar transformaciones previas de este lote para mostrar la vinculación histórica (RF02)
+  // Cargar transformaciones previas de este lote para mostrar la vinculación histórica
   const cargarHistorialTransformaciones = async (id) => {
     if (!id) return;
     try {
@@ -63,7 +63,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
   const entradaNum = parseFloat(kgEntrada) || 0;
   const sobreconsumo = entradaNum > stockDisponible;
 
-  // Detección de Retraso Operativo (RF04)
+  // Detección de Retraso Operativo en beneficio
   const alertaRetraso = useMemo(() => {
     if (!loteSeleccionado?.fecha_recepcion) return null;
     const fechaRecepcion = new Date(loteSeleccionado.fecha_recepcion);
@@ -74,7 +74,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
       return {
         tipo: 'retraso',
         dias: diasTranscurridos,
-        mensaje: `⚠ Alerta de Retraso en Proceso (RF04): Han transcurrido ${diasTranscurridos} días desde el acopio. Riesgo de fermentación ácida excesiva según NTC 1252.`,
+        mensaje: `⚠ Alerta de Retraso en Proceso: Han transcurrido ${diasTranscurridos} días desde el acopio. Riesgo de fermentación ácida excesiva según NTC 1252.`,
       };
     }
     return {
@@ -84,7 +84,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
     };
   }, [loteSeleccionado, fechaTransformacion]);
 
-  // Detección de Registro Incompleto (RF04)
+  // Detección de Registro Incompleto
   const alertaRegistroIncompleto = useMemo(() => {
     const problemas = [];
     if (!loteId) problemas.push('Lote de origen no seleccionado');
@@ -110,7 +110,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
       return { mermaPorcentaje: 0, alertaMerma: false, costoUnitario: 0, margen: 0, cascarillaKg: 0, ingresoCascarilla: 0, costoNeto: costo, errorValidacion: `Stock insuficiente: Kilos de entrada (${entrada.toFixed(2)} kg) superan los disponibles en bodega (${stockDisponible.toFixed(2)} kg)` };
     }
     if (loteBloqueado) {
-      return { mermaPorcentaje: 0, alertaMerma: false, costoUnitario: 0, margen: 0, cascarillaKg: 0, ingresoCascarilla: 0, costoNeto: costo, errorValidacion: 'Lote en cuarentena preventiva: No se pueden registrar transformaciones en lotes bloqueados por calidad (RF09)' };
+      return { mermaPorcentaje: 0, alertaMerma: false, costoUnitario: 0, margen: 0, cascarillaKg: 0, ingresoCascarilla: 0, costoNeto: costo, errorValidacion: 'Lote en cuarentena preventiva: No se pueden registrar transformaciones en lotes retenidos por calidad' };
     }
     if (salida > entrada) {
       return { mermaPorcentaje: 0, alertaMerma: false, costoUnitario: 0, margen: 0, cascarillaKg: 0, ingresoCascarilla: 0, costoNeto: costo, errorValidacion: 'La salida vendible no puede superar la masa de entrada (Ley de conservación de masa)' };
@@ -158,7 +158,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
 
     // Validaciones explícitas antes de enviar con alertas visuales claras
     if (loteBloqueado) {
-      setError('Operación Bloqueada: El lote seleccionado se encuentra en cuarentena preventiva (RF09). Debes liberarlo como Administrador para procesarlo.');
+      setError('Operación Bloqueada: El lote seleccionado se encuentra en cuarentena preventiva. Debe ser liberado formalmente por el Administrador para ser procesado.');
       return;
     }
 
@@ -168,7 +168,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
     }
 
     if (alertaRegistroIncompleto.length > 0) {
-      setError(`Registro Incompleto (RF04): Por favor corrige: ${alertaRegistroIncompleto.join(', ')}.`);
+      setError(`Registro Incompleto: Por favor corrige: ${alertaRegistroIncompleto.join(', ')}.`);
       return;
     }
 
@@ -235,34 +235,34 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
                 <Flame className="w-6 h-6" />
               </div>
               <div>
-                <h2 className="text-base font-bold text-stone-100">Transformación y Merma Agroindustrial (RF02, RF04)</h2>
-                <p className="text-xs text-stone-400">Consumo atómico de stock y cálculo con precisión Decimal</p>
+                <h2 className="text-base font-bold text-stone-100">Control de Etapas de Beneficio y Rendimiento</h2>
+                <p className="text-xs text-stone-400">Consumo de stock en bodega y cálculo de balance de masa</p>
               </div>
             </div>
             <span className="text-xs font-mono bg-stone-800 text-amber-400 px-2.5 py-1 rounded-md border border-stone-700">
-              Idempotencia UUID
+              Protección contra Duplicidad
             </span>
           </div>
 
-          {/* Banner de Bloqueo Preventivo si el Lote está BLOQUEADO (RF09) */}
+          {/* Banner de Bloqueo Preventivo si el Lote está BLOQUEADO */}
           {loteBloqueado && (
             <div className="p-3.5 bg-rose-950/80 border-2 border-rose-600 rounded-lg text-rose-200 text-xs flex items-start gap-2.5">
               <Ban className="w-5 h-5 shrink-0 text-rose-400 mt-0.5" />
               <div>
-                <p className="font-bold text-sm">⛔ LOTE EN CUARENTENA PREVENTIVA (BLOQUEADO)</p>
+                <p className="font-bold text-sm">⛔ LOTE EN RETENCIÓN PREVENTIVA (BLOQUEADO)</p>
                 <p className="mt-0.5 text-rose-300">
-                  Este lote fue bloqueado por el Administrador por sospecha de no conformidad de calidad. El sistema impide consumir existencias o registrar etapas hasta que sea formalmente liberado.
+                  Este lote fue retenido por el Administrador por sospecha de no conformidad de calidad. El sistema impide consumir existencias o registrar etapas hasta que sea formalmente liberado.
                 </p>
               </div>
             </div>
           )}
 
-          {/* Alerta de Sobreconsumo Preventiva (RF08) */}
+          {/* Alerta de Sobreconsumo Preventiva */}
           {sobreconsumo && !loteBloqueado && (
             <div className="p-3 bg-amber-950/80 border border-amber-600 rounded-lg text-amber-200 text-xs flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 shrink-0 text-amber-400 mt-0.5" />
               <div>
-                <span className="font-bold">Alerta Preventiva de Inventario (RF08): </span>
+                <span className="font-bold">Aviso de Existencias Insuficientes: </span>
                 <span>La masa solicitada ({entradaNum.toFixed(2)} kg) supera los kilos disponibles en bodega ({stockDisponible.toFixed(2)} kg). Reduce la masa de entrada o selecciona un lote con saldo.</span>
               </div>
             </div>
@@ -317,7 +317,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
               <div>
                 <label className="block text-xs font-medium text-stone-300 mb-1 flex items-center gap-1.5">
                   <Calendar className="w-3.5 h-3.5 text-amber-400" />
-                  Fecha de la Transformación (RF02) *
+                  Fecha de la Transformación *
                 </label>
                 <input
                   type="date"
@@ -348,7 +348,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
               <div>
                 <label className="block text-xs font-medium text-stone-300 mb-1 flex items-center gap-1.5">
                   <UserCheck className="w-3.5 h-3.5 text-amber-400" />
-                  Responsable Encargado de la Etapa (RF02) *
+                  Responsable Encargado de la Etapa *
                 </label>
                 <select
                   value={responsable}
@@ -366,7 +366,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
             {/* Vinculación de Salida al Lote de Origen */}
             <div className="p-3 bg-stone-950 rounded-lg border border-stone-800 text-xs">
               <span className="text-stone-400 block mb-1">
-                🔗 <strong>Vinculación de Salida con Lote de Origen (RF02):</strong>
+                🔗 <strong>Vinculación Genealógica del Lote:</strong>
               </span>
               <p className="text-stone-300 text-[11px]">
                 Esta operación generará un registro de salida vendible etiquetado como <span className="font-mono font-bold text-amber-400">SAL-{loteId}-{etapa.slice(0, 4)}</span> que estará vinculado de forma inmutable al lote de origen <strong>{loteId}</strong> ({loteSeleccionado?.origen_municipio}, Huila).
@@ -487,19 +487,19 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
                 disabled={loading}
                 className="w-full bg-amber-600 hover:bg-amber-500 active:bg-amber-700 text-stone-950 font-bold py-2.5 rounded-lg text-sm transition-all shadow-lg hover:shadow-amber-900/30 cursor-pointer disabled:opacity-50"
               >
-                {loading ? 'Procesando Transacción Atómica...' : 'Guardar Transformación y Descontar Stock (RF02)'}
+                {loading ? 'Registrando en Bodega...' : 'Registrar Proceso y Actualizar Saldos'}
               </button>
             </div>
           </form>
         </div>
 
-        {/* Columna Derecha: Alertas RF04, Cálculos Transparentes RF05 y Residuos */}
+        {/* Columna Derecha: Alertas, Cálculos Transparentes y Residuos */}
         <div className="lg:col-span-5 space-y-4">
-          {/* PANEL DE ALERTAS OPERATIVAS Y CALIDAD (RF04) */}
+          {/* PANEL DE ALERTAS OPERATIVAS Y CALIDAD */}
           <div className="bg-stone-900 border border-stone-800 rounded-xl p-5 shadow-xl space-y-3 text-xs">
             <h3 className="font-bold text-stone-200 text-sm flex items-center gap-2 pb-2 border-b border-stone-800">
               <AlertTriangle className="w-4 h-4 text-amber-400" />
-              Panel de Alertas de Proceso (RF04)
+              Monitoreo Operativo y Alertas de Calidad
             </h3>
 
             {/* 1. Alerta de Merma */}
@@ -531,7 +531,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
               }`}>
                 <Clock className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-bold">Alerta de Tiempo de Ciclo (RF04)</p>
+                  <p className="font-bold">Alerta de Tiempo de Beneficio</p>
                   <p className="text-[11px] mt-0.5">{alertaRetraso.mensaje}</p>
                 </div>
               </div>
@@ -545,7 +545,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
             }`}>
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
               <div>
-                <p className="font-bold">Verificación de Integridad de Datos (RF04)</p>
+                <p className="font-bold">Verificación de Integridad de Datos</p>
                 {alertaRegistroIncompleto.length > 0 ? (
                   <p className="text-[11px] text-rose-300 mt-0.5">
                     Pendientes: {alertaRegistroIncompleto.join(' · ')}
@@ -559,11 +559,11 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
             </div>
           </div>
 
-          {/* SUPUESTOS ECONÓMICOS Y APROVECHAMIENTO DE RESIDUOS (RF05, RF12) */}
+          {/* ESTRUCTURA DE COSTOS Y ECONOMÍA CIRCULAR */}
           <div className="bg-stone-900 border border-stone-800 rounded-xl p-5 shadow-xl space-y-3 text-xs">
             <h3 className="font-bold text-stone-200 text-sm flex items-center gap-2 pb-2 border-b border-stone-800">
               <Coins className="w-4 h-4 text-amber-500" />
-              Supuestos del Modelo Económico y Fórmulas Visibles (RF05)
+              Estructura de Costos y Economía Circular
             </h3>
 
             <div className="space-y-2 text-[11px] font-mono">
@@ -611,13 +611,13 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
         </div>
       </div>
 
-      {/* TABLA DE SALIDAS VINCULADAS AL LOTE DE ORIGEN (RF02) */}
+      {/* TABLA DE SALIDAS VINCULADAS AL LOTE DE ORIGEN */}
       <div className="bg-stone-900 border border-stone-800 rounded-xl p-5 shadow-xl space-y-3">
         <div className="flex items-center justify-between pb-3 border-b border-stone-800">
           <div className="flex items-center gap-2">
             <Link2 className="w-4 h-4 text-amber-500" />
             <h3 className="font-bold text-stone-100 text-sm">
-              Salidas Vendibles Vinculadas al Lote de Origen (RF02)
+              Salidas Vendibles Vinculadas al Lote de Origen
             </h3>
           </div>
           <span className="text-xs text-stone-400 font-mono">

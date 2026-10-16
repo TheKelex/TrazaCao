@@ -103,8 +103,8 @@ export function RecepcionView({ auth, lotes, onLoteCreado, demoData }) {
               <PackagePlus className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-stone-100">Recepción de Cacao en Grano (RF01)</h2>
-              <p className="text-xs text-stone-400">Ingreso inicial a centros de acopio en Huila</p>
+              <h2 className="text-lg font-bold text-stone-100">Registro de Ingreso y Compra en Acopio</h2>
+              <p className="text-xs text-stone-400">Pesaje inicial y liquidación a productores del Huila</p>
             </div>
           </div>
           <span className="text-xs font-mono bg-stone-800 text-stone-300 px-2.5 py-1 rounded-md border border-stone-700">
@@ -230,7 +230,7 @@ export function RecepcionView({ auth, lotes, onLoteCreado, demoData }) {
 
             <div>
               <label className="block text-xs font-medium text-stone-300 mb-1">
-                Unidad de Medida (RF01) *
+                Unidad de Medida de Recepción *
               </label>
               <select
                 name="unidad_medida"
@@ -345,7 +345,7 @@ export function RecepcionView({ auth, lotes, onLoteCreado, demoData }) {
             disabled={loading}
             className="w-full bg-amber-600 hover:bg-amber-500 active:bg-amber-700 text-stone-950 font-bold py-2.5 rounded-lg text-sm transition-all shadow-lg hover:shadow-amber-900/30 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Guardando en Base de Datos...' : 'Registrar Recepción de Lote (RF01)'}
+            {loading ? 'Registrando en Bodega...' : 'Confirmar Ingreso y Liquidar Lote'}
           </button>
         </form>
       </div>
@@ -398,8 +398,8 @@ export function RecepcionView({ auth, lotes, onLoteCreado, demoData }) {
 
         {/* Info Card Agroindustrial */}
         <div className="bg-stone-900/60 border border-stone-800/80 rounded-xl p-4 text-xs text-stone-400">
-          <p className="font-semibold text-stone-300 mb-1">📐 Aritmética Exacta en Bodega:</p>
-          <p>Los saldos se actualizan de forma atómica con SQLite WAL. Ningún lote puede descontar más kilos de los disponibles físicamente.</p>
+          <p className="font-semibold text-stone-300 mb-1">📦 Control de Inventario en Tiempo Real:</p>
+          <p>Cada ingreso y movimiento actualiza automáticamente el saldo físico en bodega. El sistema previene descuadres y garantiza trazabilidad auditada.</p>
         </div>
       </div>
     </div>

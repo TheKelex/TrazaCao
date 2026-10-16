@@ -134,6 +134,7 @@
 | **FIX-SCH** | Tolerancia en Transformación (Responsable y Salida) | Dev 1 | **DONE (DoD)** | `schemas.py` & `TransformacionView.jsx` |
 | **FIX-UX** | Ubicación Veredal y Horario Legal Colombia (COT) | Dev 1 & Dev 3 | **DONE (DoD)** | `RecepcionView.jsx` & `AuditLogView.jsx` |
 | **COD-RF12**| Panel de Balance Agroindustrial Consolidado | Dev 1 | **DONE (DoD)** | `AdminDashboard.jsx` |
+| **COD-BRAND**| Identidad TrazaCao, Erradicación RF y MVP Comercial | Equipo Completo | **DONE (DoD)** | `TrazaCaoLogo.jsx`, `favicon.svg`, Vistas Comerciales y `E08_IA_y_fuentes.md` |
 | **INT-DEV2**| Integración de suite de seguridad Dev 2 | Dev 1 & Dev 2 | **EN INTEGRACIÓN** | Rama `feature/security-qa` |
 | **DOC-E06** | Informe de Usabilidad Externa en Stand | Dev 4 | **BACKLOG** | Asignado a Dev 4 |
 | **DOC-E09** | Propuesta Comercial y Diapositivas Pitch | Dev 4 | **BACKLOG** | Asignado a Dev 4 |

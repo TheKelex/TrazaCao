@@ -14,7 +14,7 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
   const [errorEstado, setErrorEstado] = useState(null);
   const [descargandoCSV, setDescargandoCSV] = useState(false);
 
-  // RF07: Persistencia Atómica y Respaldo en Caliente
+  // Persistencia de Datos y Respaldo del Sistema
   const [backupResultado, setBackupResultado] = useState(null);
   const [generandoBackup, setGenerandoBackup] = useState(false);
   const [persistenciaInfo, setPersistenciaInfo] = useState(null);
@@ -192,7 +192,7 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
           <div className="flex items-center gap-2">
             <ShieldAlert className="w-5 h-5 text-amber-500" />
             <h2 className="text-base font-bold text-stone-100">
-              Control de Calidad, Gestión de Estados y Exportación (RF09, RF11)
+              Aprobación de Lotes, Calidad y Exportación
             </h2>
           </div>
 
@@ -201,10 +201,10 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
             onClick={handleExportarCSV}
             disabled={descargandoCSV}
             className="flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-600 active:bg-emerald-800 text-stone-100 text-xs font-bold px-3.5 py-2 rounded-lg transition-all shadow-md cursor-pointer disabled:opacity-50"
-            title="Descargar reporte en CSV con BOM utf-8-sig sanitizado contra inyección de fórmulas"
+            title="Descargar reporte consolidado en CSV compatible con Excel"
           >
             <Download className="w-4 h-4" />
-            <span>{descargandoCSV ? 'Generando CSV...' : 'Exportar CSV (BOM utf-8-sig)'}</span>
+            <span>{descargandoCSV ? 'Generando CSV...' : 'Exportar Reporte CSV'}</span>
           </button>
         </div>
 
@@ -260,7 +260,7 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
                 <th className="py-2.5 px-3">Stock Disponible</th>
                 <th className="py-2.5 px-3">Humedad / Ferm.</th>
                 <th className="py-2.5 px-3">Estado</th>
-                <th className="py-2.5 px-3 text-right">Acción de Gobierno (RF09)</th>
+                <th className="py-2.5 px-3 text-right">Estado Comercial & Certificación</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-stone-800/60 font-mono">
@@ -336,7 +336,7 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
         </div>
       </div>
 
-      {/* RF12: Balance Agroindustrial Consolidado y Economía Circular */}
+      {/* Balance Agroindustrial Consolidado y Economía Circular */}
       <div className="bg-stone-900 border border-emerald-950/80 rounded-xl p-5 shadow-xl space-y-3">
         <div className="flex items-center justify-between pb-3 border-b border-stone-800">
           <div className="flex items-center gap-2">
@@ -345,15 +345,15 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
             </span>
             <div>
               <h3 className="font-bold text-stone-100 text-sm">
-                Balance Agroindustrial Consolidado y Economía Circular (RF12)
+                Balance Consolidado y Valorización de Residuos
               </h3>
               <p className="text-xs text-stone-400">
-                Aritmética exacta Decimal · Desglose de mermas acumuladas y valorización de subproductos
+                Masa neta en bodega, mermas acumuladas y aprovechamiento de subproductos
               </p>
             </div>
           </div>
-          <span className="text-[11px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800 px-2 py-0.5 rounded">
-            Blindaje Cero Divisiones / 0
+          <span className="text-[11px] font-sans text-emerald-400 bg-emerald-950/60 border border-emerald-800 px-2 py-0.5 rounded">
+            Balance Verificado al 100%
           </span>
         </div>
 
@@ -390,11 +390,11 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
         </div>
 
         <div className="p-2.5 bg-stone-950/60 rounded border border-stone-800/80 text-[11px] text-stone-400">
-          💡 <strong>Cumplimiento RF12:</strong> Toda la contabilidad de masa y costos opera bajo <code>decimal.Decimal</code> con redondeo bancario <code>ROUND_HALF_UP</code>. Los tres casos límite de división por cero (entrada cero, salida cero o precio cero) se resuelven sin excepciones no controladas.
+          💡 <strong>Auditoría de Masa y Financiera:</strong> Los rendimientos y costos operan con precisión garantizada para liquidaciones transparentes y exactas a los cacaocultores.
         </div>
       </div>
 
-      {/* RF07: Verificación de Persistencia y Recuperación de Datos */}
+      {/* Seguridad de Datos y Respaldo del Sistema */}
       <div className="bg-stone-900 border border-amber-950/70 rounded-xl p-5 shadow-xl space-y-4">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pb-3 border-b border-stone-800">
           <div className="flex items-center gap-2">
@@ -403,10 +403,10 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
             </div>
             <div>
               <h3 className="font-bold text-stone-100 text-sm">
-                Persistencia Local, Integridad de Datos y Respaldo Atómico (RF07)
+                Seguridad de Datos y Respaldo del Sistema
               </h3>
               <p className="text-xs text-stone-400">
-                Garantía 100% Offline · Base de datos física SQLite en modo Write-Ahead Logging (WAL)
+                Operación Local Confiable · Almacenamiento seguro contra fallos de energía y cortes de red
               </p>
             </div>
           </div>
@@ -416,7 +416,7 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
               onClick={cargarInfoPersistencia}
               disabled={cargandoInfo}
               className="p-2 bg-stone-800 hover:bg-stone-700 text-stone-300 rounded-lg border border-stone-700 text-xs transition-all cursor-pointer"
-              title="Refrescar estadísticas en disco"
+              title="Refrescar estado de los datos"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${cargandoInfo ? 'animate-spin' : ''}`} />
             </button>
@@ -426,7 +426,7 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
               className="flex items-center gap-2 bg-amber-600 hover:bg-amber-500 active:bg-amber-700 text-stone-950 font-bold px-3.5 py-2 rounded-lg text-xs transition-all shadow-md cursor-pointer disabled:opacity-50"
             >
               <HardDrive className="w-4 h-4" />
-              <span>{generandoBackup ? 'Generando Snapshot...' : 'Generar Respaldo en Caliente (.db)'}</span>
+              <span>{generandoBackup ? 'Generando Respaldo...' : 'Crear Copia de Seguridad (.db)'}</span>
             </button>
           </div>
         </div>
@@ -527,7 +527,7 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
 
             <div className="mt-4">
               <label className="block text-xs font-semibold text-stone-300 mb-1">
-                Motivo Obligatorio del Cambio de Estado (Auditoría RF10) *
+                Motivo del Cambio de Estado (Registro de Seguridad) *
               </label>
               <textarea
                 rows={3}

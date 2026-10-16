@@ -39,9 +39,9 @@ export function AuditLogView({ auth }) {
         <div className="w-14 h-14 mx-auto rounded-full bg-rose-950/80 border border-rose-800/80 flex items-center justify-center text-rose-400 mb-4">
           <Lock className="w-7 h-7" />
         </div>
-        <h2 className="text-xl font-bold text-stone-100">Bitácora Exclusiva para Rol Administrador (RF10)</h2>
+        <h2 className="text-xl font-bold text-stone-100">Bitácora de Operaciones Exclusiva para Administrador</h2>
         <p className="text-sm text-stone-400 mt-2">
-          La consulta del registro inmutable de trazabilidad y auditoría está restringida por políticas RBAC.
+          La consulta del registro inmutable de trazabilidad y auditoría está restringida por políticas de seguridad.
         </p>
       </div>
     );
@@ -55,8 +55,8 @@ export function AuditLogView({ auth }) {
             <History className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-stone-100">Bitácora de Auditoría Inmutable (RF10)</h2>
-            <p className="text-xs text-stone-400">Protección estricta con Triggers nativos SQLite (UPDATE y DELETE bloqueados)</p>
+            <h2 className="text-base font-bold text-stone-100">Registro Inmutable de Operaciones y Seguridad</h2>
+            <p className="text-xs text-stone-400">Historial permanente y protegido contra modificaciones o eliminaciones</p>
           </div>
         </div>
 
@@ -73,7 +73,7 @@ export function AuditLogView({ auth }) {
       <div className="p-3 bg-emerald-950/30 border border-emerald-800/50 rounded-lg text-xs text-emerald-300 flex items-center gap-2">
         <ShieldCheck className="w-4 h-4 shrink-0 text-emerald-400" />
         <span>
-          <strong>Garantía Criptográfica & DDL:</strong> Cualquier intento de ejecutar <code>UPDATE</code> o <code>DELETE</code> sobre la tabla <code>audit_logs</code> es abortado por el motor SQLite con <code>RAISE(ABORT)</code>.
+          <strong>Garantía de Inmutabilidad y Cumplimiento:</strong> Todas las transacciones, cambios de estado y autorizaciones quedan registradas permanentemente para auditorías y certificaciones internacionales.
         </span>
       </div>
 

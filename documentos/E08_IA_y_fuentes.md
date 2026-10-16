@@ -203,3 +203,58 @@ Todas las librerías empleadas cuentan con licencias permisivas de código abier
 | **lucide-react** | 1.57.0 | ISC License | Iconografía empaquetada nativa |
 
 *Aclaración de Transparencia: No se utilizaron plantillas comerciales preexistentes ni código propietario desarrollado con anterioridad al certamen.*
+
+---
+
+## 8. BITÁCORA DE TRANSICIÓN HACIA MVP COMERCIAL, NUEVA IDENTIDAD DE MARCA Y AUDITORÍA DE CONTENIDOS
+
+### 8.1 Contexto del Cambio Estratégico
+Tras consolidar el núcleo funcional y la arquitectura Onion de backend con pruebas automatizadas aprobadas, el equipo tomó la decisión estratégica de pivotar el frontend de un "prototipo de evaluación académica saturado de códigos RF" a un **MVP Comercial Agroindustrial** listo para demostraciones ante productores, administradores de cooperativas cacaoteras e importadores internacionales.
+
+### 8.2 Registro Literal de Prompts de la Fase Comercial
+
+#### Prompt 6: Solicitud de Plan de Implementación de Identidad de Marca y Limpieza de RF
+```text
+bro estos son los logos que pretendemos usar actualmente en todo el sistema como tal, estamos abiertos a mejoras y me gustaria tambien que esto, el logo, sea implementado ya en todos los apartados del sistema actual, junto con la eliminacion de las especificaciones del RF0n (cualquier RF) y todo lo relacionado a lo tecnico , recuerda que este mvp debe de ser de caracter comercial, asi que sera prioridad mostrar informacion acorde a lo que realmente necesita ver un operador, admin o comprador, genera el plan de implementacion
+```
+- **Imágenes Suministradas por el Equipo**:
+  - `media_1792152917159_444fa535.png` (Isotipo mazorca de cacao con halo/brote superior en tono `#4A1525`).
+  - `media_1792152917159_012c3507.png` (Imagotipo oficial "TrazaCa" donde la mazorca actúa como la letra "o" de "TrazaCao").
+  - `media_1792152917166_b28001cf.png` (Captura de pantalla del estado técnico anterior de la interfaz con tags `RF01` a `RF12`).
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity Agentic Assistant.
+- **Skills Activadas**: `frontend-design`, `theme-factory`, `doc-coauthoring`.
+- **Resultado Obtenido**: Diagnóstico visual de accesibilidad (contraste borgoña `#4A1525` vs fondo oscuro `stone-950`), formulación de variantes adaptativas y generación del artefacto formal `plan_implementacion_trazacao_comercial.md`.
+
+---
+
+#### Prompt 7: Aprobación Ejecutiva, Compromiso Git y Registro Obligatorio en Bitácora
+```text
+aprobado todo y me confirmas cuando hayas terminado y dejado el commit(NO OLVIDES SIN IMPORTAR EL CHAT DEJAR REGISTRADO LA BITACORA DE IA TODO LO QUE HACEMOS Y USAMOS: PROMPTS, MODELOS, SKILLS, QUE DECISIONES HAN SIDO NEUSTRAS Y QUE HAS CONTRUIDO TU)
+```
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity Agentic Assistant.
+- **Skills Activadas**: `frontend-design`, `webapp-testing`, `doc-coauthoring`.
+- **Resultado Obtenido**: Ejecución integral de las fases de implementación, vectorización SVG, refactorización de 6 componentes frontend, erradicación de 45+ etiquetas RF, validación limpia en `npm run build` y `pytest`, y registro detallado en esta bitácora E08.
+
+---
+
+### 8.3 Inventario de Modelos y Skills Aplicadas en Esta Fase
+
+| Recurso | Tipo | Aplicación en la Fase Comercial |
+| :--- | :--- | :--- |
+| **Gemini 3.8 Flash (High)** | Modelo de Lenguaje / Agente | Diagnóstico de contraste visual, vectorización matemática del isotipo de cacao, refactorización de los 6 componentes de interfaz, sustitución semántica de terminología y validación cruzada. |
+| **`frontend-design`** | Skill de Agente | Guió la adaptación cromática del logo para evitar ilegibilidad sobre `stone-950`. Creó la variante Dark UI (marfil crema `#FDFBF7` + ámbar tostado `#F59E0B`), la variante documental `#4A1525` y la tipografía Serif orgánica enlazada a `Playfair Display`. |
+| **`theme-factory`** | Skill de Agente | Estandarizó las insignias de estado comercial (`Operación Local Autónoma · En Línea`, `Cumplimiento Normativo EUDR & NTC 1252`). |
+| **`doc-coauthoring`** | Skill de Agente | Estructuración del plan de implementación comercial (`plan_implementacion_trazacao_comercial.md`) y actualización de la bitácora técnica E08. |
+| **`webapp-testing`** | Skill de Agente | Verificación de cero errores en el bundle de Vite (`npm run build`) y preservación intacta de la suite de pruebas (`pytest tests/`). |
+
+---
+
+### 8.4 Matriz de Decisiones: Equipo Humano vs. Construcción por IA
+
+| Dimensión | Decisión / Aporte Humano (Equipo) | Construcción e Implementación por IA (Antigravity) |
+| :--- | :--- | :--- |
+| **Identidad de Marca** | Concepción y suministro de la marca oficial **TrazaCao** (Mazorca como la letra "o", tipografía Serif artesanal y tono borgoña `#4A1525`). | Diagnóstico de falla de contraste en Dark Mode; vectorización matemática del isotipo en SVG (`favicon.svg`, `TrazaCaoLogo.jsx`); diseño de la variante dual-tone para la cabecera. |
+| **Estrategia Comercial** | Decisión de erradicar toda referencia técnica a `RF01..RF12` y términos de concurso, exigiendo un MVP enfocado en Operador, Administrador y Comprador. | Auditoría completa del código frontend; reemplazo de más de 45 etiquetas de requisitos por terminología agroindustrial y financiera clara; ocultamiento de botones de error de prueba (`Test 403`). |
+| **Arquitectura de Interfaz** | Aprobación de la simplificación de las 6 pestañas de navegación y de la tarjeta de certificación del pasaporte digital. | Refactorización de `TopRoleBar.jsx`, `App.jsx`, `RecepcionView.jsx`, `TransformacionView.jsx`, `TrazabilidadView.jsx`, `AdminDashboard.jsx`, `PasaportePublico.jsx`, `AuditLogView.jsx` y `client.js`. |
+| **Gobernanza y Documentación** | Exigencia estricta de registrar prompts literales, modelos, skills y commits audibles en cumplimiento del reglamento del certamen. | Redacción de la bitácora en `E08_IA_y_fuentes.md`, creación del artefacto de plan y preparación de los commits descriptivos en Git. |
+

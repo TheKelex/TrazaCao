@@ -6,7 +6,7 @@ import { parseApiError } from '../utils/errorHandler';
 
 const API_BASE = '/api';
 
-// Generador de UUID v4 para idempotencia (RF08)
+// Generador de UUID v4 para idempotencia y prevención de doble clic
 export function generarUUID() {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {
     return crypto.randomUUID();
@@ -63,7 +63,7 @@ async function request(endpoint, options = {}, authState = { role: 'OPERADOR', u
 }
 
 export const api = {
-  // Lotes (RF01, RF08)
+  // Gestión de Lotes e Inventario
   getLotes: (filtro = {}, auth) => {
     const params = new URLSearchParams();
     if (filtro.municipio) params.append('municipio', filtro.municipio);
@@ -86,7 +86,7 @@ export const api = {
       body: JSON.stringify({ nuevo_estado, motivo }),
     }, auth),
 
-  // Transformaciones (RF02, RF04, RF08)
+  // Transformaciones y Rendimientos de Proceso
   getTransformaciones: (auth) => request('/transformaciones', { method: 'GET' }, auth),
 
   crearTransformacion: (data, auth, idempotencyKey = generarUUID()) =>
@@ -98,10 +98,10 @@ export const api = {
       body: JSON.stringify(data),
     }, auth),
 
-  // Pasaporte Público QR (RF06 - Sanitizado sin costos)
+  // Pasaporte Digital QR (Ficha de Exportación)
   getPasaporte: (loteId) => request(`/pasaporte/${loteId}`, { method: 'GET' }),
 
-  // Auditoría (RF10 - Solo Admin)
+  // Registro de Auditoría y Seguridad (Solo Admin)
   getAuditoria: (filtro = {}, auth) => {
     const params = new URLSearchParams();
     if (filtro.lote_id) params.append('lote_id', filtro.lote_id);
@@ -110,12 +110,12 @@ export const api = {
     return request(`/admin/auditoria${qs}`, { method: 'GET' }, auth);
   },
 
-  // Exportar CSV (RF11 - Solo Admin)
+  // Exportar Reporte Consolidado CSV
   exportarCSV: async (auth) => {
     return request('/admin/export/lotes-csv', { method: 'GET' }, auth);
   },
 
-  // Respaldo y Persistencia (RF07)
+  // Respaldo y Copias de Seguridad
   generarBackup: async (auth) => {
     return request('/admin/export/backup', { method: 'POST' }, auth);
   },

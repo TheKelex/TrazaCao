@@ -61,9 +61,9 @@ export function TrazabilidadView({ lotes, defaultLoteId, onVerPasaporte }) {
           </div>
           <div>
             <h2 className="text-base font-bold text-stone-100 flex items-center gap-2">
-              Línea de Vida y Trazabilidad Integral (RF03)
-              <span className="text-[10px] font-mono bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded">
-                &lt; 3.0s Meta
+              Cadena de Custodia y Trazabilidad Integral
+              <span className="text-[10px] font-sans bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded">
+                Consulta en Tiempo Real
               </span>
             </h2>
             <p className="text-xs text-stone-400">
@@ -88,13 +88,13 @@ export function TrazabilidadView({ lotes, defaultLoteId, onVerPasaporte }) {
         </div>
       </div>
 
-      {/* Indicador de Desempeño RF03 */}
+      {/* Indicador de Desempeño Operativo */}
       <div className="bg-stone-900/60 border border-stone-800 rounded-xl p-3 px-4 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
         <div className="flex items-center gap-2 text-stone-300">
           <Clock className="w-4 h-4 text-emerald-400" />
-          <span>Tiempo de reconstrucción de traza en SQLite local:</span>
+          <span>Tiempo de Verificación de Origen:</span>
           <strong className="text-emerald-400 text-sm">{tiempoMs} ms</strong>
-          <span className="text-stone-500">(Objetivo del Reto: &lt; 3.000 ms · Superado con holgura)</span>
+          <span className="text-stone-400 font-sans">· Cadena de Custodia Inmutable Verificada</span>
         </div>
         <span className="text-amber-400 font-bold">
           {transformaciones.length + 1} Hitos Cronológicos Auditados
@@ -186,18 +186,18 @@ export function TrazabilidadView({ lotes, defaultLoteId, onVerPasaporte }) {
                     className="w-full mt-3 flex items-center justify-center gap-2 bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-semibold py-2 rounded-lg border border-stone-700 transition-all cursor-pointer"
                   >
                     <QrCode className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Ver Pasaporte Digital QR (RF06)</span>
+                    <span>Ver Pasaporte Digital QR</span>
                   </button>
                 )}
               </div>
             </div>
           </div>
 
-          {/* Columna Derecha: Línea de Vida Cronológica (RF03) */}
+          {/* Columna Derecha: Línea de Vida Cronológica */}
           <div className="lg:col-span-8 bg-stone-900 border border-stone-800 rounded-xl p-6 shadow-xl space-y-6">
             <h3 className="font-bold text-stone-100 text-sm flex items-center gap-2 pb-3 border-b border-stone-800">
               <Calendar className="w-4 h-4 text-amber-400" />
-              Secuencia Cronológica de Vida del Lote (RF03)
+              Secuencia Cronológica de Vida del Lote
             </h3>
 
             <div className="relative pl-6 space-y-8 before:absolute before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-stone-800">
@@ -209,7 +209,7 @@ export function TrazabilidadView({ lotes, defaultLoteId, onVerPasaporte }) {
                 <div className="bg-stone-950 border border-stone-800 rounded-xl p-4 text-xs space-y-2">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="font-bold text-amber-400 text-sm">
-                      Recepción de Grano Seco en Acopio (RF01)
+                      Recepción de Grano Seco en Acopio
                     </span>
                     <span className="text-stone-400 font-mono text-[11px]">
                       {new Date(loteActual.fecha_recepcion).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}
