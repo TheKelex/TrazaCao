@@ -20,6 +20,7 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
   const [loadingEstado, setLoadingEstado] = useState(false);
   const [errorEstado, setErrorEstado] = useState(null);
   const [descargandoCSV, setDescargandoCSV] = useState(false);
+  const [descargandoExcel, setDescargandoExcel] = useState(false);
 
   // Persistencia de Datos y Respaldo del Sistema
   const [backupResultado, setBackupResultado] = useState(null);
@@ -138,6 +139,25 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
     }
   };
 
+  const handleExportarExcel = async () => {
+    setDescargandoExcel(true);
+    try {
+      const blob = await api.exportarExcel(auth);
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `CacaoTrace_Huila_Reporte_Ejecutivo_${new Date().toISOString().slice(0, 10)}.xls`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (err) {
+      alert(`Error al exportar Excel: ${err.message}`);
+    } finally {
+      setDescargandoExcel(false);
+    }
+  };
+
   if (!esAdmin) {
     return (
       <div className="bg-stone-900 border border-stone-800 rounded-xl p-8 text-center max-w-2xl mx-auto shadow-2xl">
@@ -245,16 +265,28 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
             </h2>
           </div>
 
-          {/* Botón de Exportación CSV */}
-          <button
-            onClick={handleExportarCSV}
-            disabled={descargandoCSV}
-            className="flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-600 active:bg-emerald-800 text-stone-100 text-xs font-bold px-3.5 py-2 rounded-lg transition-all shadow-md cursor-pointer disabled:opacity-50"
-            title="Descargar reporte consolidado en CSV compatible con Excel"
-          >
-            <Download className="w-4 h-4" />
-            <span>{descargandoCSV ? 'Generando CSV...' : 'Exportar Reporte CSV'}</span>
-          </button>
+          {/* Botones de Exportación Excel y CSV */}
+          <div className="flex items-center gap-2 flex-wrap">
+            <button
+              onClick={handleExportarExcel}
+              disabled={descargandoExcel}
+              className="flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-700 to-teal-700 hover:from-emerald-600 hover:to-teal-600 active:from-emerald-800 active:to-teal-800 text-stone-100 text-xs font-bold px-3.5 py-2 rounded-lg transition-all shadow-md cursor-pointer disabled:opacity-50 border border-emerald-600/40"
+              title="Descargar reporte corporativo en Excel (.xls) con diseño profesional, tablas formateadas, colores, badges y KPIs"
+            >
+              <FileSpreadsheet className="w-4 h-4 text-emerald-300" />
+              <span>{descargandoExcel ? 'Generando Excel...' : 'Exportar Excel (.xls)'}</span>
+            </button>
+
+            <button
+              onClick={handleExportarCSV}
+              disabled={descargandoCSV}
+              className="flex items-center justify-center gap-1.5 bg-stone-800 hover:bg-stone-700 active:bg-stone-900 text-stone-300 hover:text-stone-100 text-xs font-semibold px-3 py-2 rounded-lg transition-all shadow border border-stone-700 cursor-pointer disabled:opacity-50"
+              title="Descargar reporte consolidado en CSV con separador punto y coma (;) para apertura directa en Excel"
+            >
+              <Download className="w-3.5 h-3.5 text-stone-400" />
+              <span>{descargandoCSV ? 'Generando...' : 'CSV (.csv)'}</span>
+            </button>
+          </div>
         </div>
 
         {/* Barra de Filtros */}

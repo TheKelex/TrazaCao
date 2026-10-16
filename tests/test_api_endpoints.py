@@ -157,6 +157,15 @@ class TestApiIntegration(unittest.TestCase):
         self.assertEqual(resp.headers["content-type"], "text/csv; charset=utf-8")
         self.assertTrue(resp.content.startswith(b"\xef\xbb\xbf"))  # BOM utf-8-sig
 
+    def test_rf11_exportacion_excel_estilizado(self):
+        """RF11 Plus: Exportación de reporte Excel (.xls) con diseño corporativo, tablas y KPIs."""
+        resp = client.get("/api/admin/export/excel", headers={"X-User-Role": "ADMINISTRADOR"})
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn("application/vnd.ms-excel", resp.headers["content-type"])
+        self.assertIn("CACAOTRACE HUILA", resp.text)
+        self.assertIn("Control de Lotes Huila", resp.text)
+
 
 if __name__ == "__main__":
     unittest.main()
+

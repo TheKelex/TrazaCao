@@ -58,8 +58,13 @@ async function request(endpoint, options = {}, authState = { role: 'OPERADOR', u
       throw error;
     }
 
-    // Si es respuesta CSV o blob
-    if (res.headers.get('content-type')?.includes('text/csv')) {
+    // Si es respuesta CSV, Excel o blob binario
+    const contentType = res.headers.get('content-type') || '';
+    if (
+      contentType.includes('text/csv') ||
+      contentType.includes('application/vnd.ms-excel') ||
+      contentType.includes('application/octet-stream')
+    ) {
       return await res.blob();
     }
 
@@ -139,9 +144,14 @@ export const api = {
     return request(`/admin/auditoria${qs}`, { method: 'GET' }, auth);
   },
 
-  // Exportar Reporte Consolidado CSV
+  // Exportar Reporte Consolidado CSV compatible con Excel
   exportarCSV: async (auth) => {
     return request('/admin/export/lotes-csv', { method: 'GET' }, auth);
+  },
+
+  // Exportar Reporte Estilizado Excel (.xls) con diseño y KPIs
+  exportarExcel: async (auth) => {
+    return request('/admin/export/lotes-excel', { method: 'GET' }, auth);
   },
 
   // Respaldo y Copias de Seguridad
