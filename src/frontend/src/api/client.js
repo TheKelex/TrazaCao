@@ -4,10 +4,18 @@
  */
 import { parseApiError } from '../utils/errorHandler';
 
-// Base URL de la API: soporta variable de entorno en Vercel (VITE_API_URL)
+// Base URL de la API: soporta variable de entorno en Vercel (VITE_API_URL / VITE_API_BASE_URL)
 // o ruta relativa '/api' cuando se usa proxy o despliegue unificado.
-const rawBase = (typeof import.meta !== 'undefined' && import.meta.env && (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL)) || '/api';
-const API_BASE = rawBase.endsWith('/') ? rawBase.slice(0, -1) : rawBase;
+const rawEnvBase = (typeof import.meta !== 'undefined' && import.meta.env && (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL)) || '/api';
+let cleanBase = String(rawEnvBase).trim();
+if (cleanBase.endsWith('/')) {
+  cleanBase = cleanBase.slice(0, -1);
+}
+// Si es una URL absoluta HTTP/HTTPS y no incluye '/api', anexar '/api' para coincidir con los routers FastAPI
+if (cleanBase.startsWith('http') && !cleanBase.endsWith('/api') && !cleanBase.includes('/api/')) {
+  cleanBase = `${cleanBase}/api`;
+}
+const API_BASE = cleanBase;
 
 // Generador de UUID v4 para idempotencia y prevención de doble clic
 export function generarUUID() {
