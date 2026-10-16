@@ -110,6 +110,15 @@ export const api = {
   // Pasaporte Digital QR (Ficha de Exportación)
   getPasaporte: (loteId) => request(`/pasaporte/${loteId}`, { method: 'GET' }),
 
+  // Catálogo Industrial & Botánico B2B (Mermas & Biomasa)
+  getCatalogoSubproductos: () => request('/subproductos/catalogo-industrial', { method: 'GET' }),
+
+  solicitarCotizacionB2B: (datos) =>
+    request('/subproductos/solicitar-cotizacion-b2b', {
+      method: 'POST',
+      body: JSON.stringify(datos),
+    }),
+
   // Registro de Auditoría y Seguridad (Solo Admin)
   getAuditoria: (filtro = {}, auth) => {
     const params = new URLSearchParams();

@@ -201,3 +201,61 @@ class PasaportePublicoResponse(BaseModel):
     etapas: List[EtapaTrazabilidadPublica] = []
     sello_calidad: str = "Norma Técnica NTC 1252 / Cero Deforestación"
     contacto_asociacion_wa: str = "https://wa.me/573000000000"
+
+
+# ==============================================================================
+# ESQUEMAS PARA CATÁLOGO INDUSTRIAL Y BOTÁNICO B2B (MERMA & BIOMASA)
+# ==============================================================================
+
+class SubproductoBotanicoItem(BaseModel):
+    """
+    Ficha de subproducto botánico / merma valorizada para compradores corporativos B2B.
+    Muestra especificaciones agroindustriales y deslinde de frontera operativa.
+    """
+    id: str
+    nombre: str
+    sector_industrial: Literal[
+        "Industria Cosmética y Dermocosmética",
+        "Agroquímica Orgánica y Biofertilizantes",
+        "Extractos Botánicos, Fitofármacos y Nutracéutica"
+    ]
+    lote_origen_id: str
+    municipio_origen: str
+    kg_disponibles: Decimal
+    precio_b2b_kg_cop: Decimal
+    pureza_botanica: str
+    humedad_porcentaje: Decimal
+    aplicaciones_industriales: List[str]
+    frontera_negocio: str = (
+        "Materia prima pura. TrazaCao no manufactura mascarillas ni fertilizantes terminados; "
+        "abastecemos a grandes empresas que requieren este insumo certificado."
+    )
+
+
+class CatalogoSubproductosResponse(BaseModel):
+    principio_negocio: str
+    total_merma_recuperada_kg: Decimal
+    subproductos: List[SubproductoBotanicoItem]
+
+
+class SolicitudCotizacionB2BCreate(BaseModel):
+    subproducto_id: str = Field(..., min_length=2)
+    lote_origen_id: str = Field(..., min_length=3)
+    empresa_solicitante: str = Field(..., min_length=3, max_length=150)
+    sector_industrial: str = Field(..., min_length=3, max_length=100)
+    correo_corporativo: str = Field(..., min_length=5, max_length=150)
+    telefono_contacto: Optional[str] = None
+    volumen_requerido_kg: Decimal = Field(..., gt=0)
+    aplicacion_prevista: str = Field(..., min_length=5)
+
+
+class SolicitudCotizacionB2BResponse(BaseModel):
+    id: str
+    mensaje: str
+    folio_solicitud: str
+    subproducto_solicitado: str
+    volumen_solicitado_kg: Decimal
+    empresa: str
+    estado: str = "RECIBIDA_ANALISIS_TECNICO"
+    contacto_comercial_b2b: str
+

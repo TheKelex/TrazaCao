@@ -17,15 +17,16 @@ from routers.pasaporte import router as pasaporte_router
 from routers.auditoria import router as auditoria_router
 from routers.export import router as export_router
 from routers.auth import router as auth_router
+from routers.subproductos import router as subproductos_router
 
 # Inicialización de la aplicación FastAPI
 app = FastAPI(
     title="TrazaCao Huila API - Trazabilidad Agroindustrial",
     description=(
         "Sistema de trazabilidad, control de existencias, cálculo de mermas, "
-        "balance económico y pasaporte digital para la asociación cacaotera del Huila."
+        "balance económico, pasaporte digital y catálogo industrial/botánico de biomasa para la asociación cacaotera del Huila."
     ),
-    version="1.0.0",
+    version="1.1.0",
     docs_url="/docs",
     redoc_url="/redoc",
 )
@@ -62,6 +63,7 @@ app.include_router(pasaporte_router)
 app.include_router(auditoria_router)
 app.include_router(export_router)
 app.include_router(auth_router)
+app.include_router(subproductos_router)
 
 # Servir directamente la carpeta 'landing page' original sin duplicar archivos
 from fastapi.staticfiles import StaticFiles
