@@ -712,7 +712,7 @@
       </button>
 
       <!-- Botón de ir al final / Catálogo -->
-      <a href="http://localhost:5173/?modo=catalogo#lotes-disponibles" id="navLinkComprador" class="btn-hud" style="background: rgba(245, 197, 99, 0.2); border-color: var(--gold-pure); color: var(--gold-bright);" title="Ir al Catálogo de Lotes">
+      <a href="/?modo=catalogo#lotes-disponibles" id="navLinkComprador" class="btn-hud" style="background: rgba(245, 197, 99, 0.2); border-color: var(--gold-pure); color: var(--gold-bright);" title="Ir al Catálogo de Lotes">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="7" height="7"></rect>
           <rect x="14" y="3" width="7" height="7"></rect>
@@ -972,7 +972,7 @@
             <strong style="color: var(--gold-pure); display: block;">Granos & Catálogo Botánico B2B:</strong>
             Disponibilidad de lotes certificados y mermas valorizadas para industrias cosméticas y biofertilizantes.
           </div>
-          <a href="http://localhost:5173/?modo=catalogo#lotes-disponibles" class="btn-ir-cta" id="btnIrAccion" title="Ir al catálogo de lotes disponibles">
+          <a href="/?modo=catalogo#lotes-disponibles" class="btn-ir-cta" id="btnIrAccion" title="Ir al catálogo de lotes disponibles">
             <span>Ir al Catálogo</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -1231,7 +1231,7 @@
       if (btnIr) {
         btnIr.addEventListener('click', (e) => {
           const lote = window.loteActualSeleccionado || 'CAC001';
-          window.location.href = 'http://localhost:5173/?modo=comprador&lote=' + lote;
+          window.location.href = '/?modo=comprador&lote=' + lote;
         });
       }
     };
@@ -1291,11 +1291,11 @@
       // Mantener URLs dirigidas al catálogo de lotes disponibles
       const btnIr = document.getElementById('btnIrAccion');
       if (btnIr) {
-        btnIr.setAttribute('href', 'http://localhost:5173/?modo=catalogo#lotes-disponibles');
+        btnIr.setAttribute('href', '/?modo=catalogo#lotes-disponibles');
       }
       const navLink = document.getElementById('navLinkComprador');
       if (navLink) {
-        navLink.setAttribute('href', 'http://localhost:5173/?modo=catalogo#lotes-disponibles');
+        navLink.setAttribute('href', '/?modo=catalogo#lotes-disponibles');
       }
 
       const d = LOTES_GSAP[loteId];

@@ -4,7 +4,10 @@
  */
 import { parseApiError } from '../utils/errorHandler';
 
-const API_BASE = '/api';
+// Base URL de la API: soporta variable de entorno en Vercel (VITE_API_URL)
+// o ruta relativa '/api' cuando se usa proxy o despliegue unificado.
+const rawBase = (typeof import.meta !== 'undefined' && import.meta.env && (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL)) || '/api';
+const API_BASE = rawBase.endsWith('/') ? rawBase.slice(0, -1) : rawBase;
 
 // Generador de UUID v4 para idempotencia y prevención de doble clic
 export function generarUUID() {
@@ -145,8 +148,10 @@ export const api = {
   // Health Check Backend
   healthCheck: async () => {
     try {
-      const res = await fetch('/api/', { method: 'GET' });
-      return res.ok;
+      const res = await fetch(`${API_BASE}/health`, { method: 'GET' });
+      if (res.ok) return true;
+      const fallback = await fetch(`${API_BASE}/`, { method: 'GET' });
+      return fallback.ok;
     } catch {
       return false;
     }
