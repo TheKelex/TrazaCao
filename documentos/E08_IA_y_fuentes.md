@@ -434,6 +434,7 @@ Ya los compañeros subieron el ultimo commit y ya tendriamos la ultima version p
 
 ---
 
+<<<<<<< HEAD
 ## 13. BITÁCORA DE DEPURACIÓN INTEGRAL DE INFORMACIÓN DEMO Y ADAPTACIÓN COMERCIAL DEFINITIVA (REGLA DE ORO)
 
 ### 13.1 Contexto y Regla de Oro Operativa
@@ -511,6 +512,43 @@ Teniendo en cuenta todos estos cambios termina de buscar lo relacionado con info
 | `src/frontend/src/api/client.js` | 10% | 90% | Neutralización de comentarios y mensajes de prueba de seguridad RBAC. |
 | `src/backend/main.py` | 15% | 85% | Limpieza de la descripción OpenAPI (eliminación del reto USCO DEVURITY 2026). |
 | `src/backend/seed.py` | 10% | 90% | Neutralización de prints demostrativos de certamen en el seeder de base de datos. |
+
+---
+
+## 14. BITÁCORA DE DESPLIEGUE EN LA NUBE Y CI/CD (VERCEL + RENDER)
+
+### 14.1 Análisis de Viabilidad Arquitectónica: Vercel vs. Render
+
+| Criterio | Despliegue en Vercel (Solo) | Despliegue en Render (Docker Monolito) | Despliegue Híbrido (Vercel CDN + Render API) |
+| :--- | :--- | :--- | :--- |
+| **Cumplimiento Pasaporte QR** | ⚠️ Parcial: Solo frontend estático. Si corre serverless, SQLite pierde escrituras al apagarse la lambda. | ✅ **100% Cumplido**: Contenedor permanente, URL pública HTTPS fija, lectura y escritura en tiempo real. | ✅ **100% Cumplido**: Vercel sirve el frontend a escala global y redirige `/api` a Render. |
+| **Modo Offline-First** | ✅ Compatible a nivel de UI: el cliente puede cachear assets, pero la persistencia transaccional de campo sigue siendo local (`start.bat`). | ✅ **100% Compatible**: El centro de acopio opera en local; Render es la réplica pública para compradores. | ✅ **100% Compatible**: Ambas capas operan desacopladas de la infraestructura local. |
+| **Persistencia SQLite** | ❌ Crítica: Vercel no soporta volúmenes persistentes en runtime serverless. | ✅ **Excelente**: SQLite corre dentro del contenedor con WAL y triggers inmutables. | ✅ **Excelente**: La persistencia reside en Render mientras Vercel actúa de proxy inverso. |
+| **Auto-Despliegue GitHub** | ✅ Inmediato: Cada `git push origin develop` dispara build automático en Vercel. | ✅ **Inmediato**: Render Blueprint (`render.yaml`) reconstruye y despliega automáticamente. | ✅ **Sincronizado**: Ambos servicios escuchan la rama `develop` y se actualizan en paralelo. |
+
+### 14.2 Registro Literal de Prompts
+
+#### Prompt 14: Consulta sobre Despliegue en Vercel y Render con CI/CD Automatizado
+```text
+Brooo por ngrok no funciono y necesito verlo ya desplegado, primero orientame si por vercel se puede hacer el despliegue y cumple con el QR y con el modo offline , o lo más fatible es desplegarlo en vercel y render? puedes desplegarlo en ambas y si con ello podemos tener esto desplegado y listo que en caso que se cambien cosas se vayan cargando de forma automatica sin errores
+```
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity.
+- **Skills Activadas**: `doc-coauthoring`, `webapp-testing`.
+- **Resultado Obtenido**:
+  1. Orientación arquitectónica clara: Vercel para CDN de frontend y Render para el backend transaccional con SQLite persistente.
+  2. Creación del `Dockerfile` multi-etapa (Node 20 Alpine para Vite + Python 3.11 Slim para FastAPI).
+  3. Creación de `render.yaml` (Infrastructure as Code) y `vercel.json` con reglas de proxy inverso (`rewrites`).
+  4. Generación de `requirements.txt` en la raíz para auto-detección por parte de plataformas cloud.
+  5. Sincronización automática con GitHub: cualquier commit futuro en `develop` se compila y publica sin intervención manual.
+
+### 14.3 Mapeo de Componentes de Infraestructura Cloud
+
+| Archivo / Componente | % Aporte IA | % Aporte Humano | Rol del Estudiante / Justificación de Autoría |
+| :--- | :---: | :---: | :--- |
+| `Dockerfile` | 35% | 65% | Definición multi-etapa: compila Vite en stage 1 y empaqueta FastAPI, SQLite y datos semilla en stage 2 con puerto dinámico `$PORT`. |
+| `render.yaml` | 20% | 80% | Manifiesto de servicio web en Render con auto-deploy activo sobre rama `develop` y health check en `/api/health`. |
+| `vercel.json` | 25% | 75% | Configuración de framework Vite y reglas de reescritura transparente hacia el backend en Render. |
+| `requirements.txt` (Raíz) | 10% | 90% | Declaración de dependencias para buildpacks nativos de la nube. |
 
 
 

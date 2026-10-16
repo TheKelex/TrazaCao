@@ -1,0 +1,28 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "buildCommand": "npm run build --prefix src/frontend",
+  "outputDirectory": "src/frontend/dist",
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "https://trazacao-huila.onrender.com/api/:match*"
+    },
+    {
+      "source": "/landing/:match*",
+      "destination": "https://trazacao-huila.onrender.com/landing/:match*"
+    },
+    {
+      "source": "/docs",
+      "destination": "https://trazacao-huila.onrender.com/docs"
+    },
+    {
+      "source": "/openapi.json",
+      "destination": "https://trazacao-huila.onrender.com/openapi.json"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
