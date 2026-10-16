@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { QrCode, Smartphone, Copy, Check, ExternalLink, ShieldCheck, AlertOctagon, Sparkles, MapPin, Calendar, Award } from 'lucide-react';
+import { QrCode, Copy, Check, ExternalLink, ShieldCheck, AlertOctagon, Sparkles, MapPin, Calendar, Award } from 'lucide-react';
 import { api } from '../api/client';
 import { TrazaCaoLogo } from './TrazaCaoLogo';
 
@@ -10,10 +10,7 @@ export function PasaportePublico({ loteIdSeleccionado, lotes }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   
-  // Modo vista móvil simulada (marco de smartphone 375px)
-  const [vistaMovilSimulada, setVistaMovilSimulada] = useState(false);
-  
-  // Modal de solicitud B2B offline
+  // Modal de solicitud B2B
   const [modalB2B, setModalB2B] = useState(false);
   const [copiado, setCopiado] = useState(false);
 
@@ -81,7 +78,7 @@ export function PasaportePublico({ loteIdSeleccionado, lotes }) {
 
   return (
     <div className="space-y-6">
-      {/* Barra Superior del Pasaporte: Selector y Modos */}
+      {/* Barra Superior del Pasaporte: Selector de Lote */}
       <div className="bg-stone-900 border border-stone-800 rounded-xl p-4 shadow-md flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-lg bg-amber-950/80 text-amber-400 border border-amber-800/60">
@@ -89,7 +86,7 @@ export function PasaportePublico({ loteIdSeleccionado, lotes }) {
           </div>
           <div>
             <h2 className="text-base font-bold text-stone-100">Pasaporte Digital de Cacao Fino de Aroma</h2>
-            <p className="text-xs text-stone-400">Ficha técnica oficial de origen, calidad y cumplimiento normativo (EUDR / NTC 1252)</p>
+            <p className="text-xs text-stone-400">Ficha técnica oficial de origen y calidad</p>
           </div>
         </div>
 
@@ -106,20 +103,6 @@ export function PasaportePublico({ loteIdSeleccionado, lotes }) {
               </option>
             ))}
           </select>
-
-          {/* Botón Simular Escaneo Móvil */}
-          <button
-            onClick={() => setVistaMovilSimulada(!vistaMovilSimulada)}
-            className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-              vistaMovilSimulada
-                ? 'bg-amber-600 text-stone-950 border-amber-500'
-                : 'bg-stone-800 hover:bg-stone-700 text-stone-200 border-stone-600'
-            }`}
-            title="Previsualizar en marco de smartphone (375px) para prueba sin internet en Oasis Plaza"
-          >
-            <Smartphone className="w-4 h-4" />
-            <span>{vistaMovilSimulada ? 'Vista Completa' : 'Simular Escaneo QR (Móvil)'}</span>
-          </button>
         </div>
       </div>
 
@@ -133,17 +116,11 @@ export function PasaportePublico({ loteIdSeleccionado, lotes }) {
         <div className="p-5 bg-rose-950/70 border border-rose-800 rounded-xl text-rose-200 text-xs space-y-3">
           <div className="flex items-center gap-2 font-bold text-sm text-rose-300">
             <AlertOctagon className="w-5 h-5 text-rose-400" />
-            <span>Servidor Backend no detectado en el puerto 8000 (127.0.0.1:8000)</span>
+            <span>No se pudo conectar con el servidor de datos</span>
           </div>
           <p className="text-stone-300">
-            El frontend Vite está activo, pero no se pudo conectar con el servidor local FastAPI.
+            Comprueba la conexión con el servicio de datos para consultar el lote en tiempo real.
           </p>
-          <div className="p-3 bg-stone-900/90 rounded border border-stone-800 font-mono text-[11px] text-amber-300 leading-relaxed">
-            # Para iniciar el backend FastAPI abre una consola y ejecuta:<br/>
-            python -m uvicorn src.backend.main:app --host 127.0.0.1 --port 8000 --reload<br/><br/>
-            # O simplemente ejecuta el lanzador unificado:<br/>
-            .\start.bat
-          </div>
           <div className="flex items-center gap-3 pt-1">
             <button
               onClick={() => cargarPasaporte(loteId)}
@@ -155,22 +132,16 @@ export function PasaportePublico({ loteIdSeleccionado, lotes }) {
               onClick={cargarDemoOffline}
               className="bg-amber-600 hover:bg-amber-500 text-stone-950 px-3.5 py-1.5 rounded-lg font-bold transition-all shadow cursor-pointer"
             >
-              Cargar Ficha Demo Offline (CAC001)
+              Cargar Datos de Respaldo
             </button>
           </div>
         </div>
       )}
 
       {pasaporte && (
-        <div className={vistaMovilSimulada ? 'max-w-[390px] mx-auto' : 'max-w-4xl mx-auto'}>
-          {/* Marco de Teléfono cuando la simulación está activa */}
-          <div className={vistaMovilSimulada ? 'border-8 border-stone-800 rounded-[2.5rem] p-4 bg-stone-950 shadow-2xl relative' : ''}>
-            {vistaMovilSimulada && (
-              <div className="w-24 h-4 bg-stone-800 rounded-full mx-auto mb-4"></div>
-            )}
-
-            {/* Contenido del Pasaporte */}
-            <div className="bg-stone-900 border border-amber-950/80 rounded-2xl overflow-hidden shadow-2xl">
+        <div className="max-w-4xl mx-auto">
+          {/* Contenido del Pasaporte */}
+          <div className="bg-stone-900 border border-amber-950/80 rounded-2xl overflow-hidden shadow-2xl">
               {/* Encabezado con Denominación de Origen Huila y Marca Oficial */}
               <div className="bg-gradient-to-r from-amber-950 via-stone-900 to-amber-900 p-5 border-b border-amber-800/40 text-center relative flex flex-col items-center">
                 <div className="mb-2">
@@ -290,14 +261,6 @@ export function PasaportePublico({ loteIdSeleccionado, lotes }) {
                   )}
                 </div>
 
-                {/* Blindaje de Privacidad */}
-                <div className="p-3 bg-stone-950/50 rounded-lg border border-stone-800 text-[11px] text-stone-400 flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>
-                    <strong>Garantía de Confidencialidad:</strong> Los costos internos de transformación, márgenes comerciales y teléfonos personales están estrictamente excluidos de esta ficha según la Política de Datos de la Asociación.
-                  </span>
-                </div>
-
                 {/* Botón de Contacto Comercial / Lead B2B */}
                 <div>
                   <button
@@ -315,10 +278,9 @@ export function PasaportePublico({ loteIdSeleccionado, lotes }) {
               </div>
             </div>
           </div>
-        </div>
       )}
 
-      {/* Modal B2B Resiliente (Offline Proof) */}
+      {/* Modal B2B Resiliente */}
       {modalB2B && pasaporte && (
         <div className="fixed inset-0 bg-black/75 backdrop-blur-xs flex items-center justify-center p-4 z-50">
           <div className="bg-stone-900 border border-stone-700 max-w-md w-full rounded-xl p-5 shadow-2xl animate-in fade-in zoom-in-95">
@@ -326,7 +288,7 @@ export function PasaportePublico({ loteIdSeleccionado, lotes }) {
               Solicitud de Muestra Comercial B2B
             </h3>
             <p className="text-xs text-stone-400 mt-2">
-              Mensaje institucional autogenerado con certificación EUDR y trazabilidad de origen:
+              Mensaje institucional autogenerado con trazabilidad de origen:
             </p>
 
             <div className="mt-3 p-3 bg-stone-950 rounded-lg border border-stone-800 text-xs font-mono text-stone-300 whitespace-pre-wrap">
@@ -348,7 +310,7 @@ export function PasaportePublico({ loteIdSeleccionado, lotes }) {
                 className="flex items-center justify-center gap-1.5 px-3 py-2 bg-amber-600 hover:bg-amber-500 text-stone-950 text-xs font-bold rounded-lg transition-all cursor-pointer shadow-md"
               >
                 {copiado ? <Check className="w-4 h-4 text-stone-950" /> : <Copy className="w-4 h-4" />}
-                <span>{copiado ? '¡Copiado al Portapapeles!' : 'Copiar Orden (Modo Offline)'}</span>
+                <span>{copiado ? '¡Copiado al Portapapeles!' : 'Copiar Solicitud Comercial'}</span>
               </button>
             </div>
           </div>

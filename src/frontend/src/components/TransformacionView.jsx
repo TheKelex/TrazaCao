@@ -213,19 +213,6 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
 
   return (
     <div className="space-y-6">
-      {/* Banner de Regla de Transformación Unitaria y Difierenciador */}
-      <div className="bg-stone-900 border border-amber-950/70 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-        <div className="flex items-center gap-2.5">
-          <Link2 className="w-4 h-4 text-amber-500 shrink-0" />
-          <span className="text-stone-300">
-            <strong>Regla de Certamen:</strong> Se procesa <strong>un solo lote por operación</strong> ({loteId}). Cada salida vendible conserva intacto su origen de cultivo, productor y municipio.
-          </span>
-        </div>
-        <span className="bg-emerald-950/80 text-emerald-300 border border-emerald-800/80 px-2.5 py-1 rounded font-mono text-[11px] shrink-0 font-bold">
-          100% Offline · Descuento Atómico SQLite
-        </span>
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Columna Izquierda: Formulario de Transformación */}
         <div className="lg:col-span-7 bg-stone-900 border border-stone-800 rounded-xl p-6 shadow-xl space-y-4">
@@ -358,19 +345,9 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
                   <option value="Operador Rivera (Acopio y Fermentación)">Operador Rivera (Acopio y Fermentación)</option>
                   <option value="Maestro Tostador (Planta Campoalegre)">Maestro Tostador (Planta Campoalegre)</option>
                   <option value="Jefe de Planta (Asociación Huila)">Jefe de Planta (Asociación Huila)</option>
-                  <option value="Inspector de Calidad (NTC 1252)">Inspector de Calidad (NTC 1252)</option>
+                  <option value="Inspector de Calidad">Inspector de Calidad</option>
                 </select>
               </div>
-            </div>
-
-            {/* Vinculación de Salida al Lote de Origen */}
-            <div className="p-3 bg-stone-950 rounded-lg border border-stone-800 text-xs">
-              <span className="text-stone-400 block mb-1">
-                🔗 <strong>Vinculación Genealógica del Lote:</strong>
-              </span>
-              <p className="text-stone-300 text-[11px]">
-                Esta operación generará un registro de salida vendible etiquetado como <span className="font-mono font-bold text-amber-400">SAL-{loteId}-{etapa.slice(0, 4)}</span> que estará vinculado de forma inmutable al lote de origen <strong>{loteId}</strong> ({loteSeleccionado?.origen_municipio}, Huila).
-              </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

@@ -28,7 +28,7 @@ export function VerificadorTrazabilidadRapida({ onConsultarLote, onEntrarGestion
       <div className="max-w-5xl mx-auto px-6 sm:px-12 relative z-10 text-center space-y-8">
         <div className="inline-flex items-center gap-2 bg-[#FAF7F0]/10 border border-[#D4AF37]/40 px-4 py-1.5 rounded-full text-xs font-mono text-[#D4AF37]">
           <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-          <span>Escena 07 / Consulta Directa de Trazabilidad</span>
+          <span>Consulta Directa de Trazabilidad</span>
         </div>
 
         <h2 className="font-serif-editorial text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#FAF7F0] max-w-3xl mx-auto leading-tight">
@@ -69,9 +69,9 @@ export function VerificadorTrazabilidadRapida({ onConsultarLote, onEntrarGestion
             <p className="text-xs text-rose-400 mt-2">{errorInput}</p>
           )}
 
-          {/* Atajos Rápidos a Lotes Oficiales de la Hackathon */}
+          {/* Atajos Rápidos a Lotes Disponibles */}
           <div className="flex items-center justify-center gap-2 mt-4 text-xs text-[#E9DCC5]/70">
-            <span>Lotes disponibles en prueba:</span>
+            <span>Lotes disponibles:</span>
             {sugerencias.map((cod) => (
               <button
                 type="button"

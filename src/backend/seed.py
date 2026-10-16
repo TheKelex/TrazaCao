@@ -64,7 +64,7 @@ def seed():
         db.commit()
         print("[OK] Usuarios 'admin' y 'operador' creados con contraseñas encriptadas.")
 
-        # 2. Lotes Oficiales de la Guía DEVURITY / USCO
+        # 2. Lotes Base del Huila
         lotes_base = [
             Lote(
                 id="CAC001",
@@ -168,7 +168,7 @@ def seed():
         print(f"Subproducto (Cascarilla 20 kg): ${circular['ingreso_adicional_cop']:,.2f} COP recuperados")
         print(f"Costo Neto Circular: ${circular['costo_neto_circular_cop']:,.2f} COP")
         print("--------------------------------------------\n")
-        print("[EXITO] Base de datos lista para demostración ante el jurado.")
+        print("[EXITO] Base de datos inicializada con éxito.")
 
     except Exception as e:
         db.rollback()

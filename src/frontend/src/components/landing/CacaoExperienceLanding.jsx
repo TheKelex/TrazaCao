@@ -168,79 +168,20 @@ export function CacaoExperienceLanding({ lotes, onEntrarGestion, onVerPasaporte 
             <TrazaCaoLogo 
               variant="dark" 
               size="md" 
-              showSubtitle={true} 
-              subtitleText="Huila · Denominación de Origen" 
+              showSubtitle={false} 
             />
           </div>
-
-          {/* Menú Editorial de Enlaces */}
-          <nav className="hidden md:flex items-center gap-6 text-xs text-[#E9DCC5] font-medium tracking-wide">
-            <button
-              onClick={() => {
-                cederControlManual();
-                setProgress(0.05);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="hover:text-[#D4AF37] transition-colors cursor-pointer"
-            >
-              Territorio
-            </button>
-            <button
-              onClick={() => {
-                cederControlManual();
-                setProgress(0.30);
-                window.scrollTo({ top: window.innerHeight * 1.5, behavior: 'smooth' });
-              }}
-              className="hover:text-[#D4AF37] transition-colors cursor-pointer"
-            >
-              Cultivo & Cosecha
-            </button>
-            <button
-              onClick={() => {
-                cederControlManual();
-                setProgress(0.70);
-                window.scrollTo({ top: window.innerHeight * 3, behavior: 'smooth' });
-              }}
-              className="hover:text-[#D4AF37] transition-colors cursor-pointer"
-            >
-              Transformación
-            </button>
-            <button
-              onClick={saltarAlCatalogo}
-              className="hover:text-[#D4AF37] transition-colors cursor-pointer"
-            >
-              Lotes Certificados
-            </button>
-            <button
-              onClick={() => {
-                const el = document.getElementById('verificador-rapido');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="hover:text-[#D4AF37] transition-colors cursor-pointer"
-            >
-              Consultar QR
-            </button>
-          </nav>
 
           {/* Botones de Navegación Externa y Acceso */}
           <div className="flex items-center gap-2.5">
             <a
               href="/landing/"
               className="inline-flex items-center gap-1.5 bg-[#FAF7F0]/10 hover:bg-[#FAF7F0]/20 text-xs font-semibold px-3.5 py-1.5 rounded-full border border-[#D4AF37]/50 text-[#FAF7F0] transition-all shadow-md cursor-pointer"
-              title="Abrir la experiencia visual del cacao"
+              title="Conoce nuestra historia y origen"
             >
               <Compass className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span className="hidden sm:inline">Experiencia Visual</span>
+              <span className="hidden sm:inline">Sobre nosotros</span>
             </a>
-
-            <button
-              onClick={() => onVerPasaporte && onVerPasaporte('CAC001')}
-              className="inline-flex items-center gap-1.5 bg-[#FAF7F0]/10 hover:bg-[#FAF7F0]/20 text-xs font-semibold px-3.5 py-1.5 rounded-full border border-[#D4AF37]/50 text-[#FAF7F0] transition-all shadow-md cursor-pointer"
-              title="Ir directamente a la Ficha Comercial del Comprador"
-            >
-              <QrCode className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span className="hidden sm:inline">Ficha Comprador</span>
-            </button>
 
             <button
               onClick={onEntrarGestion}
@@ -267,39 +208,15 @@ export function CacaoExperienceLanding({ lotes, onEntrarGestion, onVerPasaporte 
             }}
           />
 
-          {/* HUD Flotante Discreto de Control Cinemático */}
-          <div className="absolute bottom-6 left-6 sm:left-12 z-30 flex items-center gap-3 bg-[#16120E]/85 backdrop-blur-md px-4 py-2 rounded-full border border-[#FAF7F0]/15 shadow-2xl text-xs text-[#E9DCC5]">
-            {/* Indicador de Reproducción Automática */}
-            <button
-              onClick={pausarReanudarIntro}
-              className="flex items-center gap-2 text-[#D4AF37] hover:text-[#FAF7F0] transition-colors cursor-pointer"
-              title={isAutoPlaying ? 'Pausar recorrido cinematográfico' : 'Reanudar recorrido guiado'}
-            >
-              {isAutoPlaying ? (
-                <>
-                  <Pause className="w-3.5 h-3.5" />
-                  <span className="font-mono text-[11px]">
-                    Intro Guiada ({Math.round(autoProgress * 100)}%)
-                  </span>
-                </>
-              ) : (
-                <>
-                  <Play className="w-3.5 h-3.5" />
-                  <span className="font-mono text-[11px]">Control Manual</span>
-                </>
-              )}
-            </button>
-
-            <span className="text-[#FAF7F0]/20">|</span>
-
-            {/* Botón para Omitir al Catálogo */}
+          {/* Botón flotante para Ir al Catálogo */}
+          <div className="absolute bottom-6 left-6 sm:left-12 z-30">
             <button
               onClick={saltarAlCatalogo}
-              className="flex items-center gap-1.5 text-xs text-[#E9DCC5]/80 hover:text-[#FAF7F0] transition-colors cursor-pointer"
-              title="Saltar directamente al catálogo de lotes"
+              className="flex items-center gap-2 bg-[#16120E]/85 backdrop-blur-md px-4 py-2.5 rounded-full border border-[#FAF7F0]/15 shadow-2xl text-xs text-[#E9DCC5] hover:text-[#FAF7F0] transition-colors cursor-pointer"
+              title="Ir directamente al catálogo de lotes"
             >
-              <SkipForward className="w-3 h-3" />
-              <span>Omitir intro</span>
+              <SkipForward className="w-3.5 h-3.5 text-[#D4AF37]" />
+              <span>Ir al Catálogo de Lotes</span>
             </button>
           </div>
         </div>
@@ -329,19 +246,19 @@ export function CacaoExperienceLanding({ lotes, onEntrarGestion, onVerPasaporte 
               TrazaCao Huila
             </span>
             <p className="text-xs text-[#E9DCC5]/70 leading-relaxed font-light">
-              Plataforma de Trazabilidad Agroindustrial y Pasaporte Digital de Cacao Fino de Aroma. Desarrollado en Neiva, Huila para la II Hackathon de Programación DEVURITY — Universidad Surcolombiana.
+              Plataforma de Trazabilidad Agroindustrial y Pasaporte Digital de Cacao Fino de Aroma del Huila.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 text-xs text-[#E9DCC5]/80">
             <div className="space-y-1">
-              <span className="font-bold text-[#FAF7F0] block">Municipios Participantes</span>
+              <span className="font-bold text-[#FAF7F0] block">Municipios Asociados</span>
               <span>Rivera · Campoalegre · Algeciras</span>
             </div>
 
             <div className="space-y-1">
-              <span className="font-bold text-[#FAF7F0] block">Normatividad</span>
-              <span>NTC 1252 · EUDR Cero Deforestación</span>
+              <span className="font-bold text-[#FAF7F0] block">Origen</span>
+              <span>Departamento del Huila, Colombia</span>
             </div>
 
             <div>
@@ -356,8 +273,8 @@ export function CacaoExperienceLanding({ lotes, onEntrarGestion, onVerPasaporte 
         </div>
 
         <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#E9DCC5]/40 font-mono">
-          <span>© 2026 TrazaCao Huila. Arquitectura Local Offline SQLite WAL.</span>
-          <span>Aritmética Exacta Decimal · Cero Fuga de Costos Comerciales</span>
+          <span>© 2026 TrazaCao Huila. Todos los derechos reservados.</span>
+          <span>Calidad y Trazabilidad de Cacao Fino de Aroma</span>
         </div>
       </footer>
     </div>

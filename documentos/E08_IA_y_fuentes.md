@@ -432,6 +432,87 @@ Ya los compañeros subieron el ultimo commit y ya tendriamos la ultima version p
 | `src/backend/main.py` | 25% | 75% | Unificación monolítica: montaje de la landing page canónica en `/landing`, frontend compilado React en `/assets` y entrega del SPA en la raíz `/` con documentación OpenAPI en `/docs`. |
 | `src/frontend/vite.config.js` | 15% | 85% | Habilitación de `allowedHosts: true` y escucha en `0.0.0.0` para permitir navegación externa sin bloqueos de host en modo desarrollo. |
 
+---
+
+## 13. BITÁCORA DE DEPURACIÓN INTEGRAL DE INFORMACIÓN DEMO Y ADAPTACIÓN COMERCIAL DEFINITIVA (REGLA DE ORO)
+
+### 13.1 Contexto y Regla de Oro Operativa
+Para consolidar la versión comercial de producción de TrazaCao, el equipo humano estableció una **Regla de Oro obligatoria**: erradicar sistemáticamente toda información técnica interna, precios o paquetes de demostración de certámenes ("Piloto Asociaciones: $450.000 COP"), leyendas de hackathon, nomenclaturas de "Escenas" de demostración y banners de evaluación que no pertenezcan al ámbito de un usuario final (cacaocultor, operador de planta, administrador de cooperativa o comprador internacional B2B).
+
+### 13.2 Registro Literal del Prompt
+
+```text
+Cambios a realizar
+
+MAS IMPORANTE / REGLA DE ORO: ELIMINAR TODA INFORMACION EXTRA QUE NO DEBA IR EN UN APLICATIVO FINAL EJ: "Piloto Asociaciones: $450.000 COP (30 días)"
+
+Landing page:
+1. Quitar header con información que tapa, dejar únicamente el recorrido y el botón de ir al final
+2. El botón de ir al final debe llevarme al catalogo y no a los códigos QR
+3. Eliminar en el apartado de Pasaporte Digital de Origen, el perfil sensorial de cata	
+4. Cambiar su nombre de "Experiencia visual" a "Sobre nosotros"
+5. Eliminar la señalización de "Escena" en todos los apartados
+
+Apartados QR:
+1. Quitar información innceseria en el headera "Costos internos protegidos · Información agronómica y sensorial pública", "Portal de Compradores B2B
+✓ Estándar NTC 1252 · EUDR
+Ficha de Exportación & Pasaporte Digital de Cacao Fino de Aroma del Huila", "Garantía de Confidencialidad: Los costos internos de transformación, márgenes comerciales y teléfonos personales están estrictamente excluidos de esta ficha según la Política de Datos de la Asociación."
+2. Eliminar el botón de simular escaneo QR (movil)
+
+Catalogo:
+1. Eliminar información innecesaria "Huila · Denominación de Origen","* Datos sintéticos de demostración oficial (II Hackathon USCO)", "Trazabilidad 100% Verificable sin Fuga de Costos Internos
+Cumplimiento estricto de la Norma NTC 1252 y compatibilidad con el Reglamento Europeo EUDR. Los compradores internacionales pueden consultar el origen, lote y fermentación sin exponer costos de intermediación ni datos privados del cacaocultor. Arquitectura Offline Local"
+2. Eliminaar botón Ficha Comprador
+3. Eliminar los botones del header "Territorio Cultivo & Cosecha Transformación Lotes Certificados Consultar QR"
+4. Eliminar botón de Control automatico
+5. Eliminar la señalización de "Escena" en todos los apartados
+
+Apartados administrativos:
+1. Quitar información inncesesaria "NTC 1252 / EUDR", "Huila Agro Operación Local Autónoma · En Línea Plataforma de Trazabilidad Cacaotera y Denominación de Origen · NTC 1252 / EUDR", "Dirección Técnica y Calidad ADMINISTRADOR", "📦 Control de Inventario en Tiempo Real: Cada ingreso y movimiento actualiza automáticamente el saldo físico en bodega. El sistema previene descuadres y garantiza trazabilidad auditada.", "🌾 Trazabilidad de origen georreferenciada para cumplimiento de la normativa europea anti-deforestación (EUDR).", "✓ Cumplimiento Normativo EUDR & NTC 1252", "Regla de Certamen: Se procesa un solo lote por operación (CAC001). Cada salida vendible conserva intacto su origen de cultivo, productor y municipio. 100% Offline · Descuento Atómico SQLite", "🔗 Vinculación Genealógica del Lote: Esta operación generará un registro de salida vendible etiquetado como SAL-CAC001-FERM que estará vinculado de forma inmutable al lote de origen CAC001 (, Huila).", "Tiempo de Verificación de Origen: 32.7 ms · Cadena de Custodia Inmutable Verificada 1 Hitos Cronológicos Auditados", "💡 Auditoría de Masa y Financiera: Los rendimientos y costos operan con precisión garantizada para liquidaciones transparentes y exactas a los cacaocultores.", "Motor de Almacenamiento:SQLite 3 con Write-Ahead Logging (WAL)PRAGMA journal_mode=WALFichero de Persistencia Principal:cacao_dev.db+ acao_dev.db-wal (Concurrencia sin bloqueos)Registros Persistidos en Disco:2 Lotes · 0 Transf. · 62 LogsConsistencia ACID garantizada🧪 Protocolo de emostración de Persistencia Post-Reinicio (Evaluación en Vivo):Registrar datos: Acopia un lote o transforma kilos en la UI.Simular caída de energía o cierre: En la terminal del backend ejecuta Ctrl + C para apagar el servidor.Reiniciar el servicio: Vuelve a arrancar uvicorn con python -m uvicorn src.backend.main:app --port 8000. (Únicamente dejar un botón para copia de seguridad) "Garantía de Inmutabilidad y Cumplimiento: Todas las transacciones, cambios de estado y autorizaciones quedan registradas permanentemente para auditorías y certificaciones internacionales."
+Validar recuperación inmediata: Refresca la aplicación; el 100% de los lotes, mermas y logs inmutables se leen de cacao_dev.db sin ninguna pérdida."
+2. Eliminar botón del header "Experiencia Cacao"
+
+Teniendo en cuenta todos estos cambios termina de buscar lo relacionado con informacion no relacionada con el usuario final
+```
+
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity.
+- **Skills Activadas**: `frontend-design`, `doc-coauthoring`.
+
+### 13.3 Matriz de Decisiones: Equipo Humano vs. Construcción IA
+
+| Área / Componente | Decisión Humana (Requerimiento) | Solución Construida por IA |
+| :--- | :--- | :--- |
+| **Landing Page Scrollytelling** | Quitar cabecera densa que tapaba la experiencia; dejar solo "Recorrido" y botón "Catálogo"; eliminar badge de piloto $450.000 COP y perfil sensorial. | En `landing page/index.html` y `demo-scrollytelling.html`, se limpió `.cinematic-header` alineado a la derecha, se enlazó el botón CTA a `http://localhost:5173/?modo=catalogo#lotes-disponibles`, se suprimió la tarjeta de cata sensorial y se eliminaron las etiquetas visuales `.hud-tag` ("Escena 01", etc.). |
+| **Pasaporte Digital & QR** | Retirar disclaimers de confidencialidad en texto plano, sellos NTC/EUDR técnicos y botón de simulación móvil de 375px. | En `PasaportePublico.jsx`, se retiró el mock de smartphone `Smartphone`, simplificando la presentación a un contenedor responsivo directo (`max-w-4xl`), limpiando los encabezados institucionales y renombrando la acción a "Copiar Solicitud Comercial". |
+| **Catálogo de Lotes B2B** | Eliminar leyenda de datos sintéticos de hackathon, textos de arquitectura offline y botones redundantes de navegación o control automático. | En `CatalogoLotesPublico.jsx` y `CacaoExperienceLanding.jsx`, se eliminaron los selectores de escenas `01-05`, el botón de pausa/reanudación automática y los avisos de certamen universitario, dejando una vitrina comercial limpia. |
+| **Módulos Administrativos** | Eliminar notas de "Regla de certamen", vinculación genealógica explicada para jurados, banners de latencia (32.7 ms), y el protocolo de simulación de reinicio/apagado forzado de terminal en el panel de persistencia. | En `RecepcionView.jsx`, `TransformacionView.jsx`, `TrazabilidadView.jsx` y `AdminDashboard.jsx`, se depuraron todos los callouts de auditoría técnica. En el panel de base de datos se conservó únicamente el botón de acción real "Crear Copia de Seguridad (.db)". |
+| **Navegación Global y Roles** | Quitar selector redundante "Experiencia Cacao" del header de operador/admin y simplificar la identificación de usuario. | En `TopRoleBar.jsx`, se eliminó el botón de navegación a la experiencia scrolly y se refinó la insignia de perfil mostrando limpiamente "Administrador" u "Operador" junto al nombre de usuario autenticado. |
+| **Backend & Semillas** | Eliminar subtítulos de hackathon en Swagger OpenAPI y prints de demostración para jurados. | En `src/backend/main.py` y `src/backend/seed.py`, se removieron las cadenas de concurso, conservando la lógica pura de la API. |
+
+### 13.4 Mapeo de Componentes Depurados (18 Archivos)
+
+| Componente / Archivo | % Aporte IA | % Aporte Humano | Rol del Estudiante / Justificación de Autoría |
+| :--- | :---: | :---: | :--- |
+| `landing page/index.html` | 20% | 80% | Depuración de cabecera fija, redirección al catálogo de lotes y erradicación del bloque de precio piloto y perfil sensorial. |
+| `landing page/demo-scrollytelling.html` | 20% | 80% | Réplica exacta sincronizada para consistencia visual entre la versión raíz y scrollytelling. |
+| `src/frontend/src/components/PasaportePublico.jsx` | 15% | 85% | Eliminación de marco de simulación móvil y textos de advertencia redundantes de confidencialidad. |
+| `src/frontend/src/App.jsx` | 25% | 75% | Ajuste de rutas de navegación por hash (`#lotes-disponibles`), scroll automático y renombrado a "Sobre nosotros". |
+| `src/frontend/src/components/landing/CatalogoLotesPublico.jsx` | 20% | 80% | Retiro de sellos sintéticos de certamen y avisos de arquitectura local offline. |
+| `src/frontend/src/components/landing/CacaoExperienceLanding.jsx` | 20% | 80% | Eliminación de botones de navegación interna redundante y control de reproducción automática. |
+| `src/frontend/src/components/landing/ScrollySceneViewer.jsx` | 20% | 80% | Limpieza de títulos de capítulos numéricos ("01 / TERRITORIO" $\rightarrow$ "TERRITORIO"). |
+| `src/frontend/src/components/landing/VerificadorTrazabilidadRapida.jsx` | 15% | 85% | Limpieza de títulos de escena y ajuste de textos comerciales. |
+| `src/frontend/src/components/RecepcionView.jsx` | 15% | 85% | Erradicación de sellos NTC/EUDR técnicos y avisos informativos redundantes. |
+| `src/frontend/src/components/TransformacionView.jsx` | 15% | 85% | Supresión del banner de "Regla de Certamen" y cuadro explicativo de vinculación genealógica. |
+| `src/frontend/src/components/TrazabilidadView.jsx` | 15% | 85% | Remoción de la métrica artificial de latencia de verificación (32.7 ms). |
+| `src/frontend/src/components/AdminDashboard.jsx` | 20% | 80% | Eliminación del bloque de evaluación con reinicio de terminal, WAL y PRAGMA, dejando únicamente el respaldo atómico. |
+| `src/frontend/src/components/AuditLogView.jsx` | 15% | 85% | Retiro del banner técnico de inmutabilidad y cumplimiento. |
+| `src/frontend/src/components/TopRoleBar.jsx` | 15% | 85% | Eliminación del botón "Experiencia Cacao" y simplificación de insignias de rol. |
+| `src/frontend/src/components/LoginView.jsx` | 15% | 85% | Adaptación de botón de retorno al inicio y refinamiento de accesos por rol. |
+| `src/frontend/src/api/client.js` | 10% | 90% | Neutralización de comentarios y mensajes de prueba de seguridad RBAC. |
+| `src/backend/main.py` | 15% | 85% | Limpieza de la descripción OpenAPI (eliminación del reto USCO DEVURITY 2026). |
+| `src/backend/seed.py` | 10% | 90% | Neutralización de prints demostrativos de certamen en el seeder de base de datos. |
+
+
 
 
 

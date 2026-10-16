@@ -388,10 +388,6 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
             </span>
           </div>
         </div>
-
-        <div className="p-2.5 bg-stone-950/60 rounded border border-stone-800/80 text-[11px] text-stone-400">
-          💡 <strong>Auditoría de Masa y Financiera:</strong> Los rendimientos y costos operan con precisión garantizada para liquidaciones transparentes y exactas a los cacaocultores.
-        </div>
       </div>
 
       {/* Seguridad de Datos y Respaldo del Sistema */}
@@ -431,73 +427,18 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
           </div>
         </div>
 
-        {/* Notificación de Éxito de Snapshot */}
+        {/* Notificación de Éxito de Respaldo */}
         {backupResultado && (
           <div className="p-3 bg-emerald-950/70 border border-emerald-700 rounded-lg text-emerald-200 text-xs flex items-start gap-2.5 animate-in fade-in">
             <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
             <div>
               <p className="font-bold">{backupResultado.mensaje}</p>
               <p className="text-stone-300 mt-1">
-                Archivo: <code className="bg-stone-950 px-1.5 py-0.5 rounded text-amber-300">{backupResultado.archivo}</code> · 
-                Tamaño: <span className="font-bold">{backupResultado.tamano_kb} KB</span> · 
-                Latencia atómica: <span className="font-bold text-emerald-300">{backupResultado.duracion_ms} ms</span>
-              </p>
-              <p className="text-[11px] text-stone-400 mt-0.5">
-                Copia sincronizada también en <code className="text-stone-300">datos/respaldo_demo.db</code> para recuperación inmediata ante fallo.
+                Archivo de respaldo generado: <code className="bg-stone-950 px-1.5 py-0.5 rounded text-amber-300">{backupResultado.archivo}</code> ({backupResultado.tamano_kb} KB)
               </p>
             </div>
           </div>
         )}
-
-        {/* Métricas y Estado de Persistencia */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div className="p-3 bg-stone-950 rounded-lg border border-stone-800">
-            <span className="text-[11px] text-stone-400 block">Motor de Almacenamiento:</span>
-            <span className="font-bold text-amber-300 text-xs mt-0.5 block">
-              {persistenciaInfo?.motor || 'SQLite 3 (Modo WAL activo)'}
-            </span>
-            <span className="text-[10px] text-stone-500 font-mono mt-1 block">
-              PRAGMA journal_mode=WAL
-            </span>
-          </div>
-
-          <div className="p-3 bg-stone-950 rounded-lg border border-stone-800">
-            <span className="text-[11px] text-stone-400 block">Fichero de Persistencia Principal:</span>
-            <span className="font-mono font-bold text-stone-200 text-xs mt-0.5 block">
-              cacao_dev.db
-            </span>
-            <span className="text-[10px] text-stone-500 block mt-1">
-              + cacao_dev.db-wal (Concurrencia sin bloqueos)
-            </span>
-          </div>
-
-          <div className="p-3 bg-stone-950 rounded-lg border border-stone-800">
-            <span className="text-[11px] text-stone-400 block">Registros Persistidos en Disco:</span>
-            <span className="font-mono font-bold text-emerald-400 text-xs mt-0.5 block">
-              {persistenciaInfo?.estadisticas ? (
-                `${persistenciaInfo.estadisticas.total_lotes} Lotes · ${persistenciaInfo.estadisticas.total_transformaciones} Transf. · ${persistenciaInfo.estadisticas.total_registros_auditoria} Logs`
-              ) : (
-                `${lotes.length} lotes cargados`
-              )}
-            </span>
-            <span className="text-[10px] text-stone-500 block mt-1">
-              Consistencia ACID garantizada
-            </span>
-          </div>
-        </div>
-
-        {/* Procedimiento de Prueba Post-Reinicio para el Jurado */}
-        <div className="p-3.5 bg-stone-950/70 border border-stone-800 rounded-lg text-xs space-y-2">
-          <div className="font-semibold text-stone-200 flex items-center gap-1.5">
-            <span>🧪 Protocolo de Demostración de Persistencia Post-Reinicio (Evaluación en Vivo):</span>
-          </div>
-          <ol className="list-decimal list-inside text-stone-400 space-y-1 pl-1">
-            <li><strong className="text-stone-300">Registrar datos:</strong> Acopia un lote o transforma kilos en la UI.</li>
-            <li><strong className="text-stone-300">Simular caída de energía o cierre:</strong> En la terminal del backend ejecuta <code className="bg-stone-900 px-1 py-0.5 rounded text-amber-400">Ctrl + C</code> para apagar el servidor.</li>
-            <li><strong className="text-stone-300">Reiniciar el servicio:</strong> Vuelve a arrancar uvicorn con <code className="bg-stone-900 px-1 py-0.5 rounded text-amber-400">python -m uvicorn src.backend.main:app --port 8000</code>.</li>
-            <li><strong className="text-stone-300">Validar recuperación inmediata:</strong> Refresca la aplicación; el 100% de los lotes, mermas y logs inmutables se leen de <code className="text-stone-300">cacao_dev.db</code> sin ninguna pérdida.</li>
-          </ol>
-        </div>
       </div>
 
       {/* Modal de Cambio de Estado (Incidencia Hora 12) */}

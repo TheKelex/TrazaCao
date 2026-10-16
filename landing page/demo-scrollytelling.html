@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Experiencia Cinemática de Origen | Cacao Huila Trazable</title>
-  <meta name="description" content="Experiencia editorial cinematográfica del cacao fino de aroma del Huila, Colombia. Storytelling con fotografía documental real, tour guiado tipo video y trazabilidad por lote." />
+  <title>Sobre Nosotros | Cacao Huila Trazable</title>
+  <meta name="description" content="Historia, origen y trazabilidad del cacao fino de aroma del Huila, Colombia. Fotografía documental real y recorrido interactivo." />
   <style>
     /* ==========================================================================
        DIRECCIÓN DE ARTE: LUXURY EDITORIAL & FOTOGRAFÍA REAL B2B
@@ -63,7 +63,7 @@
       height: 70px;
       z-index: 1000;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       padding: 0 clamp(1.2rem, 4vw, 3rem);
       background: linear-gradient(180deg, rgba(10, 7, 5, 0.96) 0%, rgba(10, 7, 5, 0.6) 70%, transparent 100%);
@@ -699,35 +699,27 @@
     <span>REPRODUCIENDO TOUR &bull; MODO VIDEO</span>
   </div>
 
-  <!-- Cabecera Cinemática Flotante -->
+  <!-- Cabecera Cinemática: únicamente recorrido y botón de ir al catálogo -->
   <header class="cinematic-header">
-    <div class="brand-group">
-      <span class="brand-badge">Huila</span>
-      <div>
-        <div class="brand-title">Cacao Huila Trazable</div>
-        <div class="brand-subtitle">Rivera &bull; Campoalegre &bull; Algeciras</div>
-      </div>
-    </div>
-
-    <div class="header-tools">
-      <button class="btn-hud" id="btnAutoTour" title="Reproducir recorrido visual">
+    <div class="header-tools" style="pointer-events: auto; display: flex; gap: 0.75rem;">
+      <button class="btn-hud" id="btnAutoTour" title="Reproducir recorrido guiado">
         <span id="tourIcon" style="display:inline-flex; align-items:center;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
             <polygon points="5 3 19 12 5 21 5 3"></polygon>
           </svg>
         </span>
-        <span id="tourLabel">Tour Guiado</span>
+        <span id="tourLabel">Recorrido</span>
       </button>
 
-      <!-- Enlace directo al Apartado del Comprador -->
-      <a href="http://localhost:5173/?modo=comprador&lote=CAC001" id="navLinkComprador" class="btn-hud" style="background: rgba(245, 197, 99, 0.2); border-color: var(--gold-pure); color: var(--gold-bright);" title="Abrir la Ficha Comercial y Pasaporte Digital del Comprador">
+      <!-- Botón de ir al final / Catálogo -->
+      <a href="http://localhost:5173/?modo=catalogo#lotes-disponibles" id="navLinkComprador" class="btn-hud" style="background: rgba(245, 197, 99, 0.2); border-color: var(--gold-pure); color: var(--gold-bright);" title="Ir al Catálogo de Lotes">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="7" height="7"></rect>
           <rect x="14" y="3" width="7" height="7"></rect>
           <rect x="14" y="14" width="7" height="7"></rect>
           <rect x="3" y="14" width="7" height="7"></rect>
         </svg>
-        <span>Apartado Comprador</span>
+        <span>Catálogo</span>
       </a>
     </div>
   </header>
@@ -766,7 +758,7 @@
     <!-- ========================================================================
          ESCENA 1: EL ORIGEN — FOTOGRAFÍA PANORÁMICA REAL DEL HUILA
          ======================================================================== -->
-    <section class="scene-viewport" id="scene1" aria-label="Escena 1: El Territorio">
+    <section class="scene-viewport" id="scene1" aria-label="El Territorio">
       <div class="photo-stage">
         <!-- Fotografía real: Mirador del Magdalena, Huila, Colombia (Bernard Gagnon, CC BY-SA 4.0) -->
         <img src="assets/images/huila-panoramica.jpg" 
@@ -779,7 +771,7 @@
       </div>
 
       <article class="editorial-hud hud-left" id="card1">
-        <div class="hud-tag">Escena 01 &bull; Panorámica Territorial</div>
+        <div class="hud-tag">Panorámica Territorial</div>
         <h1 class="hud-headline">
           Donde la cordillera oriental abraza el <em>Valle del Magdalena</em>.
         </h1>
@@ -796,9 +788,9 @@
     </section>
 
     <!-- ========================================================================
-         ESCENA 2: LA TIERRA Y EL CULTIVO — FOTOGRAFÍAS REALES DE CACAO Y SOMBRÍO
+         LA TIERRA Y EL CULTIVO — FOTOGRAFÍAS REALES DE CACAO Y SOMBRÍO
          ======================================================================== -->
-    <section class="scene-viewport" id="scene2" style="opacity: 0; visibility: hidden;" aria-label="Escena 2: La Parcela y los Suelos">
+    <section class="scene-viewport" id="scene2" style="opacity: 0; visibility: hidden;" aria-label="La Parcela y los Suelos">
       <div class="duo-photo-container">
         <!-- Fotografía real 1: Mazorcas maduras en árbol de cacao (Public Domain) -->
         <div class="duo-photo-main">
@@ -823,7 +815,7 @@
       </div>
 
       <article class="editorial-hud hud-left" id="card2">
-        <div class="hud-tag">Escena 02 &bull; Parcela &amp; Suelos Francos</div>
+        <div class="hud-tag">Parcela &amp; Suelos Francos</div>
         <h2 class="hud-headline">
           Bajo el dosel protector: <em>sombrío de guamo y suelos vivos</em>.
         </h2>
@@ -854,9 +846,9 @@
     </section>
 
     <!-- ========================================================================
-         ESCENA 3: EL PROCESO POSCOSECHA — FERMENTACIÓN Y SECADO AL SOL
+         EL PROCESO POSCOSECHA — FERMENTACIÓN Y SECADO AL SOL
          ======================================================================== -->
-    <section class="scene-viewport" id="scene3" style="opacity: 0; visibility: hidden;" aria-label="Escena 3: Beneficio Poscosecha">
+    <section class="scene-viewport" id="scene3" style="opacity: 0; visibility: hidden;" aria-label="Beneficio Poscosecha">
       <div class="duo-photo-container">
         <!-- Fotografía real 1: Fermentación en cajones de madera con hojas de plátano (Scot Nelson, CC0) -->
         <div class="duo-photo-main">
@@ -881,7 +873,7 @@
       </div>
 
       <article class="editorial-hud hud-center" id="card3">
-        <div class="hud-tag">Escena 03 &bull; Beneficio Poscosecha</div>
+        <div class="hud-tag">Beneficio Poscosecha</div>
         <h2 class="hud-headline">
           La alquimia poscosecha: <em>cajones de madera y secado solar</em>.
         </h2>
@@ -921,9 +913,9 @@
     </section>
 
     <!-- ========================================================================
-         ESCENA 4: EL RESULTADO Y LA TRAZABILIDAD — GRANOS TOSTADOS, CHOCOLATE Y PASAPORTE
+         EL RESULTADO Y LA TRAZABILIDAD — GRANOS TOSTADOS, CHOCOLATE Y PASAPORTE
          ======================================================================== -->
-    <section class="scene-viewport" id="scene4" style="opacity: 0; visibility: hidden;" aria-label="Escena 4: Calidad y Trazabilidad">
+    <section class="scene-viewport" id="scene4" style="opacity: 0; visibility: hidden;" aria-label="Calidad y Trazabilidad">
       <div class="photo-stage">
         <!-- Fotografía real: Granos tostados seleccionados y chocolate fino (The Culinary Geek, CC BY-SA 3.0) -->
         <img src="assets/images/cacao-granos-tostados.jpg" 
@@ -935,7 +927,7 @@
         <div class="photo-vignette" style="background: radial-gradient(circle at 30% 50%, rgba(10, 7, 5, 0.45) 0%, rgba(10, 7, 5, 0.92) 80%);"></div>
       </div>
 
-      <!-- Terminal del Pasaporte Comercial con el Botón "Ir" -->
+      <!-- Terminal del Pasaporte Comercial con el Botón "Ir al Catálogo" -->
       <div class="passport-modal-hud" id="passportModal">
         <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
           <div>
@@ -959,7 +951,7 @@
         </div>
 
         <!-- Matriz de Métricas Técnicas por Lote -->
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem; margin-bottom: 1rem;">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem; margin-bottom: 1.25rem;">
           <div style="background: rgba(28, 20, 15, 0.92); border: 1px solid var(--border-editorial); padding: 0.7rem; border-radius: 8px;">
             <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--gold-pure); font-weight: 800; display: block;">Humedad</span>
             <strong id="gsapLotHumedad" style="font-family: var(--font-serif); font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: #fff;">7.50%</strong>
@@ -974,34 +966,15 @@
           </div>
         </div>
 
-        <!-- Perfil Sensorial Q-Grader -->
-        <div style="background: rgba(28, 20, 15, 0.92); border: 1px solid var(--border-editorial); padding: 0.9rem; border-radius: 10px; margin-bottom: 1.25rem;">
-          <span style="font-size: 0.7rem; text-transform: uppercase; color: var(--gold-pure); font-weight: 800; display: block; margin-bottom: 0.45rem;">
-            Perfil Sensorial de Cata (Bean-to-Bar)
-          </span>
-          <div style="display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 0.45rem;">
-            <span class="flavor-tag-hud">Panela &amp; Melaza</span>
-            <span class="flavor-tag-hud">Frutos Rojos Maduros</span>
-            <span class="flavor-tag-hud">Almendra Tostada</span>
-            <span class="flavor-tag-hud" style="color: var(--green-bright); border-color: var(--green-bright);">Acidez Cítrica Limpia</span>
-          </div>
-          <p id="gsapLotDesc" style="font-size: 0.85rem; color: var(--ivory-muted); font-style: italic; line-height: 1.5;">
-            &ldquo;Cacao con balance sedoso, notas dulces de panela y final prolongado de frutos secos. Cero notas violetas de astringencia.&rdquo;
-          </p>
-        </div>
-
-        <!-- Zona de Acción Comercial y Botón "Ir" -->
-        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-editorial); padding-top: 1rem; flex-wrap: wrap; gap: 0.85rem;">
-          <div style="font-size: 0.82rem; color: var(--text-dim);">
-            Piloto Asociaciones: <strong style="color: var(--gold-pure); font-size: 0.92rem;">$450.000 COP</strong> (30 días)
-          </div>
-
-          <!-- BOTÓN "IR" DE ACCIÓN: LLEVA A LA PÁGINA DEL COMPRADOR -->
-          <div style="display: flex; gap: 0.65rem; align-items: center;">
-            <a href="http://localhost:5173/?modo=comprador&lote=CAC001" class="btn-ir-cta" id="btnIrAccion" title="Ir al apartado del comprador">
-              Ir &rarr;
-            </a>
-          </div>
+        <!-- Zona de Acción Comercial y Botón "Ir al Catálogo" -->
+        <div style="display: flex; justify-content: flex-end; align-items: center; border-top: 1px solid var(--border-editorial); padding-top: 1rem; flex-wrap: wrap; gap: 0.85rem;">
+          <a href="http://localhost:5173/?modo=catalogo#lotes-disponibles" class="btn-ir-cta" id="btnIrAccion" title="Ir al catálogo de lotes disponibles">
+            <span>Ir al Catálogo</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
         </div>
       </div>
     </section>
@@ -1311,14 +1284,14 @@
         else btn.classList.remove('selected');
       });
 
-      // Actualizar URLs hacia el apartado del comprador
+      // Mantener URLs dirigidas al catálogo de lotes disponibles
       const btnIr = document.getElementById('btnIrAccion');
       if (btnIr) {
-        btnIr.setAttribute('href', 'http://localhost:5173/?modo=comprador&lote=' + loteId);
+        btnIr.setAttribute('href', 'http://localhost:5173/?modo=catalogo#lotes-disponibles');
       }
       const navLink = document.getElementById('navLinkComprador');
       if (navLink) {
-        navLink.setAttribute('href', 'http://localhost:5173/?modo=comprador&lote=' + loteId);
+        navLink.setAttribute('href', 'http://localhost:5173/?modo=catalogo#lotes-disponibles');
       }
 
       const d = LOTES_GSAP[loteId];
@@ -1328,7 +1301,8 @@
       document.getElementById('gsapLotHumedad').textContent = d.humedad;
       document.getElementById('gsapLotFerm').textContent = d.ferm;
       document.getElementById('gsapLotStock').textContent = d.stock;
-      document.getElementById('gsapLotDesc').textContent = d.desc;
+      const descEl = document.getElementById('gsapLotDesc');
+      if (descEl) descEl.textContent = d.desc;
 
       const badge = document.getElementById('gsapLotBadge');
       badge.textContent = d.badge;

@@ -72,6 +72,19 @@ export function App() {
     }
   }, [auth?.role, activeTab]);
 
+  // Desplazamiento automático al catálogo si se solicita por parámetro o hash
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('modo') === 'catalogo' || window.location.hash === '#lotes-disponibles') {
+        setTimeout(() => {
+          const el = document.getElementById('lotes-disponibles');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 350);
+      }
+    } catch {}
+  }, []);
+
   const handleLoginSuccess = (usuario) => {
     const sesion = {
       role: usuario.rol,
@@ -155,17 +168,9 @@ export function App() {
             <div className="flex items-center gap-3">
               <TrazaCaoLogo variant="dark" size="md" />
               <div className="border-l border-stone-800 pl-3">
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] bg-amber-950 text-amber-300 font-semibold px-2 py-0.5 rounded border border-amber-800">
-                    Portal de Compradores B2B
-                  </span>
-                  <span className="text-[11px] text-emerald-400 font-mono hidden md:inline">
-                    ✓ Estándar NTC 1252 · EUDR
-                  </span>
-                </div>
-                <p className="text-xs text-stone-400 mt-0.5 hidden sm:block">
-                  Ficha de Exportación & Pasaporte Digital de Cacao Fino de Aroma del Huila
-                </p>
+                <span className="text-[11px] bg-amber-950 text-amber-300 font-semibold px-2.5 py-1 rounded border border-amber-800">
+                  Portal de Compradores B2B
+                </span>
               </div>
             </div>
 
@@ -173,11 +178,11 @@ export function App() {
               <a
                 href="/landing/"
                 className="flex items-center gap-1.5 text-xs bg-stone-800 hover:bg-stone-700 text-stone-300 border border-stone-700 px-3 py-1.5 rounded-lg transition-all cursor-pointer shadow-sm"
-                title="Volver a la experiencia visual de origen"
+                title="Conoce nuestra historia y origen"
               >
                 <Compass className="w-3.5 h-3.5 text-amber-500" />
-                <span className="hidden sm:inline">Experiencia Visual</span>
-                <span className="sm:hidden">Origen</span>
+                <span className="hidden sm:inline">Sobre nosotros</span>
+                <span className="sm:hidden">Nosotros</span>
               </a>
 
               <button
@@ -216,9 +221,6 @@ export function App() {
                 </button>
               ))}
             </div>
-            <span className="text-[11px] text-stone-400 font-mono hidden lg:inline">
-              Costos internos protegidos · Información agronómica y sensorial pública
-            </span>
           </div>
         </div>
 
@@ -361,8 +363,6 @@ export function App() {
             <span className="text-stone-400 text-[11px]">Plataforma Integral de Trazabilidad Cacaotera y Denominación de Origen</span>
           </div>
           <div className="text-[11px] text-stone-400 flex items-center gap-3">
-            <span className="text-emerald-400/90 font-medium">✓ Cumplimiento Normativo EUDR & NTC 1252</span>
-            <span className="text-stone-600">·</span>
             <span>Departamento del Huila, Colombia</span>
           </div>
         </div>

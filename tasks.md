@@ -138,6 +138,8 @@
 | **COD-AUTH** | Inicio de Sesión Criptográfico, Aislamiento de Roles y Erradicación Demo | Equipo Completo | **DONE (DoD)** | `LoginView.jsx`, `hashing.py`, `routers/auth.py`, `TopRoleBar.jsx` y `test_auth.py` |
 | **COD-LANDING** | Organización de Landing Page en su Carpeta y Enlace al Apartado del Comprador | Equipo Completo | **DONE (DoD)** | `landing page/`, `App.jsx`, `demo-scrollytelling.html` y `E08_IA_y_fuentes.md` |
 | **SYNC-REMOTE** | Sincronización Remota de Commits y Bitácora IA a GitHub (`origin/develop`) | Equipo Completo | **DONE (DoD)** | Push verificado a `origin/develop`, `E08_IA_y_fuentes.md` |
+| **COD-CLEANUP** | Depuración Integral de Textos Demo, Regla de Oro y Adaptación Comercial | Equipo Completo | **DONE (DoD)** | 18 archivos depurados, tests 24/24 pasando, build limpio y `E08_IA_y_fuentes.md` |
 | **INT-DEV2**| Integración de suite de seguridad Dev 2 | Dev 1 & Dev 2 | **EN INTEGRACIÓN** | Rama `feature/security-qa` |
 | **DOC-E06** | Informe de Usabilidad Externa en Stand | Dev 4 | **BACKLOG** | Asignado a Dev 4 |
 | **DOC-E09** | Propuesta Comercial y Diapositivas Pitch | Dev 4 | **BACKLOG** | Asignado a Dev 4 |
+

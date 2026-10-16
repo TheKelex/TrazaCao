@@ -69,14 +69,6 @@ export function AuditLogView({ auth }) {
         </button>
       </div>
 
-      {/* Banner de Garantía de Inmutabilidad */}
-      <div className="p-3 bg-emerald-950/30 border border-emerald-800/50 rounded-lg text-xs text-emerald-300 flex items-center gap-2">
-        <ShieldCheck className="w-4 h-4 shrink-0 text-emerald-400" />
-        <span>
-          <strong>Garantía de Inmutabilidad y Cumplimiento:</strong> Todas las transacciones, cambios de estado y autorizaciones quedan registradas permanentemente para auditorías y certificaciones internacionales.
-        </span>
-      </div>
-
       {error && (
         <div className="p-3 bg-rose-950/60 border border-rose-800 rounded-lg text-rose-200 text-xs flex items-center gap-2">
           <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />

@@ -107,9 +107,6 @@ export function RecepcionView({ auth, lotes, onLoteCreado, demoData }) {
               <p className="text-xs text-stone-400">Pesaje inicial y liquidación a productores del Huila</p>
             </div>
           </div>
-          <span className="text-xs font-mono bg-stone-800 text-stone-300 px-2.5 py-1 rounded-md border border-stone-700">
-            NTC 1252 / EUDR
-          </span>
         </div>
 
         {error && (
@@ -203,9 +200,6 @@ export function RecepcionView({ auth, lotes, onLoteCreado, demoData }) {
                 onChange={handleChange}
                 className="w-full bg-stone-950 border border-stone-700 rounded-lg px-3 py-2 text-stone-100 text-sm focus:outline-none focus:border-amber-500 font-mono"
               />
-            </div>
-            <div className="flex items-center text-[11px] text-amber-300/80 p-2 bg-amber-950/20 border border-amber-800/40 rounded-lg">
-              <span>🌾 Trazabilidad de origen georreferenciada para cumplimiento de la normativa europea anti-deforestación (EUDR).</span>
             </div>
           </div>
 
@@ -394,12 +388,6 @@ export function RecepcionView({ auth, lotes, onLoteCreado, demoData }) {
               ))
             )}
           </div>
-        </div>
-
-        {/* Info Card Agroindustrial */}
-        <div className="bg-stone-900/60 border border-stone-800/80 rounded-xl p-4 text-xs text-stone-400">
-          <p className="font-semibold text-stone-300 mb-1">📦 Control de Inventario en Tiempo Real:</p>
-          <p>Cada ingreso y movimiento actualiza automáticamente el saldo físico en bodega. El sistema previene descuadres y garantiza trazabilidad auditada.</p>
         </div>
       </div>
     </div>

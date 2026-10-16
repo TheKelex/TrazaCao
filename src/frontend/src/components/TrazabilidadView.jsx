@@ -88,19 +88,6 @@ export function TrazabilidadView({ lotes, defaultLoteId, onVerPasaporte }) {
         </div>
       </div>
 
-      {/* Indicador de Desempeño Operativo */}
-      <div className="bg-stone-900/60 border border-stone-800 rounded-xl p-3 px-4 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-        <div className="flex items-center gap-2 text-stone-300">
-          <Clock className="w-4 h-4 text-emerald-400" />
-          <span>Tiempo de Verificación de Origen:</span>
-          <strong className="text-emerald-400 text-sm">{tiempoMs} ms</strong>
-          <span className="text-stone-400 font-sans">· Cadena de Custodia Inmutable Verificada</span>
-        </div>
-        <span className="text-amber-400 font-bold">
-          {transformaciones.length + 1} Hitos Cronológicos Auditados
-        </span>
-      </div>
-
       {!loteActual ? (
         <div className="p-12 text-center text-stone-400 text-xs font-mono bg-stone-900 border border-stone-800 rounded-xl">
           Selecciona un lote para visualizar su línea de vida completa.

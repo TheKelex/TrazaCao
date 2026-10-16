@@ -84,7 +84,7 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-[#3C2418]">
           <div className="space-y-3 max-w-2xl">
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#D4AF37] block">
-              Escena 06 / Catálogo Comercial B2B
+              Catálogo de Lotes Disponibles
             </span>
             <h2 className="font-serif-editorial text-4xl sm:text-5xl font-bold tracking-tight text-[#FAF7F0]">
               Lotes Certificados de Cacao del Huila
@@ -92,12 +92,6 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
             <p className="font-sans text-sm sm:text-base text-[#E9DCC5]/80 font-light">
               Explore los lotes acopiados por los productores asociados. Cada lote cuenta con análisis físico, trazabilidad completa y pasaporte digital accesible sin intermediación opaca.
             </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="text-xs text-[#E9DCC5]/60 font-mono">
-              * Datos sintéticos de demostración oficial (II Hackathon USCO)
-            </span>
           </div>
         </div>
 
@@ -251,29 +245,6 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
               </div>
             );
           })}
-        </div>
-
-        {/* Garantía de Confidencialidad y Cumplimiento Internacional */}
-        <div className="mt-16 p-6 sm:p-8 rounded-3xl bg-[#FAF7F0]/5 border border-[#FAF7F0]/15 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-[#E9DCC5]">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-[#234737] border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] shrink-0">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <div>
-              <h4 className="font-serif-editorial text-base font-bold text-[#FAF7F0]">
-                Trazabilidad 100% Verificable sin Fuga de Costos Internos
-              </h4>
-              <p className="text-xs text-[#E9DCC5]/80 mt-1 max-w-2xl font-light">
-                Cumplimiento estricto de la Norma NTC 1252 y compatibilidad con el Reglamento Europeo EUDR. Los compradores internacionales pueden consultar el origen, lote y fermentación sin exponer costos de intermediación ni datos privados del cacaocultor.
-              </p>
-            </div>
-          </div>
-
-          <div className="shrink-0 flex items-center gap-3">
-            <span className="font-mono text-[11px] bg-[#FAF7F0]/10 px-3 py-1.5 rounded-full border border-white/10">
-              Arquitectura Offline Local
-            </span>
-          </div>
         </div>
       </div>
     </section>

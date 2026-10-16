@@ -20,11 +20,10 @@ from routers.auth import router as auth_router
 
 # Inicialización de la aplicación FastAPI
 app = FastAPI(
-    title="CacaoTrace Huila API - Trazabilidad Agroindustrial",
+    title="TrazaCao Huila API - Trazabilidad Agroindustrial",
     description=(
         "Sistema de trazabilidad, control de existencias, cálculo de mermas, "
-        "balance económico y pasaporte digital para la asociación cacaotera del Huila.\n\n"
-        "**Reto Oficial de Agroindustria - USCO DEVURITY 2026**"
+        "balance económico y pasaporte digital para la asociación cacaotera del Huila."
     ),
     version="1.0.0",
     docs_url="/docs",

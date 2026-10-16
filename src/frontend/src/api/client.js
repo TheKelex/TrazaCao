@@ -143,14 +143,13 @@ export const api = {
     }
   },
 
-  // Disparar prueba de 403 Forbidden para el jurado en vivo
+  // Verificación de autorización de seguridad
   test403Trigger: async (auth) => {
-    // Intenta cambiar estado de CAC001 usando el rol actual
     return request('/lotes/CAC001/estado', {
       method: 'PATCH',
       body: JSON.stringify({
         nuevo_estado: 'BLOQUEADO',
-        motivo: 'Prueba de Acceso no autorizado desde UI para verificación del Jurado',
+        motivo: 'Verificación de autorización de seguridad',
       }),
     }, auth);
   },
