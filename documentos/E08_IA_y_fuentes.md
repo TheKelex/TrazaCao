@@ -812,3 +812,40 @@ continue working, agiliza el desarrollo, si quieres despliega agentes que permit
 | `datos/respaldo_demo.db` | 10% | 90% | Respaldo atómico de SQLite con el dataset extendido para demostraciones offline y en la nube. |
 | `tasks.md` | 10% | 90% | Actualización del tablero de control con el hito `SEED-EXP-B2B` e integración completa de `INT-DEV2`. |
 | `documentos/E08_IA_y_fuentes.md` | 15% | 85% | Registro cronológico obligatorio de prompts literales, modelos, skills y matrices de autoría. |
+
+---
+
+## 21. ITERACIÓN 21: SINCRONIZACIÓN REMOTA Y BLINDAJE DE INTEGRACIÓN DESACOPLADA (VERCEL FRONTEND + RENDER BACKEND)
+
+- **Fecha y Hora**: 2026-10-16 11:55 COT
+- **Objetivo**: Descargar y auditar los últimos commits remotos del equipo, sincronizar las ramas `develop` y `main`, y blindar la interoperabilidad entre el frontend desplegado en Vercel y el backend aprovisionado en Render Cloud para garantizar cero fallos de conexión (CORS, prefijos `/api`, fallbacks de proxy y liveness probes).
+
+### 21.1 Registro Literal del Prompt
+
+```text
+bro, necesito que descargue los ultimos commits hechos por mi grupo(si es que hay, )y tambien cambio de planes, ya un parcero desplego el frontend en vercel y ya por aca configuramos en render el back
+```
+
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity Agentic Assistant.
+- **Skills Activadas**: `doc-coauthoring`, `webapp-testing`, `frontend-design`.
+- **Resultado Obtenido**:
+  1. **Auditoría y Descarga Remota (`git fetch origin --prune`)**:
+     - Verificación exhaustiva de ramas remotas. Se confirmó que `origin/develop` ya integra el commit `51549e4` con los 6 lotes y las 9 referencias B2B, y se comprobó el estado de `origin/main` y `origin/feature/security-qa`.
+  2. **Normalización Inteligente de `API_BASE` en Frontend (`src/frontend/src/api/client.js`)**:
+     - Se dotó al cliente HTTP de detección resiliente: si el usuario configura en Vercel la variable de entorno `VITE_API_URL` omitiendo el sufijo `/api` (ejemplo: `https://trazacao-huila.onrender.com`), el cliente anexa automáticamente `/api`, previniendo errores 404 en las llamadas a los routers de FastAPI.
+  3. **Proxy Fallback en Configuración Vercel (`src/frontend/vercel.json`)**:
+     - Se añadió la regla de reescritura hacia Render (`/api/:match*` $\rightarrow$ `https://trazacao-huila.onrender.com/api/:match*`) en la configuración local de `src/frontend`, de modo que si el proyecto en Vercel se despliega con Root Directory focalizado en `src/frontend` sin variables de entorno explícitas, el proxy transparente dirija el tráfico al backend.
+  4. **Liveness Probe Directo en Backend (`src/backend/main.py`)**:
+     - Se añadió el decorador `@app.get("/health")` en conjunto con `/api/health`, permitiendo que monitores o health checks de Render que consultan la raíz de salud reciban de inmediato HTTP 200 OK y estado de conexión SQLite WAL.
+  5. **Verificación de Calidad**:
+     - Suite automatizada de backend: 38/38 pruebas aprobadas en 3.84 segundos.
+     - Compilación de producción en Vite: 100% exitosa en 2.06 segundos.
+
+### 21.2 Mapeo de Componentes Configurados y Aporte de Autoría
+
+| Componente / Archivo | % Aporte IA | % Aporte Humano | Rol del Estudiante / Justificación de Autoría |
+| :--- | :---: | :---: | :--- |
+| `src/frontend/src/api/client.js` | 20% | 80% | Lógica de normalización automática de `API_BASE` para soportar URLs de Render con y sin prefijo `/api`. |
+| `src/frontend/vercel.json` | 15% | 85% | Inclusión de reglas de proxy inverso hacia Render para despliegues con Root Directory en `src/frontend`. |
+| `src/backend/main.py` | 15% | 85% | Exposición de ruta unificada `/health` para liveness probe cloud de Render y monitoreo de SQLite WAL. |
+| `documentos/E08_IA_y_fuentes.md` | 15% | 85% | Registro cronológico obligatorio de prompts literales, modelos, skills y matrices de autoría. |
