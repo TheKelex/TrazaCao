@@ -1,7 +1,7 @@
-# CacaoTrace Huila — Trazabilidad Agroindustrial con Historia y Valor
+# TrazaCao (CacaoTrace Huila) — Trazabilidad Agroindustrial con Historia y Valor
 ### II Hackathon de Programación — Universidad Surcolombiana (USCO) & Semillero DEVURITY
 
-*CacaoTrace Huila* es una solución tecnológica construida para asociaciones cacaoteras del departamento del Huila (Rivera, Campoalegre, Algeciras). Permite conectar de extremo a extremo la recepción de grano seco, el control estricto de existencias, la detección temprana de mermas anómalas en transformación, el cálculo de costos y la generación de un **Pasaporte Digital de Cacao** consultable vía código QR por compradores especializados.
+*TrazaCao* (CacaoTrace Huila) es una solución tecnológica construida para asociaciones cacaoteras del departamento del Huila (Rivera, Campoalegre, Algeciras). Permite conectar de extremo a extremo la recepción de grano seco, el control estricto de existencias, la detección temprana de mermas anómalas en transformación, el cálculo de costos y la generación de un **Pasaporte Digital de Cacao** consultable vía código QR por compradores especializados.
 
 ---
 
@@ -121,4 +121,3 @@ En cumplimiento del reglamento técnico del certamen, se declara que el proyecto
 - **Autoría y Control Humano**: Todo el código y diseño fue rigurosamente auditado, corregido y validado por los integrantes del equipo. Las decisiones críticas de ingeniería (como el descarte de `.with_for_update()` por incompatibilidad con SQLite, la implementación de triggers nativos de inmutabilidad en SQL y el blindaje con `Decimal` para evitar divisiones por cero) fueron tomadas por el equipo.
 - **Autonomía Operativa**: La aplicación no depende de APIs de IA en la nube en tiempo de ejecución (opera 100% offline).
 - **Bitácora Detallada**: Consulte el informe completo, matriz de aportes por archivo y casos de corrección en [`documentos/E08_IA_y_fuentes.md`](documentos/E08_IA_y_fuentes.md).
-
