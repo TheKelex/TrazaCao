@@ -560,25 +560,28 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
                 </span>
               </div>
 
-              {/* DIFERENCIADOR: APROVECHAMIENTO DE RESIDUOS (CIRCULARIDAD) */}
-              <div className="p-3 bg-emerald-950/40 rounded border border-emerald-800/80 text-emerald-200">
-                <div className="flex items-center justify-between pb-1 border-b border-emerald-800/60 font-sans">
+              {/* DIFERENCIADOR: APROVECHAMIENTO DE MERMA EN CATÁLOGO INDUSTRIAL & BOTÁNICO B2B */}
+              <div className="p-3.5 bg-emerald-950/40 rounded-xl border border-emerald-800/80 text-emerald-200 space-y-2">
+                <div className="flex items-center justify-between pb-1.5 border-b border-emerald-800/60 font-sans">
                   <span className="font-bold flex items-center gap-1.5 text-xs text-emerald-300">
                     <Recycle className="w-3.5 h-3.5 text-emerald-400" />
-                    Diferenciador: Economía Circular de Residuos
+                    Valorización B2B: Catálogo Industrial & Botánico
                   </span>
-                  <span className="text-[10px] bg-emerald-900 text-emerald-200 px-1.5 py-0.5 rounded font-mono">
-                    $3.000 COP/kg
+                  <span className="text-[10px] bg-emerald-900 text-emerald-200 px-2 py-0.5 rounded-full font-mono font-bold">
+                    Biomasa B2B
                   </span>
                 </div>
-                <p className="font-sans text-[11px] text-stone-300 mt-1.5">
-                  El 10% de la masa de entrada ({calculosEnVivo.cascarillaKg.toFixed(2)} kg) se recupera de la merma como cascarilla valorizada para bioabono orgánico en Rivera.
+                <p className="font-sans text-[11px] text-stone-300 leading-relaxed">
+                  La merma recuperada ({calculosEnVivo.cascarillaKg.toFixed(2)} kg) alimenta el <strong className="text-emerald-300">Catálogo Industrial y Botánico B2B</strong> como materia prima para laboratorios de cosmética (mascarillas y exfoliantes) y fabricantes de biofertilizantes.
                 </p>
-                <div className="flex items-center justify-between pt-2 mt-1 border-t border-emerald-900 font-sans">
-                  <span className="text-stone-300">Ingreso Circular Adicional:</span>
+                <div className="p-2 rounded bg-black/40 border border-emerald-900 text-[10px] text-emerald-400 font-sans leading-tight">
+                  <em>Principio operativo: TrazaCao suministra la biomasa limpia como insumo; no manufacturamos productos comerciales terminados.</em>
+                </div>
+                <div className="flex items-center justify-between pt-1.5 border-t border-emerald-900/80 font-sans text-xs">
+                  <span className="text-stone-300">Ingreso Circular Estimado:</span>
                   <span className="font-mono font-bold text-emerald-400">{formatearCOP(calculosEnVivo.ingresoCascarilla)}</span>
                 </div>
-                <div className="flex items-center justify-between pt-1 font-sans">
+                <div className="flex items-center justify-between font-sans text-xs">
                   <span className="text-stone-300">Costo Neto Post-Aprovechamiento:</span>
                   <span className="font-mono font-bold text-emerald-300">{formatearCOP(calculosEnVivo.costoNeto)}</span>
                 </div>
