@@ -37,10 +37,10 @@ Antes de escribir código en `src/`, cada desarrollador debe abrir su rama y doc
 - **Documento Obligatorio a Entregar**: `documentos/PLAN_DEV1_CORE.md`
 - **Requisitos de la Fase de Ideación / Tareas Kanban**:
   - [x] **KB-D1-01**: Analizar las fórmulas matemáticas oficiales del caso `CAC001` (100 kg entrada, 80 kg salida, merma 20.0%, costo $20.000/kg, margen 20.0%).
-  - [ ] **KB-D1-02**: Diseñar la especificación del motor de cálculo en `domain/calculos.py` con `Decimal` de Python, documentando el manejo explícito de las **tres divisiones por cero** (`entrada == 0`, `salida_vendible == 0`, `precio_venta == 0`).
-  - [ ] **KB-D1-03**: Especificar el aislamiento del dominio (Onion Architecture): cómo las entidades puras no tendrán dependencias de FastAPI ni de SQLAlchemy.
-  - [ ] **KB-D1-04**: Diseñar el algoritmo de **consumo atómico de inventario** para RF08 mediante consulta SQL `UPDATE` condicional (`kg_disponibles >= consumo`) para eliminar condiciones de carrera sin usar `.with_for_update()`.
-  - [ ] **KB-D1-05**: Redactar los contratos Pydantic para `POST /api/lotes` y `POST /api/transformaciones` con validaciones de campos no negativos.
+  - [x] **KB-D1-02**: Diseñar la especificación del motor de cálculo en `domain/calculos.py` con `Decimal` de Python, documentando el manejo explícito de las **tres divisiones por cero** (`entrada == 0`, `salida_vendible == 0`, `precio_venta == 0`).
+  - [x] **KB-D1-03**: Especificar el aislamiento del dominio (Onion Architecture): cómo las entidades puras no tendrán dependencias de FastAPI ni de SQLAlchemy.
+  - [x] **KB-D1-04**: Diseñar el algoritmo de **consumo atómico de inventario** para RF08 mediante consulta SQL `UPDATE` condicional (`kg_disponibles >= consumo`) para eliminar condiciones de carrera sin usar `.with_for_update()`.
+  - [x] **KB-D1-05**: Redactar los contratos Pydantic para `POST /api/lotes` y `POST /api/transformaciones` con validaciones de campos no negativos.
 
 ---
 
@@ -89,11 +89,11 @@ Antes de escribir código en `src/`, cada desarrollador debe abrir su rama y doc
 | **DOC-E03** | Arquitectura Onion y ADRs | Dev 1 & Dev 2 | **DONE** | `master` / `develop` |
 | **DOC-API** | Contratos de API JSON | Dev 1 | **DONE** | `master` / `develop` |
 | **DOC-CTX** | Prompt de Alineación IA | Dev 1 | **DONE** | `master` / `develop` |
-| **PLN-D1** | Plan Detallado Core & Matemáticas | Dev 1 | **EN ESPECIFICACIÓN** | `feature/backend-core` |
+| **PLN-D1** | Plan Detallado Core & Matemáticas | Dev 1 | **DONE (DoR Aprobado)** | `feature/backend-core` |
 | **PLN-D2** | Plan Seguridad, Triggers & QA | Dev 2 | **EN ESPECIFICACIÓN** | `feature/security-qa` |
 | **PLN-D3** | Plan Frontend Operador & Admin | Dev 3 | **EN ESPECIFICACIÓN** | `feature/frontend-ui` |
 | **PLN-D4** | Plan Pasaporte QR, Usabilidad & Pitch | Dev 4 | **EN ESPECIFICACIÓN** | `feature/passport-docs` |
 | **COD-B01** | Implementación SQLite WAL & Triggers | Dev 2 | Backlog (Bloqueado por PLN-D2) | `feature/security-qa` |
-| **COD-B02** | Motor Decimal de Cálculos y Pytest | Dev 1 | Backlog (Bloqueado por PLN-D1) | `feature/backend-core` |
+| **COD-B02** | Motor Decimal de Cálculos y Pytest | Dev 1 | **LISTO PARA CODIFICAR** | `feature/backend-core` |
 | **COD-U01** | Setup React + Vite Offline | Dev 3 | Backlog (Bloqueado por PLN-D3) | `feature/frontend-ui` |
 | **COD-U02** | Ficha QR y WhatsApp Lead | Dev 4 | Backlog (Bloqueado por PLN-D4) | `feature/passport-docs` |

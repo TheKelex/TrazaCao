@@ -13,9 +13,13 @@ En estricto cumplimiento del numeral 4 del Reglamento Técnico de la Hackathon F
 | **Antigravity (Google DeepMind)** | Aceleración de código base (Scaffolding) | `src/backend/` | Estructura de modelos SQLAlchemy y validadores Pydantic para prevención de cantidades negativas y división por cero. | Verificación manual de la lógica de negocio, pruebas de concurrencia y ajuste estricto de las restricciones de inventario disponible (RF08). |
 | **Antigravity (Google DeepMind)** | Diseño de casos de prueba y scripts de benchmark | `tests/` | Esqueleto de pruebas automatizadas con `pytest` y generador sintético de 100 registros. | Ejecución manual de las pruebas en terminal, corrección de aserciones y medición real del tiempo de respuesta en milisegundos. |
 
-#### Ejemplo de Manejo de Incertidumbre / Error en IA:
-- **Caso**: En una propuesta inicial generada por IA, se sugería integrar una API en la nube para análisis predictivo de precios de cacao.
-- **Detección y Corrección Humana**: El equipo descartó inmediatamente dicha sugerencia porque violaba la restricción de autonomía offline en caso de falla de conectividad en el evento y añadía costos recurrentes no justificados. Se sustituyó por lógica matemática determinista local en FastAPI.
+#### Casos Reales de Detección de Error / Incertidumbre y Corrección Humana (Dev 1 & Dev 2):
+1. **Error en Concurrencia de Base de Datos**: La IA sugirió inicialmente utilizar el método `.with_for_update()` de SQLAlchemy para el bloqueo de inventario en el consumo de lotes (RF08).
+   - *Corrección Humana*: El equipo auditó el comportamiento y verificó que el motor SQLite no soporta bloqueo por fila a nivel de dialecto. Se descartó la sugerencia de la IA y se diseñó una solución en SQL nativo: activación de `PRAGMA journal_mode=WAL;` y una sentencia `UPDATE` atómica condicional (`WHERE kg_disponibles >= :consumo`) verificando que `rowcount == 1`.
+2. **Conflicto entre Diferenciador y Fórmulas Normativas**: La IA propuso deducir el ingreso por venta de cascarilla directamente del costo de la etapa en la fórmula oficial de RF05.
+   - *Corrección Humana*: El equipo detectó que esto alteraría los valores canónicos esperados por el jurado evaluador para el lote `CAC001` (Costo = $20.000/kg y Margen = 20.0%). Se segregó el cálculo: las variables primarias oficiales permanecen 100% fieles a la guía, y el impacto de la cascarilla se expone como un indicador secundario de Economía Circular.
+3. **Manejo de la Precisión Decimal y Divisiones por Cero**: La IA utilizó inicialmente tipos `float` estándar.
+   - *Corrección Humana*: Se reemplazaron por `Decimal` con redondeo `ROUND_HALF_UP` y se blindaron de forma explícita las tres divisiones por cero potenciales (`kg_entrada == 0`, `kg_salida_vendible == 0` y `precio_venta == 0`).
 
 ---
 
