@@ -1068,4 +1068,47 @@ tambien cabe recalcar que este prompt tambn se debe de documentar
 | `src/frontend/public/images/` | 10% | 90% | Incorporación de la galería completa de imágenes fotográficas reales de alta resolución para renderizado offline. |
 | `documentos/E08_IA_y_fuentes.md` | 15% | 85% | Registro cronológico obligatorio de prompts literales, modelos, skills y matrices de autoría. |
 
+---
+
+## 25. ITERACIÓN 25: REVERSIÓN Y RESTAURACIÓN INMEDIATA DE LA LANDING PAGE A SU VERSIÓN ORIGINAL PREVIA
+
+- **Fecha y Hora**: 2026-10-16 13:35 COT
+- **Objetivo**: Atender de inmediato la directiva taxativa del usuario y equipo de producto: desestimar por completo la reestructuración de la landing page realizada en la iteración 24 y revertir el 100% de los archivos visuales y de recorrido a su versión previa canónica, manteniendo la estética de experiencia cinematográfica y documental del cacao que el equipo prefiere.
+
+### 25.1 Registro Literal del Prompt
+
+```text
+bro no me gusto para nada esta modificacion del landing, regresala a la version donde no le hicimos este cambio
+```
+
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity Agentic Assistant.
+- **Skills Activadas**: `frontend-design`, `doc-coauthoring`, `webapp-testing`.
+- **Aporte y Decisión de Producto del Humano**:
+  - Rechazo contundente de la nueva versión de la landing: el equipo evaluó la propuesta de las 5 pantallas y determinó que la versión anterior (con el relato sensorial, la estética documental y la estructura original) era superior y más fiel a la visión que deseaban proyectar.
+  - Orden inmediata de rollback sobre los componentes visuales de la landing page.
+- **Modificaciones Técnicas Realizadas (Rollback Quirúrgico)**:
+  1. **Restauración de Componentes React**:
+     - `src/frontend/src/components/landing/ScrollySceneViewer.jsx` restaurado a la versión con las escenas documentales de origen (`territorio`, `cultivo`, `recoleccion`, `transformacion`, `trazabilidad`).
+     - `src/frontend/src/components/landing/CacaoExperienceLanding.jsx` restaurado a su cabecera y controles cinematográficos previos.
+  2. **Restauración de Páginas HTML Standalone**:
+     - `landing page/demo-scrollytelling.html` e `index.html` restaurados a su versión previa (4 capítulos de relato documental, fotografías de paisaje y pasaporte en escena 4).
+     - `src/frontend/public/landing/demo-scrollytelling.html` e `index.html` restaurados exactamente a dicha versión previa.
+  3. **Integración con los Avances Paralelos del Equipo**:
+     - Preservación y merge limpio del commit remoto `1d1f663` (`App.jsx` y `PasaportePublico.jsx` dinámico para compradores).
+  4. **Verificación**:
+     - 42/42 pruebas pasando en `pytest`.
+     - Compilación de producción en Vite exitosa en 2.69s.
+
+### 25.2 Mapeo de Componentes Configurados y Aporte de Autoría
+
+| Componente / Archivo | % Aporte IA | % Aporte Humano | Rol del Estudiante / Justificación de Autoría |
+| :--- | :---: | :---: | :--- |
+| `src/frontend/src/components/landing/ScrollySceneViewer.jsx` | 5% | 95% | Reversión completa a la versión previa del visor documental y escenas canónicas. |
+| `src/frontend/src/components/landing/CacaoExperienceLanding.jsx` | 5% | 95% | Reversión de la barra superior y controladores de scroll al diseño previo aprobado. |
+| `landing page/demo-scrollytelling.html` | 5% | 95% | Reversión de la narrativa y GSAP ScrollTrigger a los 4 capítulos documentales previos. |
+| `landing page/index.html` | 5% | 95% | Reversión de la versión index standalone. |
+| `src/frontend/public/landing/` | 5% | 95% | Reversión en la carpeta de distribución para Vercel. |
+| `documentos/E08_IA_y_fuentes.md` | 15% | 85% | Registro cronológico obligatorio de prompts literales, modelos, skills y matrices de autoría. |
+
+
 
