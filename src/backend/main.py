@@ -7,10 +7,12 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from fastapi import FastAPI, Request, status
+from fastapi import FastAPI, Request, status, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
-from infra.database import init_db
+from sqlalchemy import text
+from sqlalchemy.orm import Session
+from infra.database import init_db, get_db
 from routers.lotes import router as lotes_router
 from routers.transformaciones import router as trans_router
 from routers.pasaporte import router as pasaporte_router
@@ -93,6 +95,24 @@ def ver_ficha():
     return FileResponse(dist_index, media_type="text/html")
 
 
+@app.get("/pasaporte/{lote_id}", response_class=FileResponse, tags=["Público / Pasaporte QR"])
+def ver_pasaporte_directo(lote_id: str):
+    """
+    Sirve la interfaz web del Pasaporte Comercial directamente al escanear el QR físico.
+    Permite a compradores internacionales ver la ficha del lote en el navegador móvil.
+    """
+    dist_index = os.path.join(frontend_dist, "index.html")
+    if os.path.exists(dist_index):
+        return FileResponse(dist_index, media_type="text/html")
+    index_landing = os.path.join(landing_page_dir, "index.html")
+    if os.path.exists(index_landing):
+        return FileResponse(index_landing, media_type="text/html")
+    return JSONResponse(
+        status_code=404,
+        content={"detail": f"Pasaporte para lote '{lote_id}' no disponible en este momento."},
+    )
+
+
 @app.get("/favicon.svg", include_in_schema=False)
 def favicon():
     fav = os.path.join(frontend_dist, "favicon.svg")
@@ -118,31 +138,44 @@ def trazacao_isotype():
 
 
 @app.get("/", tags=["UI / Frontend"])
+@app.get("/gestion", tags=["UI / Frontend"])
+@app.get("/catalogo", tags=["UI / Frontend"])
 def root_spa(request: Request):
-    """Sirve la aplicación SPA interactiva de TrazaCao."""
+    """Sirve la aplicación SPA interactiva de TrazaCao (React + Vite)."""
     dist_index = os.path.join(frontend_dist, "index.html")
     if os.path.exists(dist_index):
         return FileResponse(dist_index, media_type="text/html")
     return {
         "status": "online",
-        "sistema": "CacaoTrace Huila",
-        "version": "1.0.0",
+        "sistema": "TrazaCao Huila",
+        "version": "1.1.0",
         "modo": "Offline-First Local SQLite",
         "documentacion": "/docs",
         "landing": "/landing",
+        "ficha_publica": "/ficha",
     }
 
 
 @app.get("/api", tags=["Health Check"])
 @app.get("/api/", tags=["Health Check"])
 @app.get("/api/health", tags=["Health Check"])
-def health_check():
-    """Endpoint de salud del backend."""
+def health_check(db: Session = Depends(get_db)):
+    """
+    Endpoint de Salud y Liveness Probe para Render Cloud.
+    Valida activamente la conectividad y respuesta del motor de base de datos SQLite WAL.
+    """
+    db_status = "connected"
+    try:
+        db.execute(text("SELECT 1"))
+    except Exception as e:
+        db_status = f"unhealthy: {str(e)}"
+
     return {
-        "status": "online",
-        "sistema": "CacaoTrace Huila",
-        "version": "1.0.0",
-        "modo": "Offline-First Local SQLite",
+        "status": "online" if db_status == "connected" else "degraded",
+        "database": db_status,
+        "sistema": "TrazaCao Huila",
+        "version": "1.1.0",
+        "modo": "Producción Cloud / SQLite WAL",
         "documentacion": "/docs",
         "landing": "/landing",
         "ficha_publica": "/ficha",
