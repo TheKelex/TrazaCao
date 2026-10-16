@@ -136,7 +136,7 @@
 | **COD-RF12**| Panel de Balance Agroindustrial Consolidado | Dev 1 | **DONE (DoD)** | `AdminDashboard.jsx` |
 | **COD-BRAND**| Identidad TrazaCao, Erradicación RF y MVP Comercial | Equipo Completo | **DONE (DoD)** | `TrazaCaoLogo.jsx`, `favicon.svg`, Vistas Comerciales y `E08_IA_y_fuentes.md` |
 | **COD-AUTH** | Inicio de Sesión Criptográfico, Aislamiento de Roles y Erradicación Demo | Equipo Completo | **DONE (DoD)** | `LoginView.jsx`, `hashing.py`, `routers/auth.py`, `TopRoleBar.jsx` y `test_auth.py` |
-| **COD-LANDING** | Organización de Landing Cinemática GSAP y Enlace a Ficha del Comprador | Equipo Completo | **DONE (DoD)** | `src/frontend/public/landing/`, `App.jsx`, `index.html` y `E08_IA_y_fuentes.md` |
+| **COD-LANDING** | Organización de Landing Page en su Carpeta y Enlace al Apartado del Comprador | Equipo Completo | **DONE (DoD)** | `landing page/`, `App.jsx`, `demo-scrollytelling.html` y `E08_IA_y_fuentes.md` |
 | **INT-DEV2**| Integración de suite de seguridad Dev 2 | Dev 1 & Dev 2 | **EN INTEGRACIÓN** | Rama `feature/security-qa` |
 | **DOC-E06** | Informe de Usabilidad Externa en Stand | Dev 4 | **BACKLOG** | Asignado a Dev 4 |
 | **DOC-E09** | Propuesta Comercial y Diapositivas Pitch | Dev 4 | **BACKLOG** | Asignado a Dev 4 |

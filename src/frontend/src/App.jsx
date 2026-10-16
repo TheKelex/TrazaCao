@@ -173,11 +173,11 @@ export function App() {
               <a
                 href="/landing/"
                 className="flex items-center gap-1.5 text-xs bg-stone-800 hover:bg-stone-700 text-stone-300 border border-stone-700 px-3 py-1.5 rounded-lg transition-all cursor-pointer shadow-sm"
-                title="Volver a la experiencia visual y scrollytelling GSAP"
+                title="Volver a la experiencia visual de origen"
               >
                 <Compass className="w-3.5 h-3.5 text-amber-500" />
-                <span className="hidden sm:inline">Experiencia Cinemática</span>
-                <span className="sm:hidden">Cinemática</span>
+                <span className="hidden sm:inline">Experiencia Visual</span>
+                <span className="sm:hidden">Origen</span>
               </a>
 
               <button

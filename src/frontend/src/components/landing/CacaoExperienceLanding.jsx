@@ -227,10 +227,10 @@ export function CacaoExperienceLanding({ lotes, onEntrarGestion, onVerPasaporte 
             <a
               href="/landing/"
               className="inline-flex items-center gap-1.5 bg-[#FAF7F0]/10 hover:bg-[#FAF7F0]/20 text-xs font-semibold px-3.5 py-1.5 rounded-full border border-[#D4AF37]/50 text-[#FAF7F0] transition-all shadow-md cursor-pointer"
-              title="Abrir la experiencia cinematográfica en pantalla completa con GSAP"
+              title="Abrir la experiencia visual del cacao"
             >
               <Compass className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span className="hidden sm:inline">Cinemática GSAP</span>
+              <span className="hidden sm:inline">Experiencia Visual</span>
             </a>
 
             <button

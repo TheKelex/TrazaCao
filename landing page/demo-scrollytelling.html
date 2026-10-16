@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Experiencia Cinemática de Origen | Cacao Huila Trazable</title>
-  <meta name="description" content="Experiencia editorial cinematográfica del cacao fino de aroma del Huila, Colombia. Storytelling con GSAP, fotografía documental real, tour guiado tipo video y trazabilidad por lote." />
+  <meta name="description" content="Experiencia editorial cinematográfica del cacao fino de aroma del Huila, Colombia. Storytelling con fotografía documental real, tour guiado tipo video y trazabilidad por lote." />
   <style>
     /* ==========================================================================
        DIRECCIÓN DE ARTE: LUXURY EDITORIAL & FOTOGRAFÍA REAL B2B
@@ -719,20 +719,15 @@
         <span id="tourLabel">Tour Guiado</span>
       </button>
 
-      <!-- Enlace directo a la Ficha Comercial del Comprador -->
-      <a href="/?modo=comprador&lote=CAC001" id="navLinkComprador" class="btn-hud" style="background: rgba(245, 197, 99, 0.2); border-color: var(--gold-pure); color: var(--gold-bright);" title="Abrir la Ficha Comercial y Pasaporte Digital del Comprador">
+      <!-- Enlace directo al Apartado del Comprador -->
+      <a href="http://localhost:5173/?modo=comprador&lote=CAC001" id="navLinkComprador" class="btn-hud" style="background: rgba(245, 197, 99, 0.2); border-color: var(--gold-pure); color: var(--gold-bright);" title="Abrir la Ficha Comercial y Pasaporte Digital del Comprador">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="7" height="7"></rect>
           <rect x="14" y="3" width="7" height="7"></rect>
           <rect x="14" y="14" width="7" height="7"></rect>
           <rect x="3" y="14" width="7" height="7"></rect>
         </svg>
-        <span>Ficha del Comprador</span>
-      </a>
-
-      <!-- Enlace a la Consola Operativa de la Cooperativa -->
-      <a href="/?modo=gestion" class="btn-hud" style="border-color: rgba(255, 255, 255, 0.25);" title="Ingreso a la Consola Operativa de la Cooperativa">
-        <span>Cooperativa</span>
+        <span>Apartado Comprador</span>
       </a>
     </div>
   </header>
@@ -1001,10 +996,10 @@
             Piloto Asociaciones: <strong style="color: var(--gold-pure); font-size: 0.92rem;">$450.000 COP</strong> (30 días)
           </div>
 
-          <!-- BOTÓN DE ACCIÓN: ENLACE A LA PÁGINA DEL COMPRADOR -->
+          <!-- BOTÓN "IR" DE ACCIÓN: LLEVA A LA PÁGINA DEL COMPRADOR -->
           <div style="display: flex; gap: 0.65rem; align-items: center;">
-            <a href="/?modo=comprador&lote=CAC001" class="btn-ir-cta" id="btnIrAccion" title="Ver pasaporte oficial, métricas de origen y solicitud B2B como comprador">
-              Ficha del Comprador &rarr;
+            <a href="http://localhost:5173/?modo=comprador&lote=CAC001" class="btn-ir-cta" id="btnIrAccion" title="Ir al apartado del comprador">
+              Ir &rarr;
             </a>
           </div>
         </div>
@@ -1254,12 +1249,12 @@
         }, { passive: true });
       });
 
-      // 4. Botón "Ficha del Comprador"
+      // 4. Botón "Ir" -> Llevar a la página del comprador
       const btnIr = document.getElementById('btnIrAccion');
       if (btnIr) {
         btnIr.addEventListener('click', (e) => {
           const lote = window.loteActualSeleccionado || 'CAC001';
-          btnIr.href = '/?modo=comprador&lote=' + lote;
+          window.location.href = 'http://localhost:5173/?modo=comprador&lote=' + lote;
         });
       }
     };
@@ -1316,14 +1311,14 @@
         else btn.classList.remove('selected');
       });
 
-      // Actualizar URLs de comprador
+      // Actualizar URLs hacia el apartado del comprador
       const btnIr = document.getElementById('btnIrAccion');
       if (btnIr) {
-        btnIr.setAttribute('href', '/?modo=comprador&lote=' + loteId);
+        btnIr.setAttribute('href', 'http://localhost:5173/?modo=comprador&lote=' + loteId);
       }
       const navLink = document.getElementById('navLinkComprador');
       if (navLink) {
-        navLink.setAttribute('href', '/?modo=comprador&lote=' + loteId);
+        navLink.setAttribute('href', 'http://localhost:5173/?modo=comprador&lote=' + loteId);
       }
 
       const d = LOTES_GSAP[loteId];

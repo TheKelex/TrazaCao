@@ -64,6 +64,12 @@ app.include_router(auditoria_router)
 app.include_router(export_router)
 app.include_router(auth_router)
 
+# Servir directamente la carpeta 'landing page' original sin duplicar archivos
+from fastapi.staticfiles import StaticFiles
+landing_page_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "landing page"))
+if os.path.isdir(landing_page_dir):
+    app.mount("/landing", StaticFiles(directory=landing_page_dir, html=True), name="landing")
+
 
 @app.get("/", tags=["Health Check"])
 @app.get("/api", tags=["Health Check"])
