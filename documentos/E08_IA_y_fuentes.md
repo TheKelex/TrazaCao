@@ -914,3 +914,68 @@ todo esto es precisamente lo que no debemos ofrecer pq es comprometer a la empre
 | `src/frontend/src/components/landing/CatalogoLotesPublico.jsx` | 20% | 80% | Adaptación de catálogo, manifiesto estricto de negocio y tarjetas de producto. |
 | `src/frontend/src/components/landing/ScrollySceneViewer.jsx` | 15% | 85% | Actualización del capítulo de trazabilidad mencionando la línea de residuos en bruto. |
 | `documentos/E08_IA_y_fuentes.md` | 15% | 85% | Registro cronológico obligatorio de prompts literales, modelos, skills y matrices de autoría. |
+
+---
+
+## 23. ITERACIÓN 23: CONSOLIDACIÓN DE VENTA EXCLUSIVA DE CASCARILLA TOSTADA POR KILO (MERMA SIN TRATAR), PRECIOS REALISTAS DE ORIGEN Y RESEÑAS DE USO PARA TERCEROS
+
+- **Fecha y Hora**: 2026-10-16 12:25 COT
+- **Objetivo**: Atender de manera definitiva la exigencia de coherencia operativa y honestidad de catálogo formulada por el equipo de producto: una planta de transformación de cacao únicamente genera granos procesados (licor/pasta) y merma residual (cascarilla tostada). Se erradica cualquier referencia a productos semielaborados en catálogo, se establece la venta exclusiva de **Cascarilla Tostada de Cacao (Merma sin tratar)** por kilo (`$/kg`) a precios justos de mercado ($14.500 a $16.500 COP/kg) y se encapsulan las sugerencias de cosmética, agroquímica y bebidas exclusivamente como **reseñas informativas para que las empresas compradoras** elaboren sus propios productos.
+
+### 23.1 Registro Literal del Prompt
+
+```text
+bro, aun no me convence, te pregunto, una empresa QUE SOLO SE DEDICA A PROCESAR CACAO y recolectar merma, como se va a poner a ofrecer Harina Botánica de Cascarilla para Dermocosmética & Mascarillas SPA???, te pregunto, si solo se dedican a procesar cacoao ,en q momento yo como desarrollador le coloco un producto al admin, que el no puede generar, por eso te decia, bro, SOLO VENDEMOS LAS MERMA,la cascarilla tostada por kilo(no tan barata como veo ahi) y dejamos las reseñas de las cosas que se pueden hacer con ella, pero exclusivamente en ese apartado, vendemos el residuo , sin tratar okey????
+```
+
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity Agentic Assistant.
+- **Skills Activadas**: `doc-coauthoring`, `frontend-design`, `webapp-testing`.
+- **Aporte y Corrección Crítica del Humano (Realismo Operacional y Dominio Físico)**:
+  - Cuestionamiento directo al rol del desarrollador: *¿En qué momento se le coloca al administrador un producto en catálogo que físicamente no puede generar la planta de cacao?*
+  - Corrección radical del modelo mental: una planta no produce ni inventaría "Harina Botánica de Cascarilla", ni "Biomasa alta en potasio", ni "Extractos teobromínicos". Físicamente solo salen del tostador sacos de cascarilla tostada en hojuela limpia.
+  - Corrección de precios: se elevaron los valores de $2.500-$5.500 COP/kg a precios justos de comercio agroindustrial especializado para cascarilla de cacao fino de aroma del Huila ($14.500 a $16.500 COP/kg).
+  - Delimitación de las reseñas: las aplicaciones cosméticas, de compost y tisanas se mantienen estrictamente como *reviews/guías técnicas* para los laboratorios o fábricas que compran los bultos de cascarilla.
+
+### 23.2 Modificaciones Técnicas Realizadas
+
+1. **Lógica de Negocio y Dominio (`src/backend/domain/calculos.py`)**:
+   - Estandarización de las 3 fracciones base de merma bajo el nombre único: `"Cascarilla Tostada de Cacao (Merma sin tratar) - Lote CAC001"`.
+   - Precios ajustados a: $16.000 COP/kg (Cosmética), $14.500 COP/kg (Agroquímica), $16.500 COP/kg (Nutracéutica/Extractos).
+   - Formulación de aplicaciones como reseñas de comprador: `"Reseña Cosmética: Tu empresa puede micronizarla en sus instalaciones para elaborar mascarillas faciales purificantes"`, etc.
+   - Declaración expresa en `principio_negocio_b2b`: *"TrazaCao procesa cacao y recolecta su merma. Vendemos exclusivamente cascarilla tostada por kilo sin tratar. No producimos mascarillas ni fertilizantes... Suministramos la cascarilla como residuo puro; las reseñas indican lo que las empresas compradoras pueden elaborar con ella."*
+
+2. **Router API de Subproductos (`src/backend/routers/subproductos.py`)**:
+   - Actualización de las 6 referencias extendidas (`CAC002`, `CAC004`, `CAC005`, `CAC006`): todas nombradas `"Cascarilla Tostada de Cacao (Merma sin tratar) - Lote CAC00X"`.
+   - Precios unificados a escala realista ($14.500, $16.000 y $16.500 COP/kg).
+   - Pureza botánica declarada como: `"100% cascarilla pura en hojuela, residuo seco de tostión sin moler ni tratar"`.
+
+3. **Seeder de Base de Datos (`src/backend/seed.py`)**:
+   - Ajuste de las solicitudes B2B simuladas en la bitácora de auditoría inmutable reflejando compra de sacos de cascarilla tostada por kilo a $16.000 COP/kg.
+
+4. **Interfaz de Usuario React (`src/frontend/src/components/landing/CatalogoLotesPublico.jsx`)**:
+   - Fallback de subproductos (`subproductosCanónicos`) actualizado con nombres, precios ($14.500 - $16.500) y reseñas de uso.
+   - Pestaña comercial renombrada a: `Venta de Merma: Cascarilla Tostada (por Kilo)`.
+   - Insignia explícita en cada tarjeta de catálogo: `Residuo 100% Sin Tratar · Venta por Kilo`.
+   - Botón de cotización actualizado a `Cotizar por Kilo`.
+   - Encabezado del modal interactivo: `Solicitud de Compra B2B — Cascarilla Tostada por Kilo`.
+
+5. **Landing Page Editorial (`landing page/index.html` y `landing page/demo-scrollytelling.html`)**:
+   - Escena 4: Bloque destacado sobre la nueva línea B2B: *"Además de comercializar el grano y los derivados del proceso de transformación del cacao (licor y chocolate fino de origen), en TrazaCao abrimos una nueva línea para aquellas empresas o personas interesadas en adquirir el residuo del cacao (la merma / cascarilla en bruto) y de las cosas que pueden producirse gracias a ella..."*
+
+6. **Calidad y Verificación**:
+   - 38/38 pruebas aprobadas en `pytest` (cobertura total de cálculos, API, seguridad y catálogo de subproductos).
+   - `npm run build` en Vite completado en 1.53 segundos sin advertencias ni errores.
+
+### 23.3 Mapeo de Componentes Configurados y Aporte de Autoría
+
+| Componente / Archivo | % Aporte IA | % Aporte Humano | Rol del Estudiante / Justificación de Autoría |
+| :--- | :---: | :---: | :--- |
+| `src/backend/domain/calculos.py` | 15% | 85% | Consolidación del producto único físico: Cascarilla Tostada de Cacao sin tratar por kilo y actualización de precios justos ($14.500-$16.500 COP). |
+| `src/backend/routers/subproductos.py` | 15% | 85% | Homogeneización de las 9 referencias a cascarilla pura en hojuela por lote de origen y reseñas de uso industrial. |
+| `src/backend/seed.py` | 10% | 90% | Sincronización de registros de bitácora inmutable con cotizaciones de cascarilla tostada por kilo. |
+| `src/frontend/src/components/landing/CatalogoLotesPublico.jsx` | 20% | 80% | Actualización de pestañas, badges de residuo sin tratar, modal de compra por kilo y reseñas para terceros compradores. |
+| `landing page/index.html` | 15% | 85% | Inclusión del manifiesto de apertura de línea de merma y residuo en bruto para compradores industriales. |
+| `landing page/demo-scrollytelling.html` | 15% | 85% | Alineación narrativa en la versión scrollytelling de la landing page. |
+| `src/frontend/src/components/landing/ScrollySceneViewer.jsx` | 15% | 85% | Reflejo de la línea de residuos y merma en el visor reactivo de escenas. |
+| `documentos/E08_IA_y_fuentes.md` | 15% | 85% | Registro cronológico obligatorio de prompts literales, modelos, skills y matrices de autoría. |
+

@@ -163,63 +163,63 @@ Todos los endpoints deben construirse en estricta conformidad con esta especific
 - **Método**: `GET`
 - **Ruta**: `/api/subproductos/catalogo-industrial`
 - **Autenticación**: Ninguna (Acceso público para compradores industriales y corporativos).
-- **Descripción**: Expone las materias primas secundarias y mermas valorizadas del cacao (cascarilla micronizada, biomasa rica en potasio, extractos) con disponibilidad calculada a partir de las transformaciones registradas.
+- **Descripción**: Expone el residuo agroindustrial puro de la transformación del cacao: cascarilla tostada por kilo (merma sin tratar) con trazabilidad NTC 1252 y reseñas técnicas de usos potenciales para las empresas adquirentes.
 - **Response DTO (`CatalogoSubproductosResponse`)**:
   ```json
   {
-    "principio_negocio": "TrazaCao no compite con sus clientes: no producimos cosméticos ni fertilizantes finales. Vendemos merma y biomasa botánica estandarizada a empresas transformadoras.",
-    "total_merma_recuperada_kg": 20.00,
+    "principio_negocio": "TrazaCao procesa cacao y recolecta su merma. Vendemos exclusivamente cascarilla tostada por kilo sin tratar. No producimos mascarillas ni fertilizantes. Suministramos la cascarilla como residuo puro; las reseñas indican lo que las empresas compradoras pueden elaborar con ella.",
+    "total_merma_recuperada_kg": 75.00,
     "subproductos": [
       {
         "id": "SUB-COSM-01",
-        "nombre": "Cascarilla Micronizada Grado Cosmético",
+        "nombre": "Cascarilla Tostada de Cacao (Merma sin tratar) - Lote CAC001",
         "sector_industrial": "Industria Cosmética y Dermocosmética",
         "lote_origen_id": "CAC001",
         "municipio_origen": "Rivera, Huila",
         "kg_disponibles": 8.00,
-        "precio_b2b_kg_cop": 5500.00,
-        "pureza_botanica": "99.5% materia vegetal limpia de tostión controlada",
+        "precio_b2b_kg_cop": 16000.00,
+        "pureza_botanica": "100% cascarilla pura en hojuela, residuo seco de tostión sin moler ni tratar",
         "humedad_porcentaje": 5.80,
         "aplicaciones_industriales": [
-          "Formulación de mascarillas faciales purificantes",
-          "Partículas exfoliantes corporales 100% biodegradables",
-          "Jabonería botánica y saponificación artesanal"
+          "Reseña Cosmética: Tu empresa puede micronizarla en sus instalaciones para elaborar mascarillas faciales purificantes",
+          "Reseña Exfoliantes: Tu empresa puede triturarla al calibre deseado para exfoliantes corporales 100% biodegradables",
+          "Reseña Jabonería: Materia prima pura para que jabonerías botánicas elaboren jabones artesanales de cacao"
         ],
-        "frontera_negocio": "Materia prima pura. TrazaCao no manufactura mascarillas ni fertilizantes terminados; abastecemos a grandes empresas que requieren este insumo certificado."
+        "frontera_negocio": "Suministro exclusivo de cascarilla tostada por kilo sin tratar. TrazaCao no manufactura productos cosméticos; la empresa compradora los produce."
       },
       {
         "id": "SUB-AGRO-01",
-        "nombre": "Biomasa Residual de Cacao para Bioinsumos",
+        "nombre": "Cascarilla Tostada de Cacao (Merma sin tratar) - Lote CAC001",
         "sector_industrial": "Agroquímica Orgánica y Biofertilizantes",
         "lote_origen_id": "CAC001",
         "municipio_origen": "Rivera, Huila",
         "kg_disponibles": 8.00,
-        "precio_b2b_kg_cop": 2500.00,
-        "pureza_botanica": "100% residuo orgánico compostable con cenizas < 6%",
+        "precio_b2b_kg_cop": 14500.00,
+        "pureza_botanica": "100% cascarilla pura en hojuela, residuo seco de tostión sin moler ni tratar",
         "humedad_porcentaje": 6.50,
         "aplicaciones_industriales": [
-          "Biofertilizantes líquidos y lixiviados ricos en potasio (K)",
-          "Compostaje industrial acelerado y enmiendas de suelo",
-          "Biochar y captura de carbono en agricultura regenerativa"
+          "Reseña Biofertilizantes: Tu empresa puede fermentarla para producir biofertilizantes foliares ricos en potasio",
+          "Reseña Compostaje: Tu empresa puede usarla como estructurante de biomasa para compost orgánico acelerado",
+          "Reseña Enmiendas: Tu empresa puede pirólizarla para generar biochar de cacao y acondicionadores de suelo"
         ],
-        "frontera_negocio": "Materia prima pura. TrazaCao no manufactura mascarillas ni fertilizantes terminados; abastecemos a grandes empresas que requieren este insumo certificado."
+        "frontera_negocio": "Suministro exclusivo de cascarilla tostada por kilo sin tratar. TrazaCao no manufactura fertilizantes terminados; la empresa compradora los produce."
       },
       {
         "id": "SUB-BOTA-01",
-        "nombre": "Cascarilla Seleccionada para Extractos y Nutracéutica",
+        "nombre": "Cascarilla Tostada de Cacao (Merma sin tratar) - Lote CAC001",
         "sector_industrial": "Extractos Botánicos, Fitofármacos y Nutracéutica",
         "lote_origen_id": "CAC001",
         "municipio_origen": "Rivera, Huila",
         "kg_disponibles": 4.00,
-        "precio_b2b_kg_cop": 6000.00,
-        "pureza_botanica": "Grado alimentario / fitoterapéutico, humedad < 7.0%",
+        "precio_b2b_kg_cop": 16500.00,
+        "pureza_botanica": "100% cascarilla pura en hojuela, residuo seco de tostión sin moler ni tratar",
         "humedad_porcentaje": 5.20,
         "aplicaciones_industriales": [
-          "Extracción estandarizada de polifenoles y flavonoides antioxidantes",
-          "Aislamiento de teobromina para suplementos energéticos",
-          "Infusiones botánicas funcionales y bases para bebidas herbales"
+          "Reseña Extractos: Tu laboratorio puede realizar extracción hidroalcohólica de polifenoles y flavonoides",
+          "Reseña Fitofármacos: Tu empresa biotecnológica puede aislar teobromina natural de pureza farmacéutica",
+          "Reseña Bebidas: Tu empresa puede empacarla para tisanas e infusiones funcionales de cascarilla de cacao"
         ],
-        "frontera_negocio": "Materia prima pura. TrazaCao no manufactura mascarillas ni fertilizantes terminados; abastecemos a grandes empresas que requieren este insumo certificado."
+        "frontera_negocio": "Suministro exclusivo de cascarilla tostada por kilo sin tratar. TrazaCao no manufactura suplementos ni infusiones; la empresa compradora los produce."
       }
     ]
   }

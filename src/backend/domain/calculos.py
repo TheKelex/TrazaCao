@@ -259,46 +259,46 @@ def clasificar_merma_destinos_industriales(
         "kg_merma_total": dec_merma,
         "fracciones_b2b": {
             "cosmetico_mascarillas": {
-                "nombre": "Residuo de Cacao en Bruto (Cascarilla Pura de Tostión)",
+                "nombre": "Cascarilla Tostada de Cacao (Merma sin tratar) - Lote CAC001",
                 "sector": "Industria Cosmética y Dermocosmética",
                 "kg_disponibles": kg_cosmetico,
                 "aplicaciones_industriales": [
-                    "Materia prima residual en bruto para que laboratorios cosméticos formulen mascarillas faciales purificantes",
-                    "Partículas vegetales residuales para que terceros elaboren exfoliantes corporales biodegradables",
-                    "Residuo puro de cacao para que jabonerías botánicas elaboren jabones y cosméticos artesanales",
+                    "Reseña Cosmética: Tu empresa puede micronizarla en sus instalaciones para elaborar mascarillas faciales purificantes",
+                    "Reseña Exfoliantes: Tu empresa puede tamizarla para elaborar exfoliantes corporales 100% naturales biodegradables",
+                    "Reseña Jabonería: Tu empresa puede saponificarla como aditivo botánico para barras de jabón artesanal",
                 ],
-                "precio_sugerido_b2b_kg_cop": Decimal("5500.00"),
-                "pureza_botanica": "100% residuo vegetal en bruto de trilla y tostión limpia (sin aditivos)",
+                "precio_sugerido_b2b_kg_cop": Decimal("16000.00"),
+                "pureza_botanica": "100% cascarilla pura en hojuela, residuo de tostión sin moler, sin aditivos, sin tratar",
             },
             "biofertilizantes_enmiendas": {
-                "nombre": "Biomasa Residual de Cacao en Bruto (Merma Agroindustrial)",
+                "nombre": "Cascarilla Tostada de Cacao (Merma sin tratar) - Lote CAC001",
                 "sector": "Agroquímica Orgánica y Biofertilizantes",
                 "kg_disponibles": kg_fertilizante,
                 "aplicaciones_industriales": [
-                    "Residuo vegetal rico en potasio (K) para que plantas de biofertilizantes formulen bioles líquidos",
-                    "Biomasa vegetal en bruto para que empresas de compostaje produzcan abonos orgánicos acelerados",
-                    "Materia prima en bruto para que la industria agroquímica fabrique biochar y acondicionadores de suelo",
+                    "Reseña Biofertilizantes: Tu empresa puede fermentarla para producir bioles líquidos ricos en potasio (K)",
+                    "Reseña Compostaje: Tu empresa puede incorporarla en compost industrial para acelerar la actividad microbiana",
+                    "Reseña Enmiendas: Tu empresa puede pirolizarla para generar biochar y acondicionadores orgánicos de suelos",
                 ],
-                "precio_sugerido_b2b_kg_cop": Decimal("2500.00"),
-                "pureza_botanica": "100% merma vegetal orgánica en bruto con cenizas < 6% y alto potasio orgánico",
+                "precio_sugerido_b2b_kg_cop": Decimal("14500.00"),
+                "pureza_botanica": "100% cascarilla vegetal en hojuela seca, rica en potasio orgánico, sin tratar",
             },
             "botanico_extractos": {
-                "nombre": "Cascarilla Tostada de Cacao en Bruto (Residuo para Extractos)",
+                "nombre": "Cascarilla Tostada de Cacao (Merma sin tratar) - Lote CAC001",
                 "sector": "Extractos Botánicos, Fitofármacos y Nutracéutica",
                 "kg_disponibles": kg_botanico,
                 "aplicaciones_industriales": [
-                    "Residuo seco en bruto para que laboratorios farmacéuticos y nutracéuticos extraigan polifenoles bioactivos",
-                    "Materia prima vegetal para que empresas de biotecnología aíslen teobromina natural",
-                    "Cascarilla tostada pura para que marcas de té elaboren tisanas e infusiones funcionales de cacao",
+                    "Reseña Tisanas: Tu empresa puede empacarla para infusiones y té de cascarilla de cacao fino",
+                    "Reseña Extractos: Tu laboratorio puede extraer polifenoles y flavonoides antioxidantes",
+                    "Reseña Nutracéutica: Tu laboratorio puede aislar teobromina natural para suplementos dietarios",
                 ],
-                "precio_sugerido_b2b_kg_cop": Decimal("6000.00"),
-                "pureza_botanica": "100% cascarilla de cacao fino de aroma en bruto, humedad controlada < 7.0%",
+                "precio_sugerido_b2b_kg_cop": Decimal("16500.00"),
+                "pureza_botanica": "100% cascarilla tostada aromática de cacao fino de aroma, sin tratar, humedad < 7.0%",
             },
         },
         "principio_negocio_b2b": (
-            "TrazaCao vende exclusivamente los residuos y mermas del proceso de transformación del cacao (cascarilla en bruto). "
-            "No fabricamos ni vendemos mascarillas, cosméticos terminados ni fertilizantes. "
-            "Suministramos la materia prima residual en bruto para que cualquier empresa o comprador desarrolle sus propios productos."
+            "TrazaCao procesa cacao y recolecta su merma. Vendemos exclusivamente cascarilla tostada por kilo sin tratar. "
+            "No producimos ni vendemos mascarillas, ni cosméticos terminados, ni fertilizantes envasados. "
+            "Suministramos la cascarilla como residuo puro; las reseñas indican lo que las empresas compradoras pueden elaborar con ella."
         ),
     }
 

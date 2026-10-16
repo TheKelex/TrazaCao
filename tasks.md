@@ -148,6 +148,8 @@
 | **ANIM-20S** | Calibración de la Animación Cinemática del Landing a 20 Segundos | Equipo Completo | **DONE (DoD)** | `index.html`, `demo-scrollytelling.html`, `CacaoExperienceLanding.jsx` |
 | **INT-DEV2**| Integración de suite de seguridad Dev 2 | Dev 1 & Dev 2 | **DONE (DoD)** | Merge exitoso de `feature/security-qa`, 38/38 pruebas pytest passing |
 | **SEED-EXP-B2B** | Expansión Masiva de Semillas (6 lotes, 5 transf, 75kg merma, 9 refs B2B) | Dev 1 & Dev 4 | **DONE (DoD)** | `seed.py`, `subproductos.py`, `test_subproductos_catalogo.py`, `respaldo_demo.db` |
+| **FEAT-MERMA-KG** | Consolidación de Venta Exclusiva de Cascarilla Tostada por Kilo (Merma sin tratar), Precios Justos ($14.500-$16.500 COP) y Reseñas de Uso | Equipo Completo | **DONE (DoD)** | `calculos.py`, `subproductos.py`, `CatalogoLotesPublico.jsx`, `landing page/`, `E08_IA_y_fuentes.md` |
 | **DOC-E06** | Informe de Usabilidad Externa en Stand | Dev 4 | **BACKLOG** | Asignado a Dev 4 |
 | **DOC-E09** | Propuesta Comercial y Diapositivas Pitch | Dev 4 | **BACKLOG** | Asignado a Dev 4 |
+
 

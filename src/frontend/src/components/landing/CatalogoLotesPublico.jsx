@@ -88,54 +88,54 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
   const subproductosCanónicos = [
     {
       id: 'SUB-COSM-01',
-      nombre: 'Residuo de Cacao en Bruto (Cascarilla Pura de Tostión)',
+      nombre: 'Cascarilla Tostada de Cacao (Merma sin tratar) - Lote CAC001',
       sector_industrial: 'Industria Cosmética y Dermocosmética',
       lote_origen_id: 'CAC001',
       municipio_origen: 'Rivera, Huila',
       kg_disponibles: '8.00',
-      precio_b2b_kg_cop: '5500.00',
-      pureza_botanica: '100% residuo vegetal en bruto de trilla y tostión limpia (sin aditivos)',
+      precio_b2b_kg_cop: '16000.00',
+      pureza_botanica: '100% cascarilla pura en hojuela, residuo seco de tostión sin moler ni tratar',
       humedad_porcentaje: '5.80',
       aplicaciones_industriales: [
-        'Materia prima residual en bruto para que laboratorios cosméticos formulen mascarillas faciales purificantes',
-        'Partículas vegetales residuales para que terceros elaboren exfoliantes corporales biodegradables',
-        'Residuo puro de cacao para que jabonerías botánicas elaboren jabones y cosméticos artesanales',
+        'Reseña Cosmética: Tu empresa puede micronizarla en sus instalaciones para elaborar mascarillas faciales purificantes',
+        'Reseña Exfoliantes: Tu empresa puede triturarla al calibre deseado para exfoliantes corporales 100% biodegradables',
+        'Reseña Jabonería: Materia prima pura para que jabonerías botánicas elaboren jabones artesanales de cacao',
       ],
       icono: Sparkles,
       color: 'amber',
     },
     {
       id: 'SUB-AGRO-01',
-      nombre: 'Biomasa Residual de Cacao en Bruto (Merma Agroindustrial)',
+      nombre: 'Cascarilla Tostada de Cacao (Merma sin tratar) - Lote CAC001',
       sector_industrial: 'Agroquímica Orgánica y Biofertilizantes',
       lote_origen_id: 'CAC001',
       municipio_origen: 'Rivera, Huila',
       kg_disponibles: '8.00',
-      precio_b2b_kg_cop: '2500.00',
-      pureza_botanica: '100% merma vegetal orgánica en bruto con cenizas < 6% y alto potasio orgánico',
+      precio_b2b_kg_cop: '14500.00',
+      pureza_botanica: '100% cascarilla pura en hojuela, residuo seco de tostión sin moler ni tratar',
       humedad_porcentaje: '6.50',
       aplicaciones_industriales: [
-        'Residuo vegetal rico en potasio (K) para que plantas de biofertilizantes formulen bioles líquidos',
-        'Biomasa vegetal en bruto para que empresas de compostaje produzcan abonos orgánicos acelerados',
-        'Materia prima en bruto para que la industria agroquímica fabrique biochar y acondicionadores de suelo',
+        'Reseña Biofertilizantes: Tu empresa puede fermentarla para producir biofertilizantes foliares ricos en potasio',
+        'Reseña Compostaje: Tu empresa puede usarla como estructurante de biomasa para compost orgánico acelerado',
+        'Reseña Enmiendas: Tu empresa puede pirólizarla para generar biochar de cacao y acondicionadores de suelo',
       ],
       icono: Leaf,
       color: 'emerald',
     },
     {
       id: 'SUB-BOTA-01',
-      nombre: 'Cascarilla Tostada de Cacao en Bruto (Residuo para Extractos)',
+      nombre: 'Cascarilla Tostada de Cacao (Merma sin tratar) - Lote CAC001',
       sector_industrial: 'Extractos Botánicos, Fitofármacos y Nutracéutica',
       lote_origen_id: 'CAC001',
       municipio_origen: 'Rivera, Huila',
       kg_disponibles: '4.00',
-      precio_b2b_kg_cop: '6000.00',
-      pureza_botanica: '100% cascarilla de cacao fino de aroma en bruto, humedad controlada < 7.0%',
+      precio_b2b_kg_cop: '16500.00',
+      pureza_botanica: '100% cascarilla pura en hojuela, residuo seco de tostión sin moler ni tratar',
       humedad_porcentaje: '5.20',
       aplicaciones_industriales: [
-        'Residuo seco en bruto para que laboratorios farmacéuticos y nutracéuticos extraigan polifenoles bioactivos',
-        'Materia prima vegetal para que empresas de biotecnología aíslen teobromina natural',
-        'Cascarilla tostada pura para que marcas de té elaboren tisanas e infusiones funcionales de cacao',
+        'Reseña Extractos: Tu laboratorio puede realizar extracción hidroalcohólica de polifenoles y flavonoides',
+        'Reseña Fitofármacos: Tu empresa biotecnológica puede aislar teobromina natural de pureza farmacéutica',
+        'Reseña Bebidas: Tu empresa puede empacarla para tisanas e infusiones funcionales de cascarilla de cacao',
       ],
       icono: Beaker,
       color: 'amber',
@@ -282,7 +282,7 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
               }`}
             >
               <Sparkles className="w-4 h-4 text-[#D4AF37]" />
-              <span>Línea de Residuos & Mermas B2B</span>
+              <span>Venta de Merma: Cascarilla Tostada (por Kilo)</span>
             </button>
           </div>
         </div>
@@ -545,9 +545,14 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
 
                       {/* Título y Sector */}
                       <div>
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#B77A3C] block">
-                          {item.sector_industrial}
-                        </span>
+                        <div className="flex flex-wrap items-center gap-1.5 mb-1">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#B77A3C]">
+                            {item.sector_industrial}
+                          </span>
+                          <span className="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full border border-emerald-300">
+                            Residuo 100% Sin Tratar · Venta por Kilo
+                          </span>
+                        </div>
                         <h4 className="font-serif-editorial text-xl font-bold text-[#16120E] mt-1 leading-snug">
                           {item.nombre}
                         </h4>
@@ -605,7 +610,7 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
                         className="flex items-center gap-1.5 bg-[#B77A3C] hover:bg-[#a2692f] text-[#16120E] text-xs font-bold py-2.5 px-4 rounded-xl shadow-md transition-all cursor-pointer"
                       >
                         <FileText className="w-3.5 h-3.5 text-[#16120E]" />
-                        <span>Cotizar B2B</span>
+                        <span>Cotizar por Kilo</span>
                       </button>
                     </div>
                   </div>
@@ -668,7 +673,7 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
               <form onSubmit={enviarSolicitudCotizacion} className="space-y-4">
                 <div>
                   <span className="text-[11px] font-mono text-[#D4AF37] uppercase tracking-wider block">
-                    Cotización de Materia Prima B2B
+                    Solicitud de Compra B2B — Cascarilla Tostada por Kilo
                   </span>
                   <h3 className="font-serif-editorial text-2xl font-bold text-[#FAF7F0] mt-1">
                     {subproductoSeleccionado.nombre}
