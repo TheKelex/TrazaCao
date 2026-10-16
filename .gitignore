@@ -18,7 +18,9 @@ datos/cacao*.db
 
 # Node / React / Vite
 node_modules/
+**/node_modules/
 dist/
+**/dist/
 dist-ssr/
 *.local
 

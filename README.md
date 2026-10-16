@@ -1,7 +1,9 @@
 # TrazaCao (CacaoTrace Huila) — Trazabilidad Agroindustrial con Historia y Valor
 ### II Hackathon de Programación — Universidad Surcolombiana (USCO) & Semillero DEVURITY
 
-*TrazaCao* (CacaoTrace Huila) es una solución tecnológica construida para asociaciones cacaoteras del departamento del Huila (Rivera, Campoalegre, Algeciras). Permite conectar de extremo a extremo la recepción de grano seco, el control estricto de existencias, la detección temprana de mermas anómalas en transformación, el cálculo de costos y la generación de un **Pasaporte Digital de Cacao** consultable vía código QR por compradores especializados.
+*TrazaCao* (CacaoTrace Huila) es una solución tecnológica construida para asociaciones cacaoteras del departamento del Huila (Rivera, Campoalegre, Algeciras). Permite conectar de extremo a extremo la recepción de grano seco, el control estricto de existencias, la detección temprana de mermas anómalas en transformación, el cálculo de costos, la emisión del **Pasaporte Digital de Cacao** consultable vía QR y el despliegue del **Catálogo Industrial & Botánico B2B** para valorizar el 100% de la merma agroindustrial (cascarilla y biomasa) como insumo vegetal limpio para grandes laboratorios cosméticos y fabricantes de biofertilizantes.
+
+> **Principio de Especialización Agroindustrial**: TrazaCao se enfoca al 100% en el beneficio y transformación de cacao en origen. No manufacturamos bienes de consumo masivo terminados (no vendemos mascarillas ni fertilizantes comerciales); suministramos la merma como materia prima estandarizada y trazable a la gran industria.
 
 ---
 

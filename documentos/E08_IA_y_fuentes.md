@@ -623,7 +623,56 @@ broooo, ya estamos en la etapa de desplieguie en render, asi q ma g, configuremo
 | `src/backend/main.py` | 20% | 80% | Liveness probe a base de datos en `/api/health` y ruta web `/pasaporte/{lote_id}`. |
 | `src/frontend/src/App.jsx` | 15% | 85% | Enrutamiento condicional para visualización de pasaporte mediante path. |
 | `documentos/GUIA_DESPLIEGUE_RENDER.md` | 25% | 75% | Redacción de guía integral de operaciones y pruebas en vivo para Render. |
-| `tasks.md` | 10% | 90% | Registro del hito OPS-RENDER en el tablero Kanban del proyecto. |
+---
+
+## 17. ITERACIÓN 17: REFACTORIZACIÓN ESTRATÉGICA HACIA EL CATÁLOGO INDUSTRIAL Y BOTÁNICO B2B DE MERMAS DE CACAO
+
+- **Fecha y Hora**: 2026-10-16 11:20 COT
+- **Objetivo**: Refactorizar la arquitectura comercial y funcional de la solución para estructurar el **Catálogo Industrial & Botánico B2B**, valorizando el 100% de la merma agroindustrial generada en la transformación del cacao como materia prima vegetal limpia para grandes empresas (cosmética, biofertilizantes, mascarillas y nutracéutica), delimitando de forma estricta la frontera del negocio (no fabricar productos de consumo masivo B2C).
+
+### 17.1 Registro Literal del Prompt
+
+```text
+Bro, en estos momentos tenemos que estar efectuando algunos cambios y refactorizaciones porque en la documentación habíamos hablado que uno de los diferenciadores del sistema es el ofrecimiento del residuo del proceso de la transformacion del cacao, en este caso la merma, que la queremos ofrecer en un catalogo mas industrial Y botanico, pq existen empresas que usan estos derivados para el mundo cosmetico, para fertilizantes, mascarillas y todas las otras posibles creaciones de productos a raiz de la merm, como nosotros solo nos enfocamos en el tratamiento del cacao, no nos pondremos a ofrecer ni mascarillas ni fertilizantes pq preferimos venderle estos resiudos a grandes empresas que requieran de esta materia prima
+```
+
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity.
+- **Skills Activadas**: `doc-coauthoring`, `frontend-design`, `mcp-builder`.
+- **Resultado Obtenido**:
+  1. **Alineación de Frontera Operativa (Core Competency)**: Formalización de la directiva de negocio: TrazaCao es un operador agroindustrial de beneficio y transformación de cacao en origen (Huila). Se excluye la manufactura de productos de consumo final (no producimos mascarillas ni biofertilizantes terminados en retail) y se establece el modelo de **suministro mayorista B2B de biomasa certificada y estandarizada**.
+  2. **Extensión del Dominio Matemático Onion (`calculos.py`)**: Implementación de `clasificar_merma_destinos_industriales`, clasificando la merma en 3 fracciones industriales: Grado Cosmético (40%), Grado Biofertilizantes (40%) y Grado Botánico/Nutracéutico (20%).
+  3. **Esquemas DTO Pydantic (`schemas.py`)**: Creación de `SubproductoBotanicoItem`, `CatalogoSubproductosResponse`, `SolicitudCotizacionB2BCreate` y `SolicitudCotizacionB2BResponse`.
+  4. **Nuevo Router FastAPI (`routers/subproductos.py`)**:
+     - `GET /api/subproductos/catalogo-industrial`: Cálculo dinámico de stock de biomasa disponible acumulada a partir de las transformaciones registradas en SQLite y presentación de fichas botánicas.
+     - `POST /api/subproductos/solicitar-cotizacion-b2b`: Radicación formal de solicitudes de cotización con asignación de folio inmutable y registro en auditoría.
+  5. **Componente Frontend React (`CatalogoLotesPublico.jsx`)**:
+     - Selector de pestañas dual: *Granos de Cacao Especial* vs *Catálogo Industrial & Botánico B2B*.
+     - Tarjetas botánicas con especificaciones de pureza, humedad y aplicaciones industriales sugeridas (mascarillas, bioinsumos, extractos).
+     - Banner institucional con el deslinde de negocio explícito.
+     - Modal interactivo de radicación de cotizaciones B2B con confirmación inmediata de folio.
+  6. **Sincronización de Vistas Operativas (`TransformacionView.jsx` y `index.html`)**: La tarjeta de economía circular ahora enlaza la merma recuperada con la alimentación del catálogo industrial B2B.
+  7. **Suite de Pruebas Automatizadas (`tests/test_subproductos_catalogo.py`)**: 2 pruebas unitarias/integración garantizando respuesta HTTP 200, desglose de sectores y registro de cotizaciones, elevando la suite completa a 26 pruebas automáticas exitosas (100% passing).
+  8. **Documentación Arquitectónica Sincronizada**: Actualización de `E01_problema.md` (frontera de negocio), `E02_requisitos.md` (HU-13 / RF13 y Tarjeta CR-H14), `E03_diseno.md` (ADR-04 y diagramas) y `CONTRATOS_API.md`.
+
+### 17.2 Mapeo de Componentes Refactorizados y Aporte de Autoría
+
+| Componente / Archivo | % Aporte IA | % Aporte Humano | Rol del Estudiante / Justificación de Autoría |
+| :--- | :---: | :---: | :--- |
+| `src/backend/domain/calculos.py` | 20% | 80% | Definición de las fracciones de merma industrial (Cosmética 40%, Bioinsumos 40%, Extractos 20%) y principio de no competencia B2C. |
+| `src/backend/schemas.py` | 15% | 85% | Definición estricta de DTOs para fichas botánicas, pureza de materia prima y cotizaciones B2B. |
+| `src/backend/routers/subproductos.py` | 20% | 80% | Construcción del endpoint de catálogo industrial acumulativo de merma y radicación de solicitudes con folio auditado. |
+| `src/backend/main.py` | 10% | 90% | Inclusión del router modular de subproductos y actualización de versión OpenAPI a 1.1.0. |
+| `src/frontend/src/api/client.js` | 15% | 85% | Integración de métodos HTTP para consulta de catálogo botánico y radicación de cotizaciones B2B. |
+| `src/frontend/src/components/landing/CatalogoLotesPublico.jsx` | 25% | 75% | Rediseño editorial con pestañas duales, visualización de fichas botánicas industriales y modal de cotización corporativa. |
+| `src/frontend/src/components/TransformacionView.jsx` | 15% | 85% | Adaptación de la tarjeta de circularidad para reflejar la alimentación del inventario del catálogo industrial B2B. |
+| `landing page/index.html` & `demo-scrollytelling.html` | 15% | 85% | Inclusión del acceso bidireccional a granos de especialidad y catálogo botánico B2B en la experiencia cinemática. |
+| `tests/test_subproductos_catalogo.py` | 20% | 80% | Creación de casos de prueba para validación de contratos B2B, deslinde de producto final y folios de cotización. |
+| `documentos/E01_problema.md` | 15% | 85% | Delimitación de exclusiones estratégicas: no manufactura de cosméticos terminados; venta exclusiva de materia prima B2B. |
+| `documentos/E02_requisitos.md` | 20% | 80% | Especificación formal de HU-13 (RF13) y tarjeta de gestión de cambio CR-H14. |
+| `documentos/E03_diseno.md` | 20% | 80% | Redacción del ADR-04 y actualización de diagramas de secuencia y arquitectura de componentes. |
+| `documentos/CONTRATOS_API.md` | 15% | 85% | Especificación de los contratos JSON de `/api/subproductos/catalogo-industrial` y `/api/subproductos/solicitar-cotizacion-b2b`. |
+| `tasks.md` | 10% | 90% | Registro de tareas KB-D5-01 a KB-D5-04 en el tablero de seguimiento. |
+
 
 
 
