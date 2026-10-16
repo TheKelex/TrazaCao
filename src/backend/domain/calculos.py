@@ -259,45 +259,46 @@ def clasificar_merma_destinos_industriales(
         "kg_merma_total": dec_merma,
         "fracciones_b2b": {
             "cosmetico_mascarillas": {
-                "nombre": "Cascarilla Micronizada Grado Cosmético",
+                "nombre": "Residuo de Cacao en Bruto (Cascarilla Pura de Tostión)",
                 "sector": "Industria Cosmética y Dermocosmética",
                 "kg_disponibles": kg_cosmetico,
                 "aplicaciones_industriales": [
-                    "Formulación de mascarillas faciales purificantes",
-                    "Partículas exfoliantes corporales 100% biodegradables",
-                    "Jabonería botánica y saponificación artesanal",
+                    "Materia prima residual en bruto para que laboratorios cosméticos formulen mascarillas faciales purificantes",
+                    "Partículas vegetales residuales para que terceros elaboren exfoliantes corporales biodegradables",
+                    "Residuo puro de cacao para que jabonerías botánicas elaboren jabones y cosméticos artesanales",
                 ],
                 "precio_sugerido_b2b_kg_cop": Decimal("5500.00"),
-                "pureza_botanica": "99.5% materia vegetal limpia de tostión controlada",
+                "pureza_botanica": "100% residuo vegetal en bruto de trilla y tostión limpia (sin aditivos)",
             },
             "biofertilizantes_enmiendas": {
-                "nombre": "Biomasa Residual de Cacao para Bioinsumos",
+                "nombre": "Biomasa Residual de Cacao en Bruto (Merma Agroindustrial)",
                 "sector": "Agroquímica Orgánica y Biofertilizantes",
                 "kg_disponibles": kg_fertilizante,
                 "aplicaciones_industriales": [
-                    "Biofertilizantes líquidos y lixiviados ricos en potasio (K)",
-                    "Compostaje industrial acelerado y enmiendas de suelo",
-                    "Biochar y captura de carbono en agricultura regenerativa",
+                    "Residuo vegetal rico en potasio (K) para que plantas de biofertilizantes formulen bioles líquidos",
+                    "Biomasa vegetal en bruto para que empresas de compostaje produzcan abonos orgánicos acelerados",
+                    "Materia prima en bruto para que la industria agroquímica fabrique biochar y acondicionadores de suelo",
                 ],
                 "precio_sugerido_b2b_kg_cop": Decimal("2500.00"),
-                "pureza_botanica": "100% residuo orgánico compostable con cenizas < 6%",
+                "pureza_botanica": "100% merma vegetal orgánica en bruto con cenizas < 6% y alto potasio orgánico",
             },
             "botanico_extractos": {
-                "nombre": "Cascarilla Seleccionada para Extractos y Nutracéutica",
+                "nombre": "Cascarilla Tostada de Cacao en Bruto (Residuo para Extractos)",
                 "sector": "Extractos Botánicos, Fitofármacos y Nutracéutica",
                 "kg_disponibles": kg_botanico,
                 "aplicaciones_industriales": [
-                    "Extracción estandarizada de polifenoles y flavonoides antioxidantes",
-                    "Aislamiento de teobromina para suplementos energéticos",
-                    "Infusiones botánicas funcionales y bases para bebidas herbales",
+                    "Residuo seco en bruto para que laboratorios farmacéuticos y nutracéuticos extraigan polifenoles bioactivos",
+                    "Materia prima vegetal para que empresas de biotecnología aíslen teobromina natural",
+                    "Cascarilla tostada pura para que marcas de té elaboren tisanas e infusiones funcionales de cacao",
                 ],
                 "precio_sugerido_b2b_kg_cop": Decimal("6000.00"),
-                "pureza_botanica": "Grado alimentario / fitoterapéutico, humedad < 7.0%",
+                "pureza_botanica": "100% cascarilla de cacao fino de aroma en bruto, humedad controlada < 7.0%",
             },
         },
         "principio_negocio_b2b": (
-            "TrazaCao no compite con sus clientes: no producimos cosméticos ni fertilizantes finales. "
-            "Vendemos merma y biomasa botánica estandarizada a empresas transformadoras."
+            "TrazaCao vende exclusivamente los residuos y mermas del proceso de transformación del cacao (cascarilla en bruto). "
+            "No fabricamos ni vendemos mascarillas, cosméticos terminados ni fertilizantes. "
+            "Suministramos la materia prima residual en bruto para que cualquier empresa o comprador desarrolle sus propios productos."
         ),
     }
 

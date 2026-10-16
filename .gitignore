@@ -33,6 +33,7 @@ dist-ssr/
 
 # Logs y Archivos temporales
 *.log
+*.zip
 .DS_Store
 Thumbs.db
 

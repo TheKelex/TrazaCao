@@ -274,29 +274,29 @@ def seed():
             {
                 "empresa": "BioCosmética Andina S.A.S.",
                 "sector": "Industria Cosmética y Dermocosmética",
-                "subproducto": "SUB-COSM-01 (Cascarilla Micronizada Grado Cosmético)",
+                "subproducto": "SUB-COSM-01 (Residuo de Cacao en Bruto / Cascarilla Pura de Tostión)",
                 "lote_id": "CAC001",
                 "cantidad": Decimal("500.00"),
                 "contacto": "compras@biocosmetica.com",
-                "aplicacion": "Formulación de mascarillas faciales purificantes y exfoliantes biodegradables",
+                "aplicacion": "Adquisición de residuo en bruto para que la empresa formule en su planta mascarillas faciales y exfoliantes corporales",
             },
             {
                 "empresa": "FertiOrgánicos del Huila Ltda.",
                 "sector": "Agroquímica Orgánica y Biofertilizantes",
-                "subproducto": "SUB-AGRO-02 (Biomasa Alta en Potasio)",
+                "subproducto": "SUB-AGRO-02 (Biomasa Residual en Bruto Alta en Potasio)",
                 "lote_id": "CAC004",
                 "cantidad": Decimal("1200.00"),
                 "contacto": "insumos@fertiorganicos.co",
-                "aplicacion": "Elaboración de biol foliar fermentado y enmiendas de suelo",
+                "aplicacion": "Compra de biomasa residual en bruto para fermentación industrial de biol foliar y enmiendas de suelo",
             },
             {
                 "empresa": "Laboratorios Fitoterapéuticos del Sur",
                 "sector": "Extractos Botánicos, Fitofármacos y Nutracéutica",
-                "subproducto": "SUB-BOTA-02 (Cascarilla para Extractos Polifenólicos)",
+                "subproducto": "SUB-BOTA-02 (Residuo de Cascarilla Tostada en Bruto)",
                 "lote_id": "CAC005",
                 "cantidad": Decimal("350.00"),
                 "contacto": "desarrollo@fitosur.org",
-                "aplicacion": "Extracción industrial de polifenoles y teobromina para suplementos",
+                "aplicacion": "Compra de cascarilla en bruto para extracción de polifenoles y teobromina bioactiva en su laboratorio",
             },
         ]
 
@@ -323,8 +323,8 @@ def seed():
         print(" • Lotes Activos: CAC001, CAC002, CAC003, CAC004, CAC005, CAC006")
         print(" • Municipios: Rivera, Campoalegre y Algeciras")
         print(f" • Merma Total Recuperada para B2B: {total_merma_recuperada} kg")
-        print(" • Catálogo Botánico B2B: 9 referencias activas (Cosmética, Biofertilizantes, Nutracéutica)")
-        print(" • Principio de Negocio: TrazaCao suministra materias primas B2B; no compite con productos finales.")
+        print(" • Catálogo de Residuos B2B: 9 referencias de merma pura en bruto")
+        print(" • Principio de Negocio: TrazaCao vende solo la merma/residuo en bruto; no compite fabricando productos terminados.")
         print("=======================================================\n")
         print("[EXITO] Base de datos inicializada y poblada con éxito.")
 

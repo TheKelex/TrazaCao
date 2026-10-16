@@ -849,3 +849,68 @@ bro, necesito que descargue los ultimos commits hechos por mi grupo(si es que ha
 | `src/frontend/vercel.json` | 15% | 85% | Inclusión de reglas de proxy inverso hacia Render para despliegues con Root Directory en `src/frontend`. |
 | `src/backend/main.py` | 15% | 85% | Exposición de ruta unificada `/health` para liveness probe cloud de Render y monitoreo de SQLite WAL. |
 | `documentos/E08_IA_y_fuentes.md` | 15% | 85% | Registro cronológico obligatorio de prompts literales, modelos, skills y matrices de autoría. |
+
+---
+
+## 22. ITERACIÓN 22: CORRECCIÓN ESTRATÉGICA Y DELIMITACIÓN ESTRICTA DEL CATÁLOGO DE RESIDUOS EN BRUTO Y APERTURA DE LÍNEA EN LANDING
+
+- **Fecha y Hora**: 2026-10-16 12:10 COT
+- **Objetivo**: Subsanar la formulación de nombres comerciales en el catálogo B2B para evitar comprometer a TrazaCao con la producción de derivados manufacturados (mascarillas, fertilizantes líquidos, biochar o bebidas funcionales). Reestructurar el 100% de las 9 referencias comerciales como **residuos y mermas agroindustriales del cacao en bruto** (materia prima residual pura y trazable), e incorporar en la Landing Page (`index.html`, `demo-scrollytelling.html` y React SPA) la narrativa comercial sobre la apertura de esta nueva línea para empresas interesadas en adquirir el residuo del cacao.
+
+### 22.1 Registro Literal del Prompt
+
+```text
+bro no acataste bien la peticion,SUB-COSM-01: Cascarilla Micronizada Grado Cosmético (Rivera) — $5.200 COP/kg.
+SUB-AGRO-01: Biomasa Orgánica para Biofertilizantes y Compostaje (Rivera) — $2.500 COP/kg.
+SUB-BOTA-01: Cascarilla Seleccionada para Extractos y Tisanas Funcionales (Rivera) — $4.800 COP/kg.
+SUB-COSM-02: Harina Botánica para Dermocosmética & Mascarillas SPA (Campoalegre) — $5.800 COP/kg.
+SUB-AGRO-02: Biomasa Alta en Potasio para Biofertilizantes Líquidos (Rivera) — $2.700 COP/kg.
+SUB-BOTA-02: Cascarilla Tostada para Extractos Polifenólicos (Algeciras) — $6.200 COP/kg.
+SUB-COSM-03: Micro-Exfoliante Facial 100% Biodegradable (Algeciras) — $5.400 COP/kg.
+SUB-AGRO-03: Enmienda Orgánica de Biomasa de Cacao (Biochar) (Campoalegre) — $2.400 COP/kg.
+SUB-BOTA-03: Fracción Botánica Rica en Teobromina para Bebidas Funcionales (Campoalegre) — $6.500 COP/kg.
+
+todo esto es precisamente lo que no debemos ofrecer pq es comprometer a la empresa a que se dedicara tambn a producir estos productos, NOSOTROS SOLO VAMOS A VENDER LA MERMA, EL RESIDUO, de ahi en adelante lo puede comprar la empresa que quiera para producir el producto que quiera, okey? queda claro? solo le venderemos los residuos, no productos a base del residuo, y tambien estaria bueno que se añadiera en el landing que ademas de vender el derivado del proceso de transformacion del cacao (el chocoalte en si), tambien decidimos dar apartura a una nueva linea para aquellas empresas o personas interasadas en el residuo del cacao(la merma ) y de las cosas que pueden producirse gracias a ella, okey?
+```
+
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity Agentic Assistant.
+- **Skills Activadas**: `doc-coauthoring`, `frontend-design`, `webapp-testing`.
+- **Aporte y Corrección Crítica del Humano (Regla de Negocio Taxativa)**:
+  - El equipo corrigió enfáticamente el error de catalogación de la IA: bautizar ítems como "Harina Botánica para Mascarillas", "Micro-exfoliante facial" o "Biochar" comprometía falsamente la capacidad productiva de TrazaCao, sugiriendo manufactura downstream (cosméticos e insumos terminados).
+  - La directiva humana definió que TrazaCao comercializa **únicamente residuos y mermas en bruto** resultantes del beneficio y transformación del cacao. Las empresas compradoras son quienes desarrollan, formulan y envasan sus propios productos.
+- **Resultado Obtenido**:
+  1. **Rediseño del Catálogo en Dominio y Routers (`calculos.py` y `subproductos.py`)**:
+     - Las 9 referencias fueron rebautizadas a materias primas residuales en bruto:
+       - `SUB-COSM-01`: *Residuo de Cacao en Bruto (Cascarilla Pura de Tostión)*.
+       - `SUB-AGRO-01`: *Biomasa Residual de Cacao en Bruto (Merma Agroindustrial)*.
+       - `SUB-BOTA-01`: *Cascarilla Tostada de Cacao en Bruto (Residuo para Extractos)*.
+       - `SUB-COSM-02`: *Residuo de Cascarilla en Bruto (Merma Pura de Trilla) - Lote CAC002*.
+       - `SUB-AGRO-02`: *Biomasa Residual en Bruto Alta en Potasio - Lote CAC004*.
+       - `SUB-BOTA-02`: *Residuo de Cascarilla Tostada en Bruto (Cacao Criollo Fino) - Lote CAC005*.
+       - `SUB-COSM-03`: *Granulado Residual de Cascarilla en Bruto - Lote CAC005*.
+       - `SUB-AGRO-03`: *Merma de Biomasa Vegetal de Cacao (Residuo en Bruto) - Lote CAC006*.
+       - `SUB-BOTA-03`: *Cascarilla Tostada Aromática en Bruto (Residuo de Tostión) - Lote CAC006*.
+     - Las aplicaciones fueron reformuladas con redacción en tercera persona: *"Materia prima residual en bruto para que laboratorios cosméticos formulen..."*, *"Residuo vegetal rico en potasio para que empresas de biofertilizantes produzcan..."*.
+  2. **Incorporación en Landing Page (`index.html`, `demo-scrollytelling.html`, `ScrollySceneViewer.jsx`)**:
+     - Se añadió un módulo editorial destacado: *"Apertura de Nueva Línea B2B: Residuos y Merma del Cacao en Bruto. Además de comercializar el grano y derivados del proceso de transformación del cacao (chocolate fino de origen), en TrazaCao abrimos una nueva línea para aquellas empresas o personas interesadas en adquirir el residuo del cacao (la merma / cascarilla en bruto) y en las cosas que pueden producirse gracias a ella. TrazaCao vende únicamente el residuo puro en bruto; no fabricamos mascarillas ni fertilizantes terminados."*
+  3. **Refactorización en Componente React (`CatalogoLotesPublico.jsx`)**:
+     - Pestaña renombrada a *"Línea de Residuos & Mermas B2B"*.
+     - Manifiesto institucional actualizado con el principio de no manufactura downstream.
+     - Sección de aplicaciones titulada: *"Productos que tu empresa puede desarrollar con este residuo:"*.
+  4. **Base de Datos y Pruebas**:
+     - Regeneración de `seed.py` y `respaldo_demo.db`.
+     - 38/38 pruebas aprobadas en `pytest` (1.43s).
+     - Compilación limpia en Vite en 1.67s.
+
+### 22.2 Mapeo de Componentes Configurados y Aporte de Autoría
+
+| Componente / Archivo | % Aporte IA | % Aporte Humano | Rol del Estudiante / Justificación de Autoría |
+| :--- | :---: | :---: | :--- |
+| `src/backend/domain/calculos.py` | 15% | 85% | Reclasificación de fracciones de merma hacia residuos vegetales en bruto sin formular. |
+| `src/backend/routers/subproductos.py` | 15% | 85% | Sustitución de nombres de productos por residuos y mermas en bruto por lote de origen. |
+| `src/backend/seed.py` | 15% | 85% | Actualización de bitácora y auditoría de cotizaciones B2B de residuo puro. |
+| `landing page/index.html` | 20% | 80% | Incorporación del bloque de apertura de la nueva línea B2B de residuos/mermas de cacao. |
+| `landing page/demo-scrollytelling.html` | 20% | 80% | Sincronización del bloque de la nueva línea de residuos en la versión scrollytelling. |
+| `src/frontend/src/components/landing/CatalogoLotesPublico.jsx` | 20% | 80% | Adaptación de catálogo, manifiesto estricto de negocio y tarjetas de producto. |
+| `src/frontend/src/components/landing/ScrollySceneViewer.jsx` | 15% | 85% | Actualización del capítulo de trazabilidad mencionando la línea de residuos en bruto. |
+| `documentos/E08_IA_y_fuentes.md` | 15% | 85% | Registro cronológico obligatorio de prompts literales, modelos, skills y matrices de autoría. |

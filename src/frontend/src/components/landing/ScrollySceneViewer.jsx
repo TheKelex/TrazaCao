@@ -57,8 +57,8 @@ export function ScrollySceneViewer({ progress, onExplorarLotes, onConsultarTraza
       chapter: 'TRAZABILIDAD',
       location: 'Cadena de Custodia Digital',
       meta: 'Registro Criptográfico Inmutable & Pasaporte QR',
-      detail: 'Transparencia comercial para chocolateros internacionales: orígenes auténticos, análisis de calidad físico y cero fuga de costos internos.',
-      badge: 'Pasaporte Digital B2B Verificado',
+      detail: 'Comercialización de granos de especialidad y chocolate fino, junto a la nueva línea de suministro de residuos en bruto (merma y cascarilla) para que industrias cosméticas y agroquímicas creen sus propios desarrollos.',
+      badge: 'Pasaporte Digital & Línea de Residuos B2B',
     },
   ];
 

@@ -88,54 +88,54 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
   const subproductosCanónicos = [
     {
       id: 'SUB-COSM-01',
-      nombre: 'Cascarilla Micronizada Grado Cosmético',
+      nombre: 'Residuo de Cacao en Bruto (Cascarilla Pura de Tostión)',
       sector_industrial: 'Industria Cosmética y Dermocosmética',
       lote_origen_id: 'CAC001',
       municipio_origen: 'Rivera, Huila',
       kg_disponibles: '8.00',
       precio_b2b_kg_cop: '5500.00',
-      pureza_botanica: '99.5% materia vegetal limpia de tostión controlada',
+      pureza_botanica: '100% residuo vegetal en bruto de trilla y tostión limpia (sin aditivos)',
       humedad_porcentaje: '5.80',
       aplicaciones_industriales: [
-        'Formulación de mascarillas faciales purificantes',
-        'Partículas exfoliantes corporales 100% biodegradables',
-        'Jabonería botánica y saponificación artesanal',
+        'Materia prima residual en bruto para que laboratorios cosméticos formulen mascarillas faciales purificantes',
+        'Partículas vegetales residuales para que terceros elaboren exfoliantes corporales biodegradables',
+        'Residuo puro de cacao para que jabonerías botánicas elaboren jabones y cosméticos artesanales',
       ],
       icono: Sparkles,
       color: 'amber',
     },
     {
       id: 'SUB-AGRO-01',
-      nombre: 'Biomasa Residual de Cacao para Bioinsumos',
+      nombre: 'Biomasa Residual de Cacao en Bruto (Merma Agroindustrial)',
       sector_industrial: 'Agroquímica Orgánica y Biofertilizantes',
       lote_origen_id: 'CAC001',
       municipio_origen: 'Rivera, Huila',
       kg_disponibles: '8.00',
       precio_b2b_kg_cop: '2500.00',
-      pureza_botanica: '100% residuo orgánico compostable con cenizas < 6%',
+      pureza_botanica: '100% merma vegetal orgánica en bruto con cenizas < 6% y alto potasio orgánico',
       humedad_porcentaje: '6.50',
       aplicaciones_industriales: [
-        'Biofertilizantes líquidos y lixiviados ricos en potasio (K)',
-        'Compostaje industrial acelerado y enmiendas de suelo',
-        'Biochar y captura de carbono en agricultura regenerativa',
+        'Residuo vegetal rico en potasio (K) para que plantas de biofertilizantes formulen bioles líquidos',
+        'Biomasa vegetal en bruto para que empresas de compostaje produzcan abonos orgánicos acelerados',
+        'Materia prima en bruto para que la industria agroquímica fabrique biochar y acondicionadores de suelo',
       ],
       icono: Leaf,
       color: 'emerald',
     },
     {
       id: 'SUB-BOTA-01',
-      nombre: 'Cascarilla Seleccionada para Extractos y Nutracéutica',
+      nombre: 'Cascarilla Tostada de Cacao en Bruto (Residuo para Extractos)',
       sector_industrial: 'Extractos Botánicos, Fitofármacos y Nutracéutica',
       lote_origen_id: 'CAC001',
       municipio_origen: 'Rivera, Huila',
       kg_disponibles: '4.00',
       precio_b2b_kg_cop: '6000.00',
-      pureza_botanica: 'Grado alimentario / fitoterapéutico, humedad < 7.0%',
+      pureza_botanica: '100% cascarilla de cacao fino de aroma en bruto, humedad controlada < 7.0%',
       humedad_porcentaje: '5.20',
       aplicaciones_industriales: [
-        'Extracción estandarizada de polifenoles y flavonoides antioxidantes',
-        'Aislamiento de teobromina para suplementos energéticos',
-        'Infusiones botánicas funcionales y bases para bebidas herbales',
+        'Residuo seco en bruto para que laboratorios farmacéuticos y nutracéuticos extraigan polifenoles bioactivos',
+        'Materia prima vegetal para que empresas de biotecnología aíslen teobromina natural',
+        'Cascarilla tostada pura para que marcas de té elaboren tisanas e infusiones funcionales de cacao',
       ],
       icono: Beaker,
       color: 'amber',
@@ -282,7 +282,7 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
               }`}
             >
               <Sparkles className="w-4 h-4 text-[#D4AF37]" />
-              <span>Catálogo Botánico & Industrial B2B</span>
+              <span>Línea de Residuos & Mermas B2B</span>
             </button>
           </div>
         </div>
@@ -451,21 +451,22 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
                 <div className="space-y-3 max-w-3xl">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-xs font-bold text-[#D4AF37]">
                     <Factory className="w-3.5 h-3.5 text-[#D4AF37]" />
-                    <span>Frontera Agroindustrial TrazaCao · Proveedor B2B Exclusivo</span>
+                    <span>Apertura de Nueva Línea B2B · Residuos y Mermas Agroindustriales del Cacao</span>
                   </div>
                   <h3 className="font-serif-editorial text-2xl sm:text-3xl font-bold text-[#FAF7F0]">
-                    Materia Prima Botánica Pura para Grandes Industrias
+                    Venta Exclusiva de Merma y Residuos Vegetales en Bruto
                   </h3>
                   <p className="font-sans text-xs sm:text-sm text-[#E9DCC5]/90 leading-relaxed font-light">
-                    En TrazaCao nos concentramos al 100% en el tratamiento, fermentación, secado y tostión de cacao en origen. 
-                    <strong className="text-[#D4AF37] font-semibold"> No producimos mascarillas ni fertilizantes terminados para el consumidor final</strong>; 
-                    suministramos nuestras mermas limpias y estandarizadas (cascarilla micronizada, biomasa rica en potasio y extractos) a laboratorios cosméticos, fabricantes de bioinsumos y corporaciones industriales que requieren materia prima vegetal certificada.
+                    Además de comercializar el grano y derivados del proceso de transformación del cacao (como el licor y chocolate de especialidad), en TrazaCao decidimos dar apertura a una nueva línea para aquellas empresas o personas interesadas en el <strong className="text-[#D4AF37] font-semibold">residuo del cacao (la merma y cascarilla en bruto)</strong> y de las cosas que pueden producirse gracias a ella.
+                  </p>
+                  <p className="font-sans text-xs text-[#E9DCC5]/75 leading-relaxed font-light">
+                    <strong className="text-amber-300">Regla de Negocio Estricta:</strong> Nosotros solo vendemos los residuos agroindustriales limpios y trazables; <span className="underline decoration-[#D4AF37]">no fabricamos ni vendemos mascarillas, ni cosméticos terminados, ni fertilizantes envasados</span>. De ahí en adelante, lo puede comprar cualquier empresa que quiera para producir el producto que desee.
                   </p>
                 </div>
 
                 <div className="shrink-0 bg-[#16120E] border border-[#3C2418] rounded-2xl p-4 sm:p-5 text-center min-w-[220px]">
                   <span className="text-[11px] uppercase tracking-wider text-[#E9DCC5]/60 font-mono block">
-                    Biomasa de Merma Recuperada
+                    Residuo / Merma en Bruto
                   </span>
                   <span className="font-mono text-3xl font-bold text-[#D4AF37] block mt-1">
                     {parseFloat(totalMermaRecuperada).toFixed(1)} kg
@@ -568,10 +569,10 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
                         </div>
                       </div>
 
-                      {/* Aplicaciones Industriales B2B */}
+                      {/* Aplicaciones Industriales B2B que el comprador puede desarrollar */}
                       <div className="space-y-1.5">
                         <span className="text-[11px] font-bold text-[#16120E] uppercase tracking-wider block">
-                          Aplicaciones Industriales Sugeridas:
+                          Productos que tu empresa puede desarrollar con este residuo:
                         </span>
                         <ul className="space-y-1 text-xs text-[#3C2418]">
                           {item.aplicaciones_industriales?.map((app, i) => (
@@ -586,7 +587,7 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
                       {/* Deslinde de responsabilidad de producto final */}
                       <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-[11px] leading-tight flex items-start gap-1.5">
                         <ShieldCheck className="w-3.5 h-3.5 text-amber-700 shrink-0 mt-0.5" />
-                        <span>Suministrado como materia prima vegetal al por mayor. TrazaCao no envasa productos terminados.</span>
+                        <span>Suministro exclusivo de residuo puro en bruto. TrazaCao no manufactura productos finales.</span>
                       </div>
                     </div>
 
