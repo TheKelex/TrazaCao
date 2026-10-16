@@ -107,6 +107,59 @@ class Usuario(Base):
     password_hash = Column(String(255), nullable=False)
     nombre_completo = Column(String(150), nullable=False)
     rol = Column(String(30), nullable=False)  # 'OPERADOR' | 'ADMINISTRADOR'
+    email = Column(String(120), nullable=True)
+    telefono = Column(String(50), nullable=True)
+    cedula = Column(String(50), nullable=True)
+    motivo_inactivacion = Column(Text, nullable=True)
     activo = Column(Boolean, default=True, nullable=False)
     fecha_creacion = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
+class Comprador(Base):
+    """
+    Tabla de clientes compradores registrados del sistema TrazaCao Huila.
+    Permite autenticación propia de compradores, registro comercial y trazabilidad de pedidos.
+    """
+    __tablename__ = "compradores"
+
+    id = Column(String(36), primary_key=True)  # UUID4
+    email = Column(String(120), unique=True, index=True, nullable=False)
+    password_hash = Column(String(255), nullable=False)
+    nombre_contacto = Column(String(150), nullable=False)
+    empresa_o_razon_social = Column(String(150), nullable=False)
+    telefono = Column(String(50), nullable=True)
+    pais_ciudad = Column(String(100), default="Colombia", nullable=False)
+    activo = Column(Boolean, default=True, nullable=False)
+    fecha_registro = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    # Relación con sus órdenes de compra directa
+    ventas = relationship("OrdenVenta", back_populates="comprador", cascade="all, delete-orphan")
+
+
+class OrdenVenta(Base):
+    """
+    Tabla de ventas directas efectivas con descuento atómico de inventario (Cacao y Cascarilla).
+    """
+    __tablename__ = "ordenes_venta"
+
+    id = Column(String(50), primary_key=True)  # ej. VTA-CAC001-20261016-001
+    comprador_id = Column(String(36), ForeignKey("compradores.id"), nullable=False)
+    tipo_producto = Column(String(50), nullable=False)  # "LOTE_CACAO" | "MERMA_CASCARILLA"
+    item_id = Column(String(50), nullable=False)  # CAC001, SUB-COSM-01, etc.
+    item_nombre = Column(String(150), nullable=False)
+    kg_comprados = Column(Numeric(10, 2), nullable=False)
+    precio_kg_cop = Column(Numeric(12, 2), nullable=False)
+    total_cop = Column(Numeric(12, 2), nullable=False)
+    estado = Column(String(30), default="PAGADA_Y_DESPACHADA", nullable=False)
+    direccion_entrega = Column(String(250), nullable=True)
+    fecha_orden = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    # Relación inversa con el comprador
+    comprador = relationship("Comprador", back_populates="ventas")
+
+    __table_args__ = (
+        CheckConstraint("kg_comprados > 0", name="chk_venta_kg_positivo"),
+        CheckConstraint("total_cop >= 0", name="chk_venta_total_no_negativo"),
+    )
+
 

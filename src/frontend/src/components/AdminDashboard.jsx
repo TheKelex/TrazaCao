@@ -1,8 +1,15 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { ShieldAlert, Download, Filter, Search, CheckCircle, Ban, AlertCircle, FileSpreadsheet, Lock, Database, HardDrive, CheckCircle2, RefreshCw } from 'lucide-react';
+import { 
+  ShieldAlert, Download, Filter, Search, CheckCircle, Ban, 
+  AlertCircle, FileSpreadsheet, Lock, Database, HardDrive, 
+  CheckCircle2, RefreshCw, Users, ShoppingBag 
+} from 'lucide-react';
 import { api } from '../api/client';
+import { OperariosAdminView } from './OperariosAdminView';
+import { VentasCompradoresAdminView } from './VentasCompradoresAdminView';
 
 export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarParaPasaporte }) {
+  const [seccionAdmin, setSeccionAdmin] = useState('lotes'); // 'lotes' | 'operarios' | 'ventas'
   const [filtroMunicipio, setFiltroMunicipio] = useState('TODOS');
   const [filtroEstado, setFiltroEstado] = useState('TODOS');
   const [busqueda, setBusqueda] = useState('');
@@ -151,8 +158,50 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
 
   return (
     <div className="space-y-6">
-      {/* Tarjetas de Métricas / KPIs */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {/* Selector de Módulos de Administración */}
+      <div className="bg-stone-900 border border-stone-800 p-1.5 rounded-2xl flex items-center gap-2 overflow-x-auto shadow-lg">
+        <button
+          onClick={() => setSeccionAdmin('lotes')}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+            seccionAdmin === 'lotes'
+              ? 'bg-amber-600 text-stone-950 font-bold shadow-md'
+              : 'text-stone-400 hover:text-stone-200 hover:bg-stone-800'
+          }`}
+        >
+          <ShieldAlert className="w-4 h-4" />
+          <span>1. Calidad, Lotes y Cuarentena (Hora 12)</span>
+        </button>
+
+        <button
+          onClick={() => setSeccionAdmin('operarios')}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+            seccionAdmin === 'operarios'
+              ? 'bg-amber-600 text-stone-950 font-bold shadow-md'
+              : 'text-stone-400 hover:text-stone-200 hover:bg-stone-800'
+          }`}
+        >
+          <Users className="w-4 h-4" />
+          <span>2. Operarios de Planta (CRUD & Veto)</span>
+        </button>
+
+        <button
+          onClick={() => setSeccionAdmin('ventas')}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+            seccionAdmin === 'ventas'
+              ? 'bg-amber-600 text-stone-950 font-bold shadow-md'
+              : 'text-stone-400 hover:text-stone-200 hover:bg-stone-800'
+          }`}
+        >
+          <ShoppingBag className="w-4 h-4" />
+          <span>3. Clientes y Ventas Directas</span>
+        </button>
+      </div>
+
+      {/* VISTA 1: CALIDAD Y LOTES */}
+      {seccionAdmin === 'lotes' && (
+        <div className="space-y-6">
+          {/* Tarjetas de Métricas / KPIs */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-stone-900 border border-stone-800 rounded-xl p-4 shadow-md">
           <span className="text-xs text-stone-400 block font-medium">Stock Total en Bodega</span>
           <span className="text-2xl font-mono font-bold text-amber-400 mt-1 block">
@@ -506,6 +555,18 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
             </div>
           </div>
         </div>
+      )}
+        </div>
+      )}
+
+      {/* VISTA 2: GESTIÓN DE OPERARIOS (CRUD + VETO + PROHIBICIÓN DE ELIMINAR) */}
+      {seccionAdmin === 'operarios' && (
+        <OperariosAdminView auth={auth} />
+      )}
+
+      {/* VISTA 3: CLIENTES Y VENTAS DIRECTAS */}
+      {seccionAdmin === 'ventas' && (
+        <VentasCompradoresAdminView auth={auth} />
       )}
     </div>
   );

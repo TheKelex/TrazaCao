@@ -165,6 +165,47 @@ export const api = {
     }
   },
 
+  // Gestión de Operarios (Solo Admin - CRUD con Vetar, NO eliminar)
+  getOperarios: (auth) => request('/admin/operarios', { method: 'GET' }, auth),
+  crearOperario: (data, auth) =>
+    request('/admin/operarios', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }, auth),
+  actualizarOperario: (id, data, auth) =>
+    request(`/admin/operarios/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }, auth),
+  cambiarEstadoOperario: (id, { activo, motivo }, auth) =>
+    request(`/admin/operarios/${id}/estado`, {
+      method: 'PATCH',
+      body: JSON.stringify({ activo, motivo }),
+    }, auth),
+
+  // Portal y Autenticación de Compradores Comerciales
+  registroComprador: (data) =>
+    request('/compradores/registro', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+  loginComprador: (data) =>
+    request('/compradores/login', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+  getCompradoresAdmin: (auth) => request('/compradores/admin/listado', { method: 'GET' }, auth),
+
+  // Ventas Efectivas Directas con Descuento Atómico de Stock
+  comprarDirecto: (datosCompra) =>
+    request('/ventas/comprar', {
+      method: 'POST',
+      body: JSON.stringify(datosCompra),
+    }),
+  getMisComprasComprador: (compradorId) =>
+    request(`/ventas/comprador/${compradorId}`, { method: 'GET' }),
+  getVentasAdmin: (auth) => request('/ventas/todas', { method: 'GET' }, auth),
+
   // Verificación de autorización de seguridad
   test403Trigger: async (auth) => {
     return request('/lotes/CAC001/estado', {

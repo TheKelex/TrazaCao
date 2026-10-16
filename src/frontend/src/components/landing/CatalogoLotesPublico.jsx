@@ -2,11 +2,12 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Award, QrCode, MapPin, Scale, Droplets, Flame, AlertOctagon, 
   CheckCircle2, ArrowUpRight, Search, Filter, ShieldCheck, Mail,
-  Sparkles, Leaf, Factory, Beaker, Send, CheckCircle, FileText, X
+  Sparkles, Leaf, Factory, Beaker, Send, CheckCircle, FileText, X,
+  ShoppingCart
 } from 'lucide-react';
 import { api } from '../../api/client';
 
-export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMuestra }) {
+export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMuestra, onSeleccionarProducto }) {
   // Pestaña activa: 'granos' (Lotes Fino de Aroma) o 'subproductos' (Catálogo Industrial y Botánico B2B)
   const [seccionActiva, setSeccionActiva] = useState('granos');
   const [filtroMunicipio, setFiltroMunicipio] = useState('TODOS');
@@ -337,7 +338,11 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
                       esBloqueado ? 'border-rose-600/60' : 'border-[#D4AF37]/30 hover:border-[#D4AF37]'
                     }`}
                   >
-                    <div className="relative h-56 overflow-hidden bg-[#234737]">
+                    <div 
+                      onClick={() => onSeleccionarProducto && onSeleccionarProducto(lote, 'lote')}
+                      className="relative h-56 overflow-hidden bg-[#234737] cursor-pointer"
+                      title="Ver panel e-commerce y comprar lote"
+                    >
                       <img
                         src={imagenLote}
                         alt={lote.id}
@@ -377,10 +382,18 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
                     </div>
 
                     <div className="p-6 space-y-4">
-                      <div>
-                        <h3 className="font-serif-editorial text-xl font-bold text-[#16120E] leading-snug">
-                          {lote.productor || 'Cacaocultor Asociado'}
-                        </h3>
+                      <div 
+                        onClick={() => onSeleccionarProducto && onSeleccionarProducto(lote, 'lote')}
+                        className="cursor-pointer"
+                      >
+                        <div className="flex items-center justify-between">
+                          <h3 className="font-serif-editorial text-xl font-bold text-[#16120E] leading-snug group-hover:text-[#B77A3C] transition-colors">
+                            {lote.productor || 'Cacaocultor Asociado'}
+                          </h3>
+                          <span className="font-mono text-xs font-extrabold text-[#B77A3C] bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
+                            $25.000 COP/kg
+                          </span>
+                        </div>
                         <p className="text-xs text-[#3C2418]/70 font-sans mt-0.5">
                           {lote.finca || 'Finca Tradicional Huilense'} · {lote.variedad || 'Fino de Aroma'}
                         </p>
@@ -420,14 +433,25 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
                         "{lote.notas || 'Notas sensoriales a chocolate amargo, frutos secos y dulce de caña característico del Huila.'}"
                       </p>
 
-                      <div className="pt-2">
+                      <div className="pt-2 space-y-2">
+                        {/* Botón Principal: Compra Directa Inmediata E-Commerce */}
+                        <button
+                          onClick={() => onSeleccionarProducto && onSeleccionarProducto(lote, 'lote')}
+                          disabled={esBloqueado || parseFloat(lote.kg_disponibles || lote.kg_recibidos || 0) <= 0}
+                          className="w-full flex items-center justify-center gap-2 bg-[#B77A3C] hover:bg-[#a0682f] active:bg-[#865422] text-[#16120E] font-sans font-bold text-xs py-3 px-4 rounded-xl transition-all shadow-md cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                        >
+                          <ShoppingCart className="w-4 h-4 text-[#16120E]" />
+                          <span>Comprar de Una · $25.000 COP/kg</span>
+                          <ArrowUpRight className="w-4 h-4 ml-auto" />
+                        </button>
+
+                        {/* Botón Secundario: Ficha Técnica Pasaporte QR */}
                         <button
                           onClick={() => onVerPasaporte && onVerPasaporte(lote.id)}
-                          className="w-full flex items-center justify-center gap-2 bg-[#234737] hover:bg-[#1b362a] active:bg-[#16120E] text-[#FAF7F0] font-sans font-semibold text-xs py-3 px-4 rounded-xl transition-all shadow-md cursor-pointer"
+                          className="w-full flex items-center justify-center gap-2 bg-stone-100 hover:bg-stone-200 text-[#16120E] border border-stone-300 font-sans font-semibold text-xs py-2 px-3 rounded-lg transition-all cursor-pointer"
                         >
-                          <QrCode className="w-4 h-4 text-[#D4AF37]" />
-                          <span>Consultar Pasaporte QR & Trazabilidad</span>
-                          <ArrowUpRight className="w-4 h-4 ml-auto" />
+                          <QrCode className="w-3.5 h-3.5 text-[#234737]" />
+                          <span>Pasaporte Digital QR & Traza</span>
                         </button>
                       </div>
                     </div>
@@ -605,13 +629,25 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
                         </span>
                       </div>
 
-                      <button
-                        onClick={() => abrirModalCotizacion(item)}
-                        className="flex items-center gap-1.5 bg-[#B77A3C] hover:bg-[#a2692f] text-[#16120E] text-xs font-bold py-2.5 px-4 rounded-xl shadow-md transition-all cursor-pointer"
-                      >
-                        <FileText className="w-3.5 h-3.5 text-[#16120E]" />
-                        <span>Cotizar por Kilo</span>
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => abrirModalCotizacion(item)}
+                          className="flex items-center gap-1.5 bg-stone-200 hover:bg-stone-300 text-[#16120E] text-xs font-semibold py-2 px-3 rounded-xl transition-all cursor-pointer"
+                          title="Cotizar gran volumen B2B"
+                        >
+                          <FileText className="w-3.5 h-3.5" />
+                          <span>Cotizar</span>
+                        </button>
+
+                        <button
+                          onClick={() => onSeleccionarProducto && onSeleccionarProducto(item, 'subproducto')}
+                          className="flex items-center gap-1.5 bg-[#B77A3C] hover:bg-[#a2692f] text-[#16120E] text-xs font-bold py-2 px-3.5 rounded-xl shadow-md transition-all cursor-pointer"
+                          title="Comprar de una en panel e-commerce"
+                        >
+                          <ShoppingCart className="w-3.5 h-3.5 text-[#16120E]" />
+                          <span>Comprar</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 );

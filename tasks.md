@@ -37,9 +37,9 @@
 +-----------------------+-----------------------+-----------------------+--------------------------+
 | 1. BACKLOG (Pendiente)| 2. EN INTEGRACIÓN     | 3. PRUEBAS & QA       | 4. TERMINADO (DoD Hecho) |
 +-----------------------+-----------------------+-----------------------+--------------------------+
-| (Ninguna pendiente)   | (Ninguna en curso)    | • 38/38 Tests PASSED  | • DOC-E01 (Problema PDF) |
-|                       |                       |   Verificados en 1.7s | • DOC-E02 (13 Gherkins)  |
-|                       |                       |   (http://localhost:  | • DOC-E03 (Onion + ADRs) |
+| (Ninguna pendiente)   | (Ninguna en curso)    | • 42/42 Tests PASSED  | • DOC-E01 (Problema PDF) |
+|                       |                       |   Verificados en 6.3s | • DOC-E02 (13 Gherkins)  |
+|                       |                       |   (0 fallas, 100% OK) | • DOC-E03 (Onion + ADRs) |
 |                       |                       |    5173 / :8000)      | • DOC-API (Contratos)    |
 |                       |                       |                       | • PLN-D1 a PLN-D4 (DoR)  |
 |                       |                       |                       | • COD-B01 (SQLite WAL)   |
@@ -150,6 +150,10 @@
 | **FEAT-CAT-B2B** | Catálogo Industrial y Botánico B2B de Mermas | Equipo Completo | **DONE (DoD)** | `subproductos.py`, `CatalogoLotesPublico.jsx` |
 | **FEAT-MERMA-KG** | Venta Exclusiva de Cascarilla por Kilo ($14.500-$16.500) | Equipo Completo | **DONE (DoD)** | `calculos.py`, `subproductos.py` |
 | **FEAT-LANDING-BRAND** | Rediseño de Identidad de Marca y Narrativa en 5 Pantallas | Equipo Completo | **DONE (DoD)** | `ScrollySceneViewer.jsx`, `CacaoExperienceLanding.jsx`, `demo-scrollytelling.html` |
+| **FEAT-CRUD-OPERARIOS** | CRUD de Operarios: Crear, Editar, Vetar/Activar y Bloqueo de Eliminación (HTTP 400) | Equipo Completo | **DONE (DoD)** | `operarios.py`, `OperariosAdminView.jsx`, `AdminDashboard.jsx` |
+| **FEAT-AUTH-COMPRADOR** | Autenticación y Registro de Compradores B2B (Tabla `compradores`) | Equipo Completo | **DONE (DoD)** | `models.py`, `compradores.py`, `ProductoDetalleEcommerce.jsx` |
+| **FEAT-VENTA-ATOMICA** | Compra Directa Inmediata con Descuento Atómico de Stock ($25.000/kg Cacao, Merma) | Equipo Completo | **DONE (DoD)** | `ventas.py`, `ordenes_venta`, `VentasCompradoresAdminView.jsx` |
+| **FEAT-ECOMMERCE-PANEL** | Panel de Producto Tipo E-commerce: Galería Multimodal, Traza de Origen y Checkout | Equipo Completo | **DONE (DoD)** | `ProductoDetalleEcommerce.jsx`, `CatalogoLotesPublico.jsx`, `App.jsx` |
 
 ---
 *Fin del Tablero Kanban — TrazaCao Huila*

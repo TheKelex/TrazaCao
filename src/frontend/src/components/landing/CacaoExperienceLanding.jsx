@@ -8,7 +8,7 @@ import { CatalogoLotesPublico } from './CatalogoLotesPublico';
 import { VerificadorTrazabilidadRapida } from './VerificadorTrazabilidadRapida';
 import { TrazaCaoLogo } from '../TrazaCaoLogo';
 
-export function CacaoExperienceLanding({ lotes, onEntrarGestion, onVerPasaporte }) {
+export function CacaoExperienceLanding({ lotes, onEntrarGestion, onVerPasaporte, onSeleccionarProducto }) {
   // Estado del motor de Scrollytelling híbrido
   const [progress, setProgress] = useState(0); // 0.0 a 1.0
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
@@ -226,6 +226,7 @@ export function CacaoExperienceLanding({ lotes, onEntrarGestion, onVerPasaporte 
       <CatalogoLotesPublico
         lotes={lotes}
         onVerPasaporte={onVerPasaporte}
+        onSeleccionarProducto={onSeleccionarProducto}
         onSolicitarMuestra={(loteId) => {
           onVerPasaporte && onVerPasaporte(loteId);
         }}

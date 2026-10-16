@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PackagePlus, Flame, ShieldAlert, QrCode, History, GitBranch, Compass } from 'lucide-react';
+import { PackagePlus, Flame, ShieldAlert, QrCode, History, GitBranch, Compass, ShoppingCart } from 'lucide-react';
 import { api } from './api/client';
 import { TopRoleBar } from './components/TopRoleBar';
 import { LoginView } from './components/LoginView';
@@ -11,6 +11,7 @@ import { PasaportePublico } from './components/PasaportePublico';
 import { AuditLogView } from './components/AuditLogView';
 import { TrazaCaoLogo } from './components/TrazaCaoLogo';
 import { CacaoExperienceLanding } from './components/landing/CacaoExperienceLanding';
+import { ProductoDetalleEcommerce } from './components/ProductoDetalleEcommerce';
 
 export function App() {
   const [auth, setAuth] = useState(() => {
@@ -21,6 +22,17 @@ export function App() {
       return null;
     }
   });
+
+  const [compradorAuth, setCompradorAuth] = useState(() => {
+    try {
+      const stored = localStorage.getItem('trazacao_buyer');
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const [productoEcommerce, setProductoEcommerce] = useState(null);
 
   const [modoVista, setModoVista] = useState(() => {
     try {
@@ -158,6 +170,29 @@ export function App() {
     (p) => auth && p.roles.includes(auth.role)
   );
 
+  const handleCompradorLogin = (comprador) => {
+    setCompradorAuth(comprador);
+    try {
+      localStorage.setItem('trazacao_buyer', JSON.stringify(comprador));
+    } catch (e) {
+      console.warn('No se pudo guardar la sesión de comprador:', e);
+    }
+  };
+
+  const handleCompradorLogout = () => {
+    setCompradorAuth(null);
+    try {
+      localStorage.removeItem('trazacao_buyer');
+    } catch (e) {
+      console.warn('No se pudo limpiar la sesión de comprador:', e);
+    }
+  };
+
+  const handleSeleccionarProductoEcommerce = (producto, tipo = 'lote') => {
+    setProductoEcommerce({ producto, tipo });
+    setModoVista('ecommerce');
+  };
+
   // 1. Si está en modo landing pública
   if (modoVista === 'landing') {
     return (
@@ -167,6 +202,27 @@ export function App() {
         onVerPasaporte={(id) => {
           setLotePasaporteId(id);
           setModoVista('comprador');
+        }}
+        onSeleccionarProducto={handleSeleccionarProductoEcommerce}
+      />
+    );
+  }
+
+  // 1.5. Si está en modo E-Commerce (Ficha de Producto, Galería, Traza y Compra Directa Inmediata)
+  if (modoVista === 'ecommerce' && productoEcommerce) {
+    return (
+      <ProductoDetalleEcommerce
+        producto={productoEcommerce.producto}
+        tipo={productoEcommerce.tipo}
+        compradorAuth={compradorAuth}
+        onCompradorLogin={handleCompradorLogin}
+        onVolver={() => setModoVista('landing')}
+        onVerPasaporte={(id) => {
+          setLotePasaporteId(id);
+          setModoVista('comprador');
+        }}
+        onActualizarStock={async () => {
+          await fetchLotes();
         }}
       />
     );
@@ -198,6 +254,18 @@ export function App() {
                 <span className="hidden sm:inline">Sobre nosotros</span>
                 <span className="sm:hidden">Nosotros</span>
               </a>
+
+              <button
+                onClick={() => {
+                  const loteObj = lotes.find((l) => (typeof l === 'string' ? l : l.id) === lotePasaporteId) || { id: lotePasaporteId };
+                  handleSeleccionarProductoEcommerce(loteObj, 'lote');
+                }}
+                className="flex items-center gap-1.5 text-xs bg-[#B77A3C] hover:bg-[#a2692f] text-[#16120E] font-bold px-3 py-1.5 rounded-lg transition-all cursor-pointer shadow-sm"
+                title="Comprar este lote en el panel e-commerce"
+              >
+                <ShoppingCart className="w-3.5 h-3.5" />
+                <span>Comprar este Lote</span>
+              </button>
 
               <button
                 onClick={() => setModoVista('landing')}

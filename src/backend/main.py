@@ -20,6 +20,9 @@ from routers.auditoria import router as auditoria_router
 from routers.export import router as export_router
 from routers.auth import router as auth_router
 from routers.subproductos import router as subproductos_router
+from routers.operarios import router as operarios_router
+from routers.compradores import router as compradores_router
+from routers.ventas import router as ventas_router
 
 # Inicialización de la aplicación FastAPI
 app = FastAPI(
@@ -67,6 +70,9 @@ app.include_router(auditoria_router)
 app.include_router(export_router)
 app.include_router(auth_router)
 app.include_router(subproductos_router)
+app.include_router(operarios_router)
+app.include_router(compradores_router)
+app.include_router(ventas_router)
 
 # Servir directamente la carpeta 'landing page' original sin duplicar archivos
 from fastapi.staticfiles import StaticFiles

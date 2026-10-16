@@ -14,7 +14,7 @@ from decimal import Decimal
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from infra.database import init_db, SessionLocal
-from models import Lote, Transformacion, AuditoriaLog, Usuario
+from models import Lote, Transformacion, AuditoriaLog, Usuario, Comprador, OrdenVenta
 from security.hashing import hash_password
 from domain.calculos import balance_agroindustrial_completo
 
@@ -40,15 +40,44 @@ def seed():
                 password_hash=hash_password("AdminTrazaCao2026!"),
                 nombre_completo="Dirección Técnica y Calidad",
                 rol="ADMINISTRADOR",
+                email="admin@trazacao.com",
+                telefono="+57 310 456 7890",
+                cedula="12345678",
                 activo=True,
             ),
             Usuario(
                 id="usr-operador-01",
                 username="operador",
                 password_hash=hash_password("OperadorCacao2026!"),
-                nombre_completo="Operador de Acopio y Planta",
+                nombre_completo="Operador de Acopio y Planta (Rivera)",
                 rol="OPERADOR",
+                email="operador.rivera@trazacao.com",
+                telefono="+57 315 123 4567",
+                cedula="87654321",
                 activo=True,
+            ),
+            Usuario(
+                id="usr-operador-02",
+                username="operador_campoalegre",
+                password_hash=hash_password("OperadorCacao2026!"),
+                nombre_completo="Javier Cuéllar (Campoalegre)",
+                rol="OPERADOR",
+                email="j.cuellar@trazacao.com",
+                telefono="+57 312 987 6543",
+                cedula="1075234567",
+                activo=True,
+            ),
+            Usuario(
+                id="usr-operador-03",
+                username="operador_suspendido",
+                password_hash=hash_password("OperadorCacao2026!"),
+                nombre_completo="Marlon Perdomo (Algeciras)",
+                rol="OPERADOR",
+                email="m.perdomo@trazacao.com",
+                telefono="+57 320 555 4321",
+                cedula="1075998877",
+                activo=False,
+                motivo_inactivacion="Vetado temporalmente por investigación de no conformidad en secado",
             ),
         ]
         for u in usuarios_base:
@@ -59,12 +88,51 @@ def seed():
                     accion="CREACION",
                     lote_id="SISTEMA",
                     valor_anterior=None,
-                    valor_nuevo=f"Usuario: {u.username}, Rol: {u.rol}, Nombre: {u.nombre_completo}",
-                    motivo="Carga inicial de usuario con contraseña encriptada (PBKDF2-SHA256)",
+                    valor_nuevo=f"Usuario: {u.username}, Rol: {u.rol}, Nombre: {u.nombre_completo}, Activo: {u.activo}",
+                    motivo="Carga inicial de personal con contraseña encriptada (PBKDF2-SHA256)",
                 )
             )
+
+        # 1.2 Carga de Compradores B2B Iniciales
+        compradores_base = [
+            Comprador(
+                id="cmp-huila-chocolates-01",
+                email="comprador@chocolateshuila.com",
+                password_hash=hash_password("Comprador2026!"),
+                nombre_contacto="Valentina Morales",
+                empresa_o_razon_social="Chocolatería Artesanal del Huila SAS",
+                telefono="+57 318 654 3210",
+                pais_ciudad="Colombia, Neiva",
+                activo=True,
+                fecha_registro=datetime.utcnow(),
+            ),
+            Comprador(
+                id="cmp-swiss-cacao-02",
+                email="contact@swisscocoa.ch",
+                password_hash=hash_password("SwissCocoa2026!"),
+                nombre_contacto="Hans Peter Meier",
+                empresa_o_razon_social="Alpine Premium Chocolate AG",
+                telefono="+41 22 555 1234",
+                pais_ciudad="Suiza, Zúrich",
+                activo=True,
+                fecha_registro=datetime.utcnow(),
+            ),
+        ]
+        for c in compradores_base:
+            db.add(c)
+            db.add(
+                AuditoriaLog(
+                    usuario="sistema_seed",
+                    accion="REGISTRO_COMPRADOR",
+                    lote_id="CLIENTES",
+                    valor_anterior=None,
+                    valor_nuevo=f"Cliente: {c.empresa_o_razon_social}, Contacto: {c.nombre_contacto}",
+                    motivo="Carga inicial de clientes compradores B2B en semilla",
+                )
+            )
+
         db.commit()
-        print("[OK] Usuarios 'admin' y 'operador' creados con contraseñas encriptadas.")
+        print("[OK] Usuarios administradores, operarios (activos y vetados) y compradores B2B creados.")
 
         # 2. Lotes Base y Ampliados del Huila (Rivera, Campoalegre y Algeciras)
         ahora = datetime.utcnow()
