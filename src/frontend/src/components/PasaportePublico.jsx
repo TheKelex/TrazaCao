@@ -4,7 +4,7 @@ import { QrCode, Copy, Check, ExternalLink, ShieldCheck, AlertOctagon, Sparkles,
 import { api } from '../api/client';
 import { TrazaCaoLogo } from './TrazaCaoLogo';
 
-export function PasaportePublico({ loteIdSeleccionado, lotes }) {
+export function PasaportePublico({ loteIdSeleccionado, lotes, onSelectLote }) {
   const [loteId, setLoteId] = useState(loteIdSeleccionado || (lotes[0]?.id || 'CAC001'));
   const [pasaporte, setPasaporte] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -94,7 +94,11 @@ export function PasaportePublico({ loteIdSeleccionado, lotes }) {
           {/* Selector de Lote */}
           <select
             value={loteId}
-            onChange={(e) => setLoteId(e.target.value)}
+            onChange={(e) => {
+              const val = e.target.value;
+              setLoteId(val);
+              if (onSelectLote) onSelectLote(val);
+            }}
             className="bg-stone-950 border border-stone-700 rounded-lg px-3 py-1.5 text-xs text-stone-100 font-mono focus:outline-none focus:border-amber-500"
           >
             {lotes.map((l) => (

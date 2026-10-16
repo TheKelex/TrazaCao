@@ -218,22 +218,26 @@ export function App() {
 
         {/* Barra de Selección Rápida de Lotes para el Comprador */}
         <div className="bg-stone-900/80 border-b border-stone-800/80 px-4 py-2 sticky top-[57px] z-40 backdrop-blur-sm">
-          <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 overflow-x-auto text-xs">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 overflow-x-auto text-xs py-0.5">
             <div className="flex items-center gap-2">
-              <span className="text-stone-400 font-medium">Lote Seleccionado:</span>
-              {['CAC001', 'CAC002', 'CAC003'].map((id) => (
-                <button
-                  key={id}
-                  onClick={() => setLotePasaporteId(id)}
-                  className={`px-3 py-1 rounded-md font-mono text-xs font-bold transition-all cursor-pointer ${
-                    lotePasaporteId === id
-                      ? 'bg-amber-600 text-stone-950 shadow-sm'
-                      : 'bg-stone-800 text-stone-300 hover:bg-stone-700 border border-stone-700'
-                  }`}
-                >
-                  {id}
-                </button>
-              ))}
+              <span className="text-stone-400 font-medium whitespace-nowrap">Lotes Registrados:</span>
+              {(lotes && lotes.length > 0 ? lotes : [{ id: 'CAC001' }, { id: 'CAC002' }, { id: 'CAC003' }]).map((l) => {
+                const id = typeof l === 'string' ? l : l.id;
+                const isSelected = lotePasaporteId === id;
+                return (
+                  <button
+                    key={id}
+                    onClick={() => setLotePasaporteId(id)}
+                    className={`px-3 py-1 rounded-md font-mono text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+                      isSelected
+                        ? 'bg-amber-600 text-stone-950 shadow-sm ring-1 ring-amber-400'
+                        : 'bg-stone-800 text-stone-300 hover:bg-stone-700 border border-stone-700'
+                    }`}
+                  >
+                    {id}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -243,6 +247,7 @@ export function App() {
           <PasaportePublico
             loteIdSeleccionado={lotePasaporteId}
             lotes={lotes}
+            onSelectLote={(id) => setLotePasaporteId(id)}
           />
         </main>
 
