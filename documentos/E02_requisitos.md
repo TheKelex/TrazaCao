@@ -125,10 +125,23 @@
   - *Cuando* se calculan los costos,
   - *Entonces* el sistema maneja la excepción devolviendo valores controlados (0 o no aplicable) con explicación visible de los rubros incluidos.
 
+#### HU-13: Catálogo Industrial y Botánico B2B de Mermas y Biomasa (RF13)
+- **Rol**: Comprador Corporativo B2B (Laboratorios Cosméticos / Agroquímica / Nutracéutica) / Administrador Comercial
+- **Necesidad**: Consultar fichas técnicas botánicas y cotizar volúmenes de merma agroindustrial estandarizada (cascarilla micronizada, biomasa rica en potasio y extractos) provenientes de la transformación del cacao.
+- **Beneficio**: Monetización del 100% de la biomasa residual sin dispersión operativa. TrazaCao se mantiene enfocado exclusivamente en el tratamiento del cacao y no compite con sus clientes fabricando productos finales (no comercializamos mascarillas terminadas ni fertilizantes embotellados).
+- **Prioridad**: Alta (Diferenciador Estratégico)
+- **Criterio de Aceptación (Gherkin)**:
+  - *Dado* que se registran transformaciones en centros de beneficio que generan merma (ej. 20 kg en CAC001),
+  - *Cuando* un comprador corporativo o directivo consulta el endpoint `GET /api/subproductos/catalogo-industrial` o la pestaña pública del catálogo,
+  - *Entonces* el sistema presenta las líneas de materias primas categorizadas (Cosmética, Biofertilizantes, Botánica) con sus especificaciones de pureza vegetal, humedad, aplicaciones sugeridas y precio base B2B.
+  - *Y además* el sistema expone explícitamente el deslinde de responsabilidad: *"TrazaCao se enfoca exclusivamente en el tratamiento y transformación del cacao; suministramos la materia prima vegetal certificada y no elaboramos bienes de consumo masivo terminados"*.
+  - *Cuando* el comprador radica una solicitud de cotización vía `POST /api/subproductos/solicitar-cotizacion-b2b`, el sistema genera un folio inmutable de seguimiento y registra el evento en auditoría.
+
 ---
 
-### 2. Tarjeta de Gestión de Cambio — Incidencia de la Hora 12
+### 2. Tarjetas de Gestión de Cambio (Change Requests)
 
+#### CR-H12-BLOQUEO-CAC001: Incidencia de Calidad y Bloqueo Preventivo
 | Campo | Detalle de la Incidencia |
 | :--- | :--- |
 | **ID de Cambio** | `CR-H12-BLOQUEO-CAC001` |
@@ -136,3 +149,13 @@
 | **Impacto Operativo** | Riesgo de comercialización de producto no conforme. Se requiere congelamiento preventivo inmediato. |
 | **Acción Realizada** | 1. Administrador invoca `POST /api/lotes/CAC001/estado` con estado `BLOQUEADO` y motivo `"Reporte de humedad no conforme por comprador"`.<br>2. Verificación de que la Ficha Pública cambie a estado NO DISPONIBLE.<br>3. Auditoría conserva el historial completo sin borrar registros previos. |
 | **Criterio de Regresión** | Ejecución de prueba automatizada `test_bloqueo_cac001_y_ficha_publica()` garantizando que la ficha comercial no ofrezca el producto y que los lotes `CAC002` y `CAC003` sigan operando normalmente. |
+
+#### CR-H14-VALORIZACION-MERMA-CATALOGO-BOTANICO-B2B: Modelo de Venta Industrial de Residuos
+| Campo | Detalle de la Incidencia |
+| :--- | :--- |
+| **ID de Cambio** | `CR-H14-VALORIZACION-MERMA-CATALOGO-BOTANICO-B2B` |
+| **Origen del Requerimiento** | Clarificación estratégica del modelo de negocio: el aprovechamiento de la merma no es contable ni de consumo masivo, sino una oferta comercial B2B para industrias de cosméticos y fertilizantes. |
+| **Impacto Operativo** | Creación del Catálogo Industrial & Botánico B2B. Deslinde estricto de la frontera del negocio: TrazaCao solo procesa cacao y vende materia prima a gran escala, sin elaborar productos de consumo final (ni mascarillas ni fertilizantes terminados). |
+| **Acción Realizada** | 1. Extensión del dominio Onion (`clasificar_merma_destinos_industriales`).<br>2. Creación del router `/api/subproductos` con endpoints de catálogo y radicación de cotizaciones B2B.<br>3. Adaptación visual en el frontend con selector de pestañas (Granos vs Catálogo Botánico B2B) y modal de cotización.<br>4. Incorporación del deslinde operativo explícito en UI y DTOs. |
+| **Criterio de Regresión** | Ejecución de la suite `tests/test_subproductos_catalogo.py` asegurando 100% de pase en endpoints B2B, integridad del inventario de biomasa y confirmación del principio de no manufactura de bienes finales. |
+
