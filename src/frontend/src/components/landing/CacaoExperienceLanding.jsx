@@ -222,16 +222,33 @@ export function CacaoExperienceLanding({ lotes, onEntrarGestion, onVerPasaporte 
             </button>
           </nav>
 
-          {/* Botón de Acceso a la Plataforma Operativa */}
-          <div className="flex items-center gap-3">
+          {/* Botones de Navegación Externa y Acceso */}
+          <div className="flex items-center gap-2.5">
+            <a
+              href="/landing/"
+              className="inline-flex items-center gap-1.5 bg-[#FAF7F0]/10 hover:bg-[#FAF7F0]/20 text-xs font-semibold px-3.5 py-1.5 rounded-full border border-[#D4AF37]/50 text-[#FAF7F0] transition-all shadow-md cursor-pointer"
+              title="Abrir la experiencia cinematográfica en pantalla completa con GSAP"
+            >
+              <Compass className="w-3.5 h-3.5 text-[#D4AF37]" />
+              <span className="hidden sm:inline">Cinemática GSAP</span>
+            </a>
+
+            <button
+              onClick={() => onVerPasaporte && onVerPasaporte('CAC001')}
+              className="inline-flex items-center gap-1.5 bg-[#FAF7F0]/10 hover:bg-[#FAF7F0]/20 text-xs font-semibold px-3.5 py-1.5 rounded-full border border-[#D4AF37]/50 text-[#FAF7F0] transition-all shadow-md cursor-pointer"
+              title="Ir directamente a la Ficha Comercial del Comprador"
+            >
+              <QrCode className="w-3.5 h-3.5 text-[#D4AF37]" />
+              <span className="hidden sm:inline">Ficha Comprador</span>
+            </button>
+
             <button
               onClick={onEntrarGestion}
-              className="inline-flex items-center gap-2 bg-[#FAF7F0]/10 hover:bg-[#FAF7F0]/20 active:bg-[#FAF7F0]/30 text-xs font-semibold px-4 py-2 rounded-full border border-[#D4AF37]/50 text-[#FAF7F0] transition-all shadow-md cursor-pointer"
+              className="inline-flex items-center gap-1.5 bg-[#D4AF37] hover:bg-[#c29d2b] text-[#16120E] text-xs font-bold px-3.5 py-1.5 rounded-full transition-all shadow-md cursor-pointer"
               title="Abrir la consola operativa para operadores y administradores"
             >
-              <Lock className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span className="hidden sm:inline">Acceso Cooperativa</span>
-              <span className="sm:hidden">Cooperativa</span>
+              <Lock className="w-3.5 h-3.5 text-[#16120E]" />
+              <span className="hidden sm:inline">Cooperativa</span>
             </button>
           </div>
         </div>

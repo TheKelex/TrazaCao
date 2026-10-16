@@ -313,4 +313,46 @@ Genera un inicio de sesion siguiendo el estilo visual del aplicativo, al hacer e
 | **Administrador** | `admin` | `AdminTrazaCao2026!` | Dirección Técnica, Calidad y Auditoría | 1. Recepción, 2. Transformación, 3. Cadena de Custodia, 4. Calidad y Administración, 5. Pasaporte QR, 6. Bitácora de Operaciones (6 módulos) |
 | **Operador** | `operador` | `OperadorCacao2026!` | Acopio, Pesaje y Registro de Beneficio | 1. Recepción, 2. Transformación, 3. Cadena de Custodia, 5. Pasaporte QR (4 módulos protegidos) |
 
+---
+
+## 10. BITÁCORA DE ORGANIZACIÓN: LANDING CINEMÁTICA GSAP Y VINCULACIÓN AL PORTAL DEL COMPRADOR
+
+### 10.1 Contexto de la Tarea
+El equipo subió los archivos fuente de la experiencia cinemática scrollytelling (`landing page/`), compuesta por `demo-scrollytelling.html`, librerías locales GSAP / ScrollTrigger y 7 fotografías documentales reales del Huila. Se requirió ordenar esta carpeta en su ubicación debida dentro del ecosistema del aplicativo y conectar el enlace comercial para dirigir al usuario directamente a la **Página del Comprador** (Ficha Comercial Pública y Pasaporte Digital QR).
+
+### 10.2 Registro Literal de Prompts
+
+#### Prompt 9: Organización de Carpeta Landing y Enlace a la Página del Comprador
+```text
+Ya quedo subida la landing page del aplicativo, organiza la carpeta para que quede en su debido espacio y añade el link para que lo lleve a la pagina del comprador
+```
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity Agentic Assistant.
+- **Skills Activadas**: `frontend-design`, `theme-factory`, `webapp-testing`, `doc-coauthoring`.
+- **Resultado Obtenido**: 
+  - Organización limpia del directorio en `src/frontend/public/landing/` (eliminando la carpeta raíz con espacios), permitiendo el despliegue automático tanto en Vite dev server (`http://localhost:5173/landing/`) como en el empaquetado de producción `dist/landing/`.
+  - Configuración dual de acceso: `src/frontend/public/landing/index.html` y `demo-scrollytelling.html`.
+  - Actualización del botón interactivo `btnIrAccion` ("Ficha del Comprador →") en la Escena 4 de la landing GSAP, conectándolo reactivamente al lote seleccionado (`CAC001`, `CAC002`, `CAC003`) mediante `/?modo=comprador&lote={id}`.
+  - Inclusión de botones directos en la cabecera flotante (`cinematic-header`) hacia la "Ficha del Comprador" y a la "Cooperativa".
+  - Apertura del **Modo Comprador** en `src/frontend/src/App.jsx` que permite a cualquier comprador internacional inspeccionar el pasaporte digital y generar pedidos B2B offline **sin requerir inicio de sesión ni exponer costos internos**.
+
+---
+
+### 10.3 Inventario de Modelos y Skills Aplicadas
+
+| Recurso | Tipo | Aplicación en la Integración de Landing y Comprador |
+| :--- | :--- | :--- |
+| **Gemini 3.8 Flash (High)** | Modelo de Lenguaje / Agente | Reestructuración de rutas estáticas, sincronización de parámetros URL en React (`?modo=comprador`), actualización de listeners GSAP y verificación de builds. |
+| **`frontend-design`** | Skill de Agente | Diseño del Portal del Comprador en `App.jsx`, selector rápido de lotes comercial con insignias NTC 1252 / EUDR y contraste armónico con la cabecera cinemática. |
+| **`webapp-testing`** | Skill de Agente | Verificación de respuestas HTTP 200 en `/landing/` y en `/?modo=comprador`, verificación de compilación en Vite en 2.33s y suite de 24 pruebas pytest. |
+
+---
+
+### 10.4 Matriz de Decisiones: Equipo Humano vs. Construcción por IA
+
+| Dimensión | Decisión / Aporte Humano (Equipo) | Construcción e Implementación por IA (Antigravity) |
+| :--- | :--- | :--- |
+| **Suministro de la Experiencia Visual** | Creación y provisión de la landing cinemática con GSAP, fotografías documentales de alta resolución y storytelling por capítulos. | Migración y organización estructural en `src/frontend/public/landing/` con compatibilidad `index.html` y `demo-scrollytelling.html`. |
+| **Flujo de Conversión Comercial** | Exigencia de vincular la landing directamente con la página del comprador para convertir la experiencia visual en una acción de compra real. | Modificación del botón de acción y la cabecera de la landing; sincronización reactiva del ID de lote (`CAC001`, `CAC002`, `CAC003`); habilitación del modo público de comprador en `App.jsx` sin fricción de login. |
+
+
 

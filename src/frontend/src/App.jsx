@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PackagePlus, Flame, ShieldAlert, QrCode, History, GitBranch } from 'lucide-react';
+import { PackagePlus, Flame, ShieldAlert, QrCode, History, GitBranch, Compass } from 'lucide-react';
 import { api } from './api/client';
 import { TopRoleBar } from './components/TopRoleBar';
 import { LoginView } from './components/LoginView';
@@ -22,11 +22,31 @@ export function App() {
     }
   });
 
-  const [modoVista, setModoVista] = useState('landing'); // 'landing' | 'gestion'
+  const [modoVista, setModoVista] = useState(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const modo = params.get('modo');
+      if (modo === 'comprador' || modo === 'pasaporte' || params.get('tab') === 'pasaporte') {
+        return 'comprador';
+      }
+      if (modo === 'gestion') {
+        return 'gestion';
+      }
+    } catch {}
+    return 'landing'; // 'landing' | 'comprador' | 'gestion'
+  });
+
   const [activeTab, setActiveTab] = useState('recepcion');
   const [lotes, setLotes] = useState([]);
   const [loadingLotes, setLoadingLotes] = useState(false);
-  const [lotePasaporteId, setLotePasaporteId] = useState('CAC001');
+  const [lotePasaporteId, setLotePasaporteId] = useState(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('lote') || 'CAC001';
+    } catch {
+      return 'CAC001';
+    }
+  });
 
   // Carga inicial y reactiva de lotes
   const fetchLotes = async () => {
@@ -119,14 +139,115 @@ export function App() {
         onEntrarGestion={() => setModoVista('gestion')}
         onVerPasaporte={(id) => {
           setLotePasaporteId(id);
-          setActiveTab('pasaporte');
-          setModoVista('gestion');
+          setModoVista('comprador');
         }}
       />
     );
   }
 
-  // 2. Si está en modo gestión pero aún no se ha autenticado
+  // 2. Si está en modo comprador público (Ficha Comercial & Pasaporte Digital QR sin requerir login)
+  if (modoVista === 'comprador') {
+    return (
+      <div className="min-h-screen bg-stone-950 text-stone-100 flex flex-col font-sans selection:bg-amber-500 selection:text-stone-950">
+        {/* Cabecera del Portal del Comprador */}
+        <header className="bg-stone-900 border-b border-stone-800 px-4 py-3 sticky top-0 z-50 shadow-md">
+          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <TrazaCaoLogo variant="dark" size="md" />
+              <div className="border-l border-stone-800 pl-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] bg-amber-950 text-amber-300 font-semibold px-2 py-0.5 rounded border border-amber-800">
+                    Portal de Compradores B2B
+                  </span>
+                  <span className="text-[11px] text-emerald-400 font-mono hidden md:inline">
+                    ✓ Estándar NTC 1252 · EUDR
+                  </span>
+                </div>
+                <p className="text-xs text-stone-400 mt-0.5 hidden sm:block">
+                  Ficha de Exportación & Pasaporte Digital de Cacao Fino de Aroma del Huila
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <a
+                href="/landing/"
+                className="flex items-center gap-1.5 text-xs bg-stone-800 hover:bg-stone-700 text-stone-300 border border-stone-700 px-3 py-1.5 rounded-lg transition-all cursor-pointer shadow-sm"
+                title="Volver a la experiencia visual y scrollytelling GSAP"
+              >
+                <Compass className="w-3.5 h-3.5 text-amber-500" />
+                <span className="hidden sm:inline">Experiencia Cinemática</span>
+                <span className="sm:hidden">Cinemática</span>
+              </a>
+
+              <button
+                onClick={() => setModoVista('landing')}
+                className="flex items-center gap-1.5 text-xs bg-stone-800 hover:bg-stone-700 text-stone-300 border border-stone-700 px-3 py-1.5 rounded-lg transition-all cursor-pointer shadow-sm"
+              >
+                <span>Catálogo</span>
+              </button>
+
+              <button
+                onClick={() => setModoVista('gestion')}
+                className="flex items-center gap-1.5 text-xs bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold px-3 py-1.5 rounded-lg transition-all cursor-pointer shadow-sm"
+              >
+                <span>Acceso Cooperativa</span>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        {/* Barra de Selección Rápida de Lotes para el Comprador */}
+        <div className="bg-stone-900/80 border-b border-stone-800/80 px-4 py-2 sticky top-[57px] z-40 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 overflow-x-auto text-xs">
+            <div className="flex items-center gap-2">
+              <span className="text-stone-400 font-medium">Lote Seleccionado:</span>
+              {['CAC001', 'CAC002', 'CAC003'].map((id) => (
+                <button
+                  key={id}
+                  onClick={() => setLotePasaporteId(id)}
+                  className={`px-3 py-1 rounded-md font-mono text-xs font-bold transition-all cursor-pointer ${
+                    lotePasaporteId === id
+                      ? 'bg-amber-600 text-stone-950 shadow-sm'
+                      : 'bg-stone-800 text-stone-300 hover:bg-stone-700 border border-stone-700'
+                  }`}
+                >
+                  {id}
+                </button>
+              ))}
+            </div>
+            <span className="text-[11px] text-stone-400 font-mono hidden lg:inline">
+              Costos internos protegidos · Información agronómica y sensorial pública
+            </span>
+          </div>
+        </div>
+
+        {/* Ficha Pública del Pasaporte */}
+        <main className="max-w-7xl mx-auto w-full px-4 py-6 flex-1">
+          <PasaportePublico
+            loteIdSeleccionado={lotePasaporteId}
+            lotes={lotes}
+          />
+        </main>
+
+        <footer className="bg-stone-950 border-t border-stone-800 py-4 px-4 text-xs text-stone-400">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5">
+              <TrazaCaoLogo variant="isotype" size="sm" />
+              <span className="font-bold text-stone-200">TrazaCao Huila</span>
+              <span className="text-stone-600">|</span>
+              <span className="text-stone-400 text-[11px]">Plataforma de Trazabilidad y Exportación de Cacao Fino de Aroma</span>
+            </div>
+            <div className="text-[11px] text-stone-400">
+              Municipios de Rivera, Campoalegre y Algeciras · Huila, Colombia
+            </div>
+          </div>
+        </footer>
+      </div>
+    );
+  }
+
+  // 3. Si está en modo gestión pero aún no se ha autenticado
   if (!auth) {
     return (
       <LoginView
