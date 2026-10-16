@@ -19,7 +19,7 @@ export function CacaoExperienceLanding({ lotes, onEntrarGestion, onVerPasaporte 
   const containerRef = useRef(null);
   const animFrameRef = useRef(null);
   const startTimeRef = useRef(null);
-  const DURATION_MS = 13000; // 13 segundos de recorrido guiado
+  const DURATION_MS = 20000; // 20 segundos de recorrido guiado
 
   // 1. Detección de Preferencias de Movimiento Reducido
   useEffect(() => {
@@ -43,7 +43,7 @@ export function CacaoExperienceLanding({ lotes, onEntrarGestion, onVerPasaporte 
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, []);
 
-  // 3. Motor de Autoplay Introductorio (8 - 15 segundos)
+  // 3. Motor de Autoplay Introductorio (20 segundos)
   useEffect(() => {
     if (!isAutoPlaying || reducedMotion || userInteracted) return;
 
