@@ -74,5 +74,27 @@ Todas las librerías empleadas cuentan con licencias permisivas de código abier
 | **Pytest** | 9.1.1 | MIT License | Ejecución automatizada de la suite de pruebas |
 | **HTTPX** | 0.28.1 | BSD-3-Clause | Cliente de pruebas para TestClient de FastAPI |
 | **Python-Multipart** | 0.0.32 | Apache-2.0 | Procesamiento de formularios y cargas multipart |
+| **React** | 19.2.8 | MIT License | Construcción de la interfaz de usuario reactiva SPA |
+| **Vite** | 8.3.4 | MIT License | Empaquetado y servidor de desarrollo ultrarrápido |
+| **Tailwind CSS** | 4.3.3 | MIT License | Sistema de diseño y estilos utilitarios locales |
+| **qrcode.react** | 4.2.0 | ISC License | Renderizado vectorial de códigos QR en SVG local sin APIs externas |
+| **lucide-react** | 1.57.0 | ISC License | Iconografía empaquetada nativa |
 
 *Aclaración de Transparencia: No se utilizaron plantillas preexistentes comerciales ni código propietario desarrollado antes del inicio oficial del certamen.*
+
+---
+
+## 6. BITÁCORA DE INTERACCIÓN Y AUDITORÍA DE IA - FASE E04 (FRONTEND & UX)
+
+### Interacción: Auditoría de Usabilidad y Resiliencia en Oasis Plaza (Argon 4)
+- **Herramienta IA Consultada**: Argon 4 (Revisor Técnico de Arquitectura y Usabilidad).
+- **Prompt Enviado**: Solicitud de auditoría sobre riesgos del MVP funcional ante el jurado en el centro comercial Oasis Plaza (redes saturadas, portales cautivos, prueba a ciegas).
+- **Diagnóstico y Recomendaciones de la IA**:
+  1. *Fuga de errores crudos de Pydantic (HTTP 422)*: Si React intenta renderizar un array de objetos de error directamente, la aplicación sufre pantalla blanca. **Solución**: Interceptor `parseApiError()` con diccionario de errores amigables en español.
+  2. *Desincronización de saldos tras transformar*: Evitar que el select mantenga el saldo viejo en memoria. **Solución**: Refresco automático de catálogo tras cada `POST`.
+  3. *Dependencia de conectividad externa en el stand*: Fuentes externas (Google Fonts), enlaces a WhatsApp y lectura de QR vía IP local fallan bajo portales cautivos o *AP Isolation*. **Solución**: Pila tipográfica del SO, previsualizador móvil (marco 375px) en pantalla y modal B2B con copia de orden al portapapeles offline.
+  4. *Demostración de seguridad RBAC*: El jurado necesita comprobar el rechazo HTTP 403. **Solución**: Botón persistente "Probar Acceso Denegado (Test 403)" que dispara una petición real y muestra el banner interceptado limpiamente.
+- **Validación Humana y Aplicación**:
+  - Se adoptaron todas las recomendaciones en `src/frontend/src/utils/errorHandler.js`, `TopRoleBar.jsx`, `TransformacionView.jsx` y `PasaportePublico.jsx`.
+  - Se probó la compilación de producción con `npm run build` obteniendo 0 errores en 1.27 segundos.
+
