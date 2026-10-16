@@ -673,6 +673,39 @@ Bro, en estos momentos tenemos que estar efectuando algunos cambios y refactoriz
 | `documentos/CONTRATOS_API.md` | 15% | 85% | Especificación de los contratos JSON de `/api/subproductos/catalogo-industrial` y `/api/subproductos/solicitar-cotizacion-b2b`. |
 | `tasks.md` | 10% | 90% | Registro de tareas KB-D5-01 a KB-D5-04 en el tablero de seguimiento. |
 
+---
+
+## 18. BITÁCORA DE CALIBRACIÓN DE DURACIÓN DE LA ANIMACIÓN CINEMÁTICA DEL LANDING (20 SEGUNDOS)
+
+### 18.1 Contexto y Decisión del Equipo
+A solicitud del usuario, se ajustó la velocidad y cadencia temporal de la experiencia animada del landing page scrollytelling para extender su duración a exactamente **20 segundos**.
+
+**Justificación de Diseño (Frontend & UX)**:
+Una animación de 20 segundos permite que el espectador asimile pausadamente los 4 hitos geográficos y de transformación (territorio andino, suelos francos de sombra, beneficio poscosecha y pasaporte digital comercial) con una velocidad documental premium, sin transiciones apresuradas y con total legibilidad de los metadatos de altitud, temperatura y calidad de taza.
+
+### 18.2 Registro Literal del Prompt
+
+```text
+quiero que la animacion del landing dure 20 segundo
+```
+
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity.
+- **Skills Activadas**: `frontend-design`.
+- **Resultado Obtenido**:
+  1. En `landing page/index.html`: Se actualizó el cálculo cinemático de GSAP: `const tourDuration = Math.max(5, remainingP * 20);` asegurando un barrido continuo de exactamente 20.0 segundos desde el inicio ($p = 0$).
+  2. En `landing page/demo-scrollytelling.html`: Se verificó la consistencia exacta en 20 segundos.
+  3. En `src/frontend/src/components/landing/CacaoExperienceLanding.jsx`: Se calibró la constante temporal del motor de animación React `DURATION_MS = 20000` (20.000 ms) gobernada por `requestAnimationFrame` con curva de aceleración/desaceleración cúbica suave.
+  4. Recompilación de producción en Vite (`npm run build`) y verificación de pruebas automáticas (26/26 aprobadas).
+
+### 18.3 Mapeo de Componentes Calibrados
+
+| Componente / Archivo | % Aporte IA | % Aporte Humano | Rol del Estudiante / Justificación de Autoría |
+| :--- | :---: | :---: | :--- |
+| `landing page/index.html` | 20% | 80% | Calibración de `tourDuration` a 20 segundos en el tween de ScrollTrigger. |
+| `landing page/demo-scrollytelling.html` | 15% | 85% | Armonización del cálculo de tiempo en la versión scrollytelling complementaria. |
+| `src/frontend/src/components/landing/CacaoExperienceLanding.jsx` | 20% | 80% | Ajuste de `DURATION_MS` a 20.000 ms en el autoplay guiado del componente React. |
+
+
 
 
 

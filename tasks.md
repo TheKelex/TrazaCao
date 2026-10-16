@@ -142,6 +142,8 @@
 | **COD-NO-EUDR** | Erradicación Total de Referencias a Normativa EUDR en UI y Schemas | Equipo Completo | **DONE (DoD)** | `landing page/index.html`, `AdminDashboard.jsx`, `schemas.py`, `pasaporte.py` |
 | **OPS-RENDER** | Configuración Integral de Despliegue en Render Cloud (Dockerfile, Blueprint, Healthcheck & Guía) | Equipo Completo | **DONE (DoD)** | `Dockerfile`, `render.yaml`, `build.sh`, `.dockerignore`, `GUIA_DESPLIEGUE_RENDER.md` |
 | **FEAT-CAT-B2B** | Refactorización Estratégica: Catálogo Industrial y Botánico B2B de Mermas | Equipo Completo | **DONE (DoD)** | `subproductos.py`, `calculos.py`, `CatalogoLotesPublico.jsx`, `test_subproductos_catalogo.py`, SDD/ADR-04 |
+| **ANIM-20S** | Calibración de la Animación Cinemática del Landing a 20 Segundos | Equipo Completo | **DONE (DoD)** | `index.html`, `demo-scrollytelling.html`, `CacaoExperienceLanding.jsx` |
 | **INT-DEV2**| Integración de suite de seguridad Dev 2 | Dev 1 & Dev 2 | **EN INTEGRACIÓN** | Rama `feature/security-qa` |
 | **DOC-E06** | Informe de Usabilidad Externa en Stand | Dev 4 | **BACKLOG** | Asignado a Dev 4 |
 | **DOC-E09** | Propuesta Comercial y Diapositivas Pitch | Dev 4 | **BACKLOG** | Asignado a Dev 4 |
+
