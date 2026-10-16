@@ -359,5 +359,37 @@ No, el apartado al que estas dirigiendome es el apartado de comprador no la land
 | **Erradicación de Nombres de Frameworks** | Orden taxativa de eliminar el término técnico de animación de la interfaz y la documentación para mantener el tono comercial del producto. | Reemplazo de etiquetas por terminología de negocio clara (*"Experiencia Visual"*, *"Apartado Comprador"*). |
 | **Flujo de Conversión Comercial** | Instrucción de que el botón "Ir →" de la landing page dirija de forma efectiva al apartado del comprador en el aplicativo. | Conexión del listener y atributos `href` de `btnIrAccion` hacia `/?modo=comprador&lote={lote}`, con lectura reactiva del lote activo. |
 
+---
+
+## 11. BITÁCORA DE SINCRONIZACIÓN REMOTA Y DESPLIEGUE FINAL (PUSH A DEVELOP)
+
+### 11.1 Contexto de la Tarea
+Tras culminar la implementación de la identidad de marca TrazaCao, la erradicación de tecnicismos RF, la construcción del inicio de sesión seguro con hash PBKDF2, el aislamiento de pantallas por rol, la preservación de la landing page en su carpeta canónica y su enlace directo al apartado del comprador, el equipo ordenó la publicación y sincronización completa de todos los commits hacia el repositorio remoto oficial de GitHub.
+
+### 11.2 Registro Literal de Prompts
+
+#### Prompt 11: Despliegue y Publicación de Commits con Bitácora Sincronizada
+```text
+Sube todos los commits con su respectiva bitacora documentada de IA
+```
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity Agentic Assistant.
+- **Skills Activadas**: `doc-coauthoring`, `webapp-testing`.
+- **Resultado Obtenido**: 
+  - Verificación de la suite de 24 pruebas de backend (`pytest tests/`) y del empaquetado de frontend en Vite.
+  - Sincronización de la bitácora documental `documentos/E08_IA_y_fuentes.md` con todos los prompts literales, modelos, skills y matrices de autoría.
+  - Ejecución de `git push origin develop` publicando el historial limpio de commits del MVP comercial.
+
+---
+
+### 11.3 Historial de Commits Sincronizados a `origin/develop`
+
+1. **`7693426`** — `feat(landing): implementar Cacao Experience inmersiva con scrollytelling y catalogo de lotes`
+2. **`16fe95f`** — `feat(brand): integrar nueva identidad TrazaCao, eliminar especificaciones RF y orientar MVP a perfiles comerciales`
+3. **`ba41ab4`** — `feat(auth): implementar inicio de sesion con hash PBKDF2, aislamiento de pantallas por rol y eliminacion de controles demo`
+4. **`05f8242`** — `feat(landing): organizar carpeta en public/landing y enlazar boton comercial al portal del comprador`
+5. **`dbf8e84`** — `fix(landing): preservar landing page en su carpeta oficial, eliminar duplicado en public y enlazar boton comercial al apartado del comprador`
+6. Commit de sincronización final de bitácora y publicación remota.
+
+
 
 
