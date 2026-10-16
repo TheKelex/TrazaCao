@@ -7,7 +7,7 @@ y segregación rigurosa de DTOs (público vs administrativo).
 from datetime import datetime
 from decimal import Decimal
 from typing import Optional, List, Literal
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator, ConfigDict
 
 
 # Municipios Oficiales del Reto Agroindustrial en el Huila
@@ -112,8 +112,7 @@ class TransformacionResponse(BaseModel):
     incidencia_justificacion: Optional[str] = None
     fecha_transformacion: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # ==============================================================================

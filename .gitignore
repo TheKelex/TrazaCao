@@ -8,9 +8,16 @@ __pycache__/
 .pytest_cache/
 
 # Base de datos SQLite local (para evitar conflictos de merge binarios)
+*.db
+*.db-journal
 *.db-wal
 *.db-shm
 cacao_dev.db
+datos/*.db
+datos/respaldos/
+
+# Variables de entorno
+.env
 
 # Node / React / Vite
 node_modules/

@@ -82,25 +82,31 @@ pytest tests/ -v
 ### Medición de Rendimiento (Benchmark de 100 Registros)
 ```bash
 # Ejecutar prueba de consulta de trazabilidad sobre 100 registros sintéticos
-python tests/benchmark_100_registros.py
+python scripts/benchmark_100.py
 ```
 *Tiempo objetivo del reto*: < 3.00 segundos.  
-*Tiempo obtenido en SQLite local*: **< 0.05 segundos (50 ms)**.
+*Tiempo obtenido en SQLite local*: **0.64 milisegundos (0.0006 s)**.
+
+### Ejecutor de Pruebas Manuales Paso a Paso (Para Jurados)
+```bash
+python scripts/ejecutar_pruebas_manuales.py
+```
+*Ejecuta interactivamente las 8 pruebas clave requeridas por el comité evaluador.*
 
 ---
 
 ## 5. Procedimiento de Respaldo y Restauración de Datos
 
-### Generar Respaldo
+### Generar Respaldo Atómico en Caliente (SHA-256)
 ```bash
-python src/backend/backup.py
-# Genera una copia fechada e íntegra en datos/respaldo_YYYYMMDD_HHMMSS.db
+python scripts/backup.py
+# Genera copia atómica con sqlite3.backup y archivo de checksum .sha256 en datos/respaldos/
 ```
 
-### Restaurar Respaldo
+### Restaurar Respaldo y Comprobación de Integridad
 ```bash
-python src/backend/restore.py datos/respaldo_demo.db
-# Restaura el estado de la base de datos y valida cantidades de lote inmediatamente
+python scripts/restore.py
+# Restaura el estado de la base de datos y valida integridad con PRAGMA integrity_check;
 ```
 
 ---

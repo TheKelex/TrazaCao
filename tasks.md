@@ -49,10 +49,10 @@ Antes de escribir código en `src/`, cada desarrollador debe abrir su rama y doc
 - **Documento Obligatorio a Entregar**: `documentos/PLAN_DEV2_INFRA_QA.md`
 - **Requisitos de la Fase de Ideación / Tareas Kanban**:
   - [x] **KB-D2-01**: Documentar la configuración de SQLite en modo `WAL` (`journal_mode=WAL`, `busy_timeout=5000`, `foreign_keys=ON`) para alta concurrencia local.
-  - [ ] **KB-D2-02**: Diseñar los scripts DDL en SQL nativo para los **Triggers de Inmutabilidad** de `audit_logs` (`BEFORE UPDATE` y `BEFORE DELETE` con `RAISE(ABORT, ...)` para RF10).
-  - [ ] **KB-D2-03**: Especificar la matriz de autorización RBAC (`security/rbac.py`): definir el comportamiento de la dependencia FastAPI que rechazará al Operador con `HTTP 403 Forbidden` al intentar alterar estados.
-  - [ ] **KB-D2-04**: Redactar la matriz de los **6 casos de prueba automatizados obligatorios** en `pytest` (caso feliz CAC001, cantidades negativas, sobreconsumo de stock, división por cero, permisos denegados y regresión Hora 12).
-  - [ ] **KB-D2-05**: Especificar el protocolo de prueba y scripts de `backup.py` y `restore.py`, definiendo cómo se validará la integridad de registros tras la restauración.
+  - [x] **KB-D2-02**: Diseñar los scripts DDL en SQL nativo para los **Triggers de Inmutabilidad** de `audit_logs` (`BEFORE UPDATE` y `BEFORE DELETE` con `RAISE(ABORT, ...)` para RF10).
+  - [x] **KB-D2-03**: Especificar la matriz de autorización RBAC (`security/rbac.py`): definir el comportamiento de la dependencia FastAPI que rechazará al Operador con `HTTP 403 Forbidden` al intentar alterar estados.
+  - [x] **KB-D2-04**: Redactar la matriz de los **6 casos de prueba automatizados obligatorios** en `pytest` (caso feliz CAC001, cantidades negativas, sobreconsumo de stock, división por cero, permisos denegados y regresión Hora 12).
+  - [x] **KB-D2-05**: Especificar el protocolo de prueba y scripts de `backup.py` y `restore.py`, definiendo cómo se validará la integridad de registros tras la restauración.
 
 ---
 
@@ -90,10 +90,13 @@ Antes de escribir código en `src/`, cada desarrollador debe abrir su rama y doc
 | **DOC-API** | Contratos de API JSON | Dev 1 | **DONE** | `master` / `develop` |
 | **DOC-CTX** | Prompt de Alineación IA | Dev 1 | **DONE** | `master` / `develop` |
 | **PLN-D1** | Plan Detallado Core & Matemáticas | Dev 1 | **DONE (DoR Aprobado)** | `feature/backend-core` |
-| **PLN-D2** | Plan Seguridad, Triggers & QA | Dev 2 | **EN ESPECIFICACIÓN** | `feature/security-qa` |
+| **PLN-D2** | Plan Seguridad, Triggers & QA | Dev 2 | **DONE (DoR Aprobado)** | `feature/security-qa` |
 | **PLN-D3** | Plan Frontend Operador & Admin | Dev 3 | **EN ESPECIFICACIÓN** | `feature/frontend-ui` |
 | **PLN-D4** | Plan Pasaporte QR, Usabilidad & Pitch | Dev 4 | **EN ESPECIFICACIÓN** | `feature/passport-docs` |
 | **COD-B01** | Implementación SQLite WAL & Triggers | Dev 2 | **DONE (Integrado en Core)** | `feature/backend-core` |
 | **COD-B02** | Motor Decimal de Cálculos y Pytest | Dev 1 | **DONE (15/15 Tests OK)** | `feature/backend-core` |
+| **COD-Q01** | Suite Pytest QA y Regresión Hora 12 | Dev 2 | **DONE (26/26 Tests OK)** | `feature/security-qa` |
+| **COD-Q02** | Scripts Respaldo/Restauración & Benchmark | Dev 2 | **DONE (Integridad Verificada)** | `feature/security-qa` |
+| **DOC-E05** | Informe Evidencia Pruebas & Rendimiento | Dev 2 | **DONE** | `feature/security-qa` |
 | **COD-U01** | Setup React + Vite Offline | Dev 3 | Backlog (Bloqueado por PLN-D3) | `feature/frontend-ui` |
 | **COD-U02** | Ficha QR y WhatsApp Lead | Dev 4 | Backlog (Bloqueado por PLN-D4) | `feature/passport-docs` |

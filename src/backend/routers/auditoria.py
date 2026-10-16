@@ -16,6 +16,9 @@ from security.rbac import require_admin
 router = APIRouter(prefix="/api/admin/auditoria", tags=["Auditoría (Admin)"])
 
 
+from pydantic import BaseModel, ConfigDict
+
+
 class AuditoriaLogResponse(BaseModel):
     id: int
     timestamp: datetime
@@ -26,8 +29,7 @@ class AuditoriaLogResponse(BaseModel):
     valor_nuevo: Optional[str] = None
     motivo: Optional[str] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 @router.get("", response_model=List[AuditoriaLogResponse])
