@@ -3,6 +3,10 @@ Punto de Entrada Principal - CacaoTrace Huila (FastAPI Monolito Modular)
 Expone la documentación interactiva OpenAPI en /docs y orquesta los routers del sistema.
 """
 
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
