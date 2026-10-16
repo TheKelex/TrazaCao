@@ -111,3 +111,14 @@ python src/backend/restore.py datos/respaldo_demo.db
 - **`documentos/`**: Documentación técnica y metodológica completa (E01 a E09).
 - **`pitch/`**: Presentación comercial de 5 diapositivas para el jurado.
 - **`tests/`**: Suite de pruebas unitarias y de integración ejecutables.
+
+---
+
+## 7. Declaración de Transparencia e Inteligencia Artificial (Numeral 4 del Reglamento)
+
+En cumplimiento del reglamento técnico del certamen, se declara que el proyecto utilizó asistencia de **Inteligencia Artificial Generativa (Antigravity / Google DeepMind y ChatGPT / OpenAI)** para tareas de diseño arquitectónico, estructuración de historias de usuario (Gherkin), aceleración de scaffolding de código base y esqueleto de pruebas automatizadas.
+
+- **Autoría y Control Humano**: Todo el código y diseño fue rigurosamente auditado, corregido y validado por los integrantes del equipo. Las decisiones críticas de ingeniería (como el descarte de `.with_for_update()` por incompatibilidad con SQLite, la implementación de triggers nativos de inmutabilidad en SQL y el blindaje con `Decimal` para evitar divisiones por cero) fueron tomadas por el equipo.
+- **Autonomía Operativa**: La aplicación no depende de APIs de IA en la nube en tiempo de ejecución (opera 100% offline).
+- **Bitácora Detallada**: Consulte el informe completo, matriz de aportes por archivo y casos de corrección en [`documentos/E08_IA_y_fuentes.md`](documentos/E08_IA_y_fuentes.md).
+
