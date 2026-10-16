@@ -24,6 +24,14 @@ export function App() {
 
   const [modoVista, setModoVista] = useState(() => {
     try {
+      if (typeof window !== 'undefined') {
+        if (window.location.pathname.startsWith('/pasaporte')) {
+          return 'comprador';
+        }
+        if (window.location.pathname.startsWith('/gestion')) {
+          return 'gestion';
+        }
+      }
       const params = new URLSearchParams(window.location.search);
       const modo = params.get('modo');
       if (modo === 'comprador' || modo === 'pasaporte' || params.get('tab') === 'pasaporte') {
@@ -41,6 +49,12 @@ export function App() {
   const [loadingLotes, setLoadingLotes] = useState(false);
   const [lotePasaporteId, setLotePasaporteId] = useState(() => {
     try {
+      if (typeof window !== 'undefined') {
+        const parts = window.location.pathname.split('/').filter(Boolean);
+        if (parts[0] === 'pasaporte' && parts[1]) {
+          return parts[1].toUpperCase();
+        }
+      }
       const params = new URLSearchParams(window.location.search);
       return params.get('lote') || 'CAC001';
     } catch {

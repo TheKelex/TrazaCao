@@ -588,6 +588,44 @@ lo de eudr quitalo
 | `documentos/E04_manual.md` | 10% | 90% | Alineación del texto descriptivo del pasaporte en el manual de demostración. |
 | `documentos/PLAN_DEV4_COMERCIAL_UX.md` | 10% | 90% | Sincronización del contrato de datos de la especificación comercial del frontend. |
 
+---
+
+## 16. ITERACIÓN 16: CONFIGURACIÓN INTEGRAL DE DESPLIEGUE EN RENDER CLOUD (OPS-RENDER)
+
+- **Fecha y Hora**: 2026-10-16 11:15 COT
+- **Objetivo**: Configurar, blindar y documentar todos los artefactos requeridos para el despliegue continuo de TrazaCao Huila en Render Cloud (Web Service contenerizado Docker y soporte nativo Python).
+
+### 16.1 Registro Literal del Prompt
+
+```text
+broooo, ya estamos en la etapa de desplieguie en render, asi q ma g, configuremos todo lo necesario para ir desarrollando este despliegue
+```
+
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity.
+- **Skills Activadas**: `doc-coauthoring`, `webapp-testing`.
+- **Resultado Obtenido**:
+  1. **Creación de `.dockerignore`**: Exclusión estricta de `node_modules` de Windows, entornos virtuales, cachés y archivos WAL de SQLite para builds en Render ultra-rápidos e inmunes a conflictos de arquitectura SO.
+  2. **Optimización de `Dockerfile`**: Bracket-syntax para rutas con espacios `["landing page/", "./landing page/"]`, inyección de variables de entorno de producción (`DATABASE_PATH`, `PYTHONPATH`, `PORT`), compilación determinista con `npm ci` y precarga canónica con `seed.py`.
+  3. **Ajuste de Blueprint `render.yaml`**: Configuración de Infraestructura como Código (IaC) con healthcheck en `/api/health`, variables de entorno y auto-deploy en push a `develop`.
+  4. **Creación de `build.sh`**: Script ejecutable de compilación para soporte nativo alternativo en caso de optar por un Web Service de Python en Render.
+  5. **Robustecimiento de `src/backend/main.py`**: Enlace del healthcheck `/api/health` con probe activo a SQLite (`SELECT 1`), soporte para acceso directo al pasaporte comercial escaneado vía QR (`/pasaporte/{lote_id}`) y fallbacks de Single Page Application.
+  6. **Enrutamiento React en `App.jsx`**: Lectura inicial de pathname para `/pasaporte/:lote_id` facilitando la apertura instantánea del lote tras el escaneo con cámara de celular.
+  7. **Redacción de `documentos/GUIA_DESPLIEGUE_RENDER.md`**: Guía operativa paso a paso para el jurado y equipo con arquitectura, opciones de despliegue, credenciales y comandos smoke tests (`curl`).
+
+### 16.2 Mapeo de Componentes Configurados
+
+| Componente / Archivo | % Aporte IA | % Aporte Humano | Rol del Estudiante / Justificación de Autoría |
+| :--- | :---: | :---: | :--- |
+| `.dockerignore` | 15% | 85% | Definición de exclusiones de archivos de compilación, caché y bases locales. |
+| `Dockerfile` | 20% | 80% | Configuración multi-stage Node/Python con uvicorn dinámico en `$PORT`. |
+| `render.yaml` | 15% | 85% | Blueprint de infraestructura declarativa con health check y plan free. |
+| `build.sh` | 15% | 85% | Automatización shell para instalación de pip, build de Vite y seed de base de datos. |
+| `src/backend/main.py` | 20% | 80% | Liveness probe a base de datos en `/api/health` y ruta web `/pasaporte/{lote_id}`. |
+| `src/frontend/src/App.jsx` | 15% | 85% | Enrutamiento condicional para visualización de pasaporte mediante path. |
+| `documentos/GUIA_DESPLIEGUE_RENDER.md` | 25% | 75% | Redacción de guía integral de operaciones y pruebas en vivo para Render. |
+| `tasks.md` | 10% | 90% | Registro del hito OPS-RENDER en el tablero Kanban del proyecto. |
+
+
 
 
 

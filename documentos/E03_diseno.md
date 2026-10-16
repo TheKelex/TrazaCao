@@ -38,6 +38,13 @@ sequenceDiagram
     BE-->>COMP: 200 OK (Origen, historia, estado LIBERADO. Costos internos OCULTOS)
     COMP->>BE: POST /api/public/leads (Interés de compra, ref='COMPRADOR_01')
     BE-->>COMP: 201 Created (Muestra solicitada con código de descuento)
+
+    Note over COMP,BE: 5. Catálogo Industrial & Botánico B2B de Mermas (RF13)
+    COMP->>BE: GET /api/subproductos/catalogo-industrial (Consulta pública)
+    BE-->>COMP: 200 OK (Cascarilla cosmética, biofertilizantes, extractos con pureza botánica)
+    COMP->>BE: POST /api/subproductos/solicitar-cotizacion-b2b (Empresa, kg requeridos)
+    BE->>DB: INSERT INTO AuditoriaLog (Intención B2B radicada)
+    BE-->>COMP: 201 Created (Folio oficial COT-B2B-XXXX generado)
 ```
 
 ---
@@ -50,6 +57,7 @@ flowchart TB
         V_OP["Vista Operador\n(Mobile-First: Recepción y Transformación)"]
         V_ADM["Dashboard Administrador\n(Inventario, Alertas, Costos, Auditoría, CSV)"]
         V_PUB["Ficha Comercial Pública\n(Pasaporte Digital QR + Referidos B2B)"]
+        V_CAT["Catálogo Dual B2B\n(Granos Certificados vs Mermas Industriales/Botánicas)"]
     end
 
     subgraph API["Capa de Servicios y Control de Acceso (Backend FastAPI)"]
@@ -60,10 +68,11 @@ flowchart TB
         R_AUDIT["Servicio Auditoría Inmutable (RF10)"]
         R_PUB["Router Consulta Pública Sanitizada (RF06)"]
         R_EXP["Router Exportación CSV (RF11)"]
+        R_SUB["Router Subproductos & Catálogo Industrial B2B (RF13)"]
     end
 
     subgraph DATA["Capa de Persistencia y Recuperación (Local SQLite)"]
-        DB_ENGINE[("Motor SQLite 3 (proud_cacao.db)")]
+        DB_ENGINE[("Motor SQLite 3 (cacao_dev.db)")]
         BACKUP_TOOL["Script backup.py / restore.py"]
     end
 
@@ -73,6 +82,8 @@ flowchart TB
     GUARD --> R_FINAN
     GUARD --> R_AUDIT
     V_PUB --> R_PUB
+    V_CAT --> R_SUB
+    V_CAT --> R_PUB
     GUARD --> R_EXP
 
     R_LOTES --> DB_ENGINE
@@ -81,6 +92,7 @@ flowchart TB
     R_AUDIT --> DB_ENGINE
     R_PUB --> DB_ENGINE
     R_EXP --> DB_ENGINE
+    R_SUB --> DB_ENGINE
     DB_ENGINE <--> BACKUP_TOOL
 ```
 
@@ -181,6 +193,14 @@ erDiagram
 - **Decisión**: Emplear **FastAPI con esquemas Pydantic**, garantizando validación estricta de tipos en tiempo de compilación/ejecución y generando documentación OpenAPI interactiva en `/docs` para la inspección directa del jurado.
 - **Alternativas Descartadas**: Express.js o Flask sin tipado fuerte, donde la validación manual de cada campo aumenta la probabilidad de omitir casos borde en 24 horas.
 - **Limitaciones y Trade-offs Asumidos**: Requiere entorno Python 3.10+, el cual está estandarizado en la documentación de instalación limpia.
+
+### ADR-04: Segregación Estratégica del Catálogo Botánico/Industrial B2B vs. Manufactura B2C de Derivados
+- **Contexto**: En la mesa directiva y técnica se debatió si la cooperativa debía elaborar productos terminados derivados de la merma (ej. formular y comercializar mascarillas cosméticas o embotellar biofertilizantes para jardinería) para capturar más margen.
+- **Decisión**: **Frontera estricta de especialización agroindustrial**. TrazaCao se concentra 100% en el tratamiento, fermentación, secado y tostión de cacao en grano. **NO competimos con nuestros clientes ni asumimos costos de formulación, envasado cosmético ni registro INVIMA de productos finales.** En su lugar, el sistema expone un **Catálogo Industrial & Botánico B2B** para vender la merma estandarizada, limpia y trazable como materia prima vegetal al por mayor a grandes corporaciones, laboratorios cosméticos y fabricantes de bioinsumos agrícolas.
+- **Alternativas Descartadas**:
+  1. *Creación de una línea B2C de mascarillas y biofertilizantes empaquetados*: Descartado por requerir registro cosmético INVIMA, cadena de empaque estéril, canales de distribución retail masivo y dilución del foco agroindustrial de la asociación.
+  2. *Tratamiento de la merma como residuo o pérdida irrecuperable*: Descartado porque destruye valor económico y desconoce que la cascarilla huilense es altamente cotizada por sus polifenoles y potasio.
+- **Limitaciones y Trade-offs Asumidos**: El precio por kilogramo como materia prima B2B ($2.500 - $6.000 COP/kg) es inferior al valor de un producto terminado de consumo masivo, pero elimina el 100% del riesgo de inventario retail, costos de mercadeo B2C y fricción regulatoria, asegurando compras recurrentes por volumen (toneladas) con grandes aliados industriales.
 
 ---
 
