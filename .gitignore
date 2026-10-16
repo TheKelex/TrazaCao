@@ -12,6 +12,9 @@ __pycache__/
 *.db-shm
 cacao_dev.db
 datos/backups/
+datos/respaldos/
+datos/cacao*.db
+!datos/respaldo_demo.db
 
 # Node / React / Vite
 node_modules/

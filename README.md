@@ -16,9 +16,16 @@
 ## 2. Instalación Limpia y Puesta en Marcha
 
 ### Opción Rápida en Windows (Script de un solo clic)
-```powershell
-.\start.bat
-```
+- **Modo 100% Offline Local**:
+  ```powershell
+  .\start.bat
+  ```
+- **Modo Híbrido (Local + Túnel Online para Escaneo QR en Celulares)**:
+  ```powershell
+  .\start_publico.bat
+  ```
+  *Inicializa la base de datos oficial, compila/sirve la aplicación y levanta un túnel público TLS seguro con Ngrok para que jurados y compradores escaneen el Pasaporte Digital desde cualquier celular.*
+
 
 ### Opción Manual Paso a Paso
 

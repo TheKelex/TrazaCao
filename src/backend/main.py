@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 from infra.database import init_db
 from routers.lotes import router as lotes_router
 from routers.transformaciones import router as trans_router
@@ -70,10 +70,71 @@ landing_page_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..",
 if os.path.isdir(landing_page_dir):
     app.mount("/landing", StaticFiles(directory=landing_page_dir, html=True), name="landing")
 
+# Servir el Frontend SPA compilado (React + Vite)
+frontend_dist = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "frontend", "dist"))
+dist_assets = os.path.join(frontend_dist, "assets")
+dist_images = os.path.join(frontend_dist, "images")
 
-@app.get("/", tags=["Health Check"])
+if os.path.isdir(dist_assets):
+    app.mount("/assets", StaticFiles(directory=dist_assets), name="dist_assets")
+if os.path.isdir(dist_images):
+    app.mount("/images", StaticFiles(directory=dist_images), name="dist_images")
+
+
+@app.get("/ficha", response_class=FileResponse, tags=["Público / Pasaporte QR"])
+@app.get("/pasaporte-web", response_class=FileResponse, tags=["Público / Pasaporte QR"])
+def ver_ficha():
+    """Sirve la Ficha Comercial y Experiencia Visual de Origen."""
+    index_landing = os.path.join(landing_page_dir, "index.html")
+    if os.path.exists(index_landing):
+        return FileResponse(index_landing, media_type="text/html")
+    dist_index = os.path.join(frontend_dist, "index.html")
+    return FileResponse(dist_index, media_type="text/html")
+
+
+@app.get("/favicon.svg", include_in_schema=False)
+def favicon():
+    fav = os.path.join(frontend_dist, "favicon.svg")
+    if os.path.exists(fav):
+        return FileResponse(fav)
+    return JSONResponse(status_code=404, content={"detail": "Not found"})
+
+
+@app.get("/trazacao-logo.png", include_in_schema=False)
+def trazacao_logo():
+    lg = os.path.join(frontend_dist, "trazacao-logo.png")
+    if os.path.exists(lg):
+        return FileResponse(lg)
+    return JSONResponse(status_code=404, content={"detail": "Not found"})
+
+
+@app.get("/trazacao-isotype.png", include_in_schema=False)
+def trazacao_isotype():
+    iso = os.path.join(frontend_dist, "trazacao-isotype.png")
+    if os.path.exists(iso):
+        return FileResponse(iso)
+    return JSONResponse(status_code=404, content={"detail": "Not found"})
+
+
+@app.get("/", tags=["UI / Frontend"])
+def root_spa(request: Request):
+    """Sirve la aplicación SPA interactiva de TrazaCao."""
+    dist_index = os.path.join(frontend_dist, "index.html")
+    if os.path.exists(dist_index):
+        return FileResponse(dist_index, media_type="text/html")
+    return {
+        "status": "online",
+        "sistema": "CacaoTrace Huila",
+        "version": "1.0.0",
+        "modo": "Offline-First Local SQLite",
+        "documentacion": "/docs",
+        "landing": "/landing",
+    }
+
+
 @app.get("/api", tags=["Health Check"])
 @app.get("/api/", tags=["Health Check"])
+@app.get("/api/health", tags=["Health Check"])
 def health_check():
     """Endpoint de salud del backend."""
     return {
@@ -82,4 +143,7 @@ def health_check():
         "version": "1.0.0",
         "modo": "Offline-First Local SQLite",
         "documentacion": "/docs",
+        "landing": "/landing",
+        "ficha_publica": "/ficha",
     }
+

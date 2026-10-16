@@ -390,6 +390,49 @@ Sube todos los commits con su respectiva bitacora documentada de IA
 5. **`dbf8e84`** — `fix(landing): preservar landing page en su carpeta oficial, eliminar duplicado en public y enlazar boton comercial al apartado del comprador`
 6. Commit de sincronización final de bitácora y publicación remota.
 
+---
+
+## 12. BITÁCORA DE DESPLIEGUE HÍBRIDO (OFFLINE-FIRST + TÚNEL TLS PÚBLICO)
+
+### 12.1 Contexto y Decisión Arquitectónica
+Para la evaluación final ante el comité de jurados de la Hackathon y compradores de cacao, el sistema requería dos capacidades operativas simultáneas:
+1. **Operación 100% Desconectada (Offline-First en Finca/Stand)**: Garantizar que la recepción de lotes, pesaje, cálculo de mermas y auditoría inmutable funcionen en SQLite local en la laptop sin depender del portal cautivo ni del ancho de banda de Oasis Plaza ($0 COP de costo cloud).
+2. **Exposición Pública Segura (Online para Escaneo Móvil de QR)**: Permitir que los jurados y evaluadores escaneen el Pasaporte Digital (`/ficha` o `/?modo=comprador`) directamente desde las cámaras de sus teléfonos móviles con datos celulares 4G/5G.
+
+**Decisión Humana / Corrección Crítica**: Se evaluó y descartó una migración a la nube (PaaS en Render/AWS con PostgreSQL), ya que violaría el requisito de resiliencia rural y arriesgaría caídas en stand. Se implementó una **arquitectura híbrida de proyección por túnel inverso (TLS Multiplexing con Ngrok)** hacia el puerto 8000 unificado de FastAPI, permitiendo que la base de datos viva localmente en disco con WAL mientras se proyecta una URL HTTPS pública fija (`https://saturday-resubmit-array.ngrok-free.dev`).
+
+### 12.2 Registro Literal de Prompts
+
+#### Prompt 12.1: Consulta y Evaluación de Herramientas de Despliegue Híbrido
+```text
+y brooooo, ahora llegamos a un punto donde necesitamos desplegar, que herramientas son aptas para un despliegue que logre correr el sistema tanto online como offline, o eso aun no lo podemos hacer? configuremos un tunel y bitacoreemos estas decisiones en la E8. Como opera este? Debemos tener scripts de levantamiento? Migracion? Cuales son las buenas practicas para realizarlo a travez de tuneles?
+```
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity.
+- **Skills Activadas**: `doc-coauthoring`, `webapp-testing`.
+- **Resultado Obtenido**: Análisis comparativo de despliegue offline (Hotspot LAN Wi-Fi con SQLite WAL) vs. nube tradicional vs. túnel inverso. Creación del script gestor en Python `scripts/iniciar_tunel.py`, `start_publico.bat` y directivas de cero migración de BD.
+
+#### Prompt 12.2: Sincronización de Última Versión y Ejecución del Despliegue
+```text
+Ya los compañeros subieron el ultimo commit y ya tendriamos la ultima version pero faltan algunas mejoras, entonces baja los cambios, prueba que todo este funcionando y crea todo listo para el despliegue y realizalo bro de una el despliegue!
+```
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity.
+- **Skills Activadas**: `doc-coauthoring`, `webapp-testing`.
+- **Resultado Obtenido**: 
+  - `git pull origin develop` exitoso incorporando autenticación PBKDF2, marca TrazaCao y landing page oficial.
+  - Ejecución de `seed.py` y verificación de las 24 pruebas automatizadas con `pytest` (100% aprobadas).
+  - Compilación de Vite en `dist/` en 976 ms y unificación del backend FastAPI para servir la SPA, landing page y APIs desde un único puerto.
+  - Puesta en marcha del túnel público HTTPS listo para demostración en vivo.
+
+### 12.3 Mapeo de Componentes del Despliegue
+
+| Componente / Archivo | % Aporte IA | % Aporte Humano | Rol del Estudiante / Justificación de Autoría |
+| :--- | :---: | :---: | :--- |
+| `scripts/iniciar_tunel.py` | 30% | 70% | Orquestador en Python: verifica la disponibilidad del backend local, inicializa el túnel seguro Ngrok, consulta la API de telemetría local (`localhost:4040`) e imprime los enlaces listos para escanear en celular. |
+| `start_publico.bat` | 20% | 80% | Lanzador de producción híbrida de un solo clic que inicializa la base de datos semilla oficial, arranca el servidor y proyecta el túnel público. |
+| `src/backend/main.py` | 25% | 75% | Unificación monolítica: montaje de la landing page canónica en `/landing`, frontend compilado React en `/assets` y entrega del SPA en la raíz `/` con documentación OpenAPI en `/docs`. |
+| `src/frontend/vite.config.js` | 15% | 85% | Habilitación de `allowedHosts: true` y escucha en `0.0.0.0` para permitir navegación externa sin bloqueos de host en modo desarrollo. |
+
+
 
 
 
