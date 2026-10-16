@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PackagePlus, Flame, ShieldAlert, QrCode, History, CheckCircle2, ChevronRight, Cpu, GitBranch } from 'lucide-react';
+import { PackagePlus, Flame, ShieldAlert, QrCode, History, CheckCircle2, ChevronRight, Cpu, GitBranch, Compass } from 'lucide-react';
 import { api } from './api/client';
 import { TopRoleBar } from './components/TopRoleBar';
 import { RecepcionView } from './components/RecepcionView';
@@ -8,6 +8,8 @@ import { TrazabilidadView } from './components/TrazabilidadView';
 import { AdminDashboard } from './components/AdminDashboard';
 import { PasaportePublico } from './components/PasaportePublico';
 import { AuditLogView } from './components/AuditLogView';
+import { TrazaCaoLogo } from './components/TrazaCaoLogo';
+import { CacaoExperienceLanding } from './components/landing/CacaoExperienceLanding';
 
 export function App() {
   const [auth, setAuth] = useState({
@@ -15,6 +17,7 @@ export function App() {
     user: 'Operador Rivera',
   });
 
+  const [modoVista, setModoVista] = useState('landing'); // 'landing' | 'gestion'
   const [activeTab, setActiveTab] = useState('recepcion');
   const [lotes, setLotes] = useState([]);
   const [loadingLotes, setLoadingLotes] = useState(false);
@@ -63,25 +66,40 @@ export function App() {
   };
 
   const pestañas = [
-    { id: 'recepcion', label: '1. Recepción & Acopio', icon: PackagePlus, tag: 'RF01' },
-    { id: 'transformacion', label: '2. Transformación & Merma', icon: Flame, tag: 'RF02, RF04' },
-    { id: 'trazabilidad', label: '3. Trazabilidad Integral', icon: GitBranch, tag: 'RF03' },
-    { id: 'admin', label: '4. Admin & Control Calidad', icon: ShieldAlert, tag: 'RF07, RF09, RF11, RF12' },
-    { id: 'pasaporte', label: '5. Pasaporte Digital QR', icon: QrCode, tag: 'RF06' },
-    { id: 'auditoria', label: '6. Auditoría Inmutable', icon: History, tag: 'RF10' },
+    { id: 'recepcion', label: '1. Recepción y Compra', icon: PackagePlus },
+    { id: 'transformacion', label: '2. Transformación y Beneficio', icon: Flame },
+    { id: 'trazabilidad', label: '3. Cadena de Custodia', icon: GitBranch },
+    { id: 'admin', label: '4. Calidad y Administración', icon: ShieldAlert },
+    { id: 'pasaporte', label: '5. Pasaporte Digital QR', icon: QrCode },
+    { id: 'auditoria', label: '6. Bitácora de Operaciones', icon: History },
   ];
+
+  if (modoVista === 'landing') {
+    return (
+      <CacaoExperienceLanding
+        lotes={lotes}
+        onEntrarGestion={() => setModoVista('gestion')}
+        onVerPasaporte={(id) => {
+          setLotePasaporteId(id);
+          setActiveTab('pasaporte');
+          setModoVista('gestion');
+        }}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-stone-950 text-stone-100 flex flex-col font-sans selection:bg-amber-500 selection:text-stone-950">
-      {/* Barra Superior con Selector de Rol y Prueba 403 */}
+      {/* Barra Superior con Selector de Rol y Conexión */}
       <TopRoleBar
         auth={auth}
         setAuth={setAuth}
         onAutocompletarDemo={handleAutocompletarDemo}
         onRefreshAll={fetchLotes}
+        onVolverLanding={() => setModoVista('landing')}
       />
 
-      {/* Navegación por Pestañas */}
+      {/* Navegación por Pestañas Comerciales */}
       <nav className="bg-stone-900 border-b border-stone-800 px-2 sm:px-4 py-2 sticky top-[57px] z-40 backdrop-blur-md bg-stone-900/95">
         <div className="max-w-7xl mx-auto flex items-center gap-1.5 overflow-x-auto py-1">
           {pestañas.map((p) => {
@@ -91,7 +109,7 @@ export function App() {
               <button
                 key={p.id}
                 onClick={() => setActiveTab(p.id)}
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                   esActiva
                     ? 'bg-amber-600 text-stone-950 shadow-md font-bold'
                     : 'text-stone-400 hover:text-stone-200 hover:bg-stone-800'
@@ -99,11 +117,6 @@ export function App() {
               >
                 <Icon className={`w-4 h-4 ${esActiva ? 'text-stone-950' : 'text-amber-500/80'}`} />
                 <span>{p.label}</span>
-                <span className={`text-[10px] px-1.5 py-0.5 rounded ${
-                  esActiva ? 'bg-stone-950/20 text-stone-950' : 'bg-stone-950 text-stone-400'
-                }`}>
-                  {p.tag}
-                </span>
               </button>
             );
           })}
@@ -158,17 +171,19 @@ export function App() {
         )}
       </main>
 
-      {/* Pie de Página Institucional */}
-      <footer className="bg-stone-950 border-t border-stone-800 py-3.5 px-4 text-xs text-stone-400">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-stone-300">TrazaCao Huila</span>
-            <span>· II Hackathon DEVURITY - USCO</span>
+      {/* Pie de Página Institucional y Comercial */}
+      <footer className="bg-stone-950 border-t border-stone-800 py-4 px-4 text-xs text-stone-400">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <TrazaCaoLogo variant="isotype" size="sm" />
+            <span className="font-bold text-stone-200">TrazaCao Huila</span>
             <span className="text-stone-600">|</span>
-            <span className="text-emerald-400 font-mono text-[11px]">Onion Architecture + SQLite WAL</span>
+            <span className="text-stone-400 text-[11px]">Plataforma Integral de Trazabilidad Cacaotera y Denominación de Origen</span>
           </div>
-          <div className="text-[11px] text-stone-400">
-            Mesa Nacional de Trazabilidad · Fórmulas exactas en Decimal Python · Respaldo caliente &lt; 20ms
+          <div className="text-[11px] text-stone-400 flex items-center gap-3">
+            <span className="text-emerald-400/90 font-medium">✓ Cumplimiento Normativo EUDR & NTC 1252</span>
+            <span className="text-stone-600">·</span>
+            <span>Departamento del Huila, Colombia</span>
           </div>
         </div>
       </footer>

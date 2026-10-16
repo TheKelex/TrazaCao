@@ -1,15 +1,39 @@
 @import "tailwindcss";
 
 :root {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-display: 'Cinzel', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  
+  /* Paleta Editorial Cacao Experience */
+  --cacao-bosque: #234737;
+  --cacao-tierra: #3C2418;
+  --cacao-marfil: #FAF7F0;
+  --cacao-ambar: #B77A3C;
+  --cacao-crema: #E9DCC5;
+  --cacao-oro: #D4AF37;
+  --cacao-noche: #16120E;
+}
+
+.font-serif-editorial {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-display-cacao {
+  font-family: 'Cinzel', Georgia, serif;
+}
+
+.font-sans-clean {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
 body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background-color: #1c1917; /* stone-900 */
-  color: #f5f5f4; /* stone-100 */
+  background-color: #16120E; /* cacao-noche */
+  color: #FAF7F0; /* cacao-marfil */
 }
 
 /* Custom scrollbar for clean dashboard view */

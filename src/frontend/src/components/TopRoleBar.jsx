@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, UserCheck, AlertTriangle, RefreshCw, Zap, CheckCircle2, Lock, Radio } from 'lucide-react';
+import { Shield, UserCheck, AlertTriangle, RefreshCw, Zap, CheckCircle2, Lock, Radio, Compass } from 'lucide-react';
 import { api } from '../api/client';
 
-export function TopRoleBar({ auth, setAuth, onAutocompletarDemo, onRefreshAll }) {
+import { TrazaCaoLogo } from './TrazaCaoLogo';
+
+export function TopRoleBar({ auth, setAuth, onAutocompletarDemo, onRefreshAll, onVolverLanding }) {
   const [test403Modal, setTest403Modal] = useState(null);
   const [testing403, setTesting403] = useState(false);
   const [backendOnline, setBackendOnline] = useState(null);
@@ -43,7 +45,7 @@ export function TopRoleBar({ auth, setAuth, onAutocompletarDemo, onRefreshAll })
     } catch (err) {
       setTest403Modal({
         tipo: '403_interceptado',
-        titulo: `HTTP 403 Forbidden - Acceso Denegado por RBAC`,
+        titulo: `Acceso Restringido - Control de Roles de Seguridad`,
         mensaje: err.message,
         codigo: err.status || 403,
       });
@@ -55,59 +57,68 @@ export function TopRoleBar({ auth, setAuth, onAutocompletarDemo, onRefreshAll })
   return (
     <header className="bg-stone-950 border-b border-amber-950/60 sticky top-0 z-50 px-4 py-2.5 shadow-md">
       <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-        {/* Brand & Context */}
+        {/* Identidad de Marca TrazaCao & Estado */}
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-amber-900/40 border border-amber-700/60 flex items-center justify-center p-1.5 shadow-inner">
-            <svg viewBox="0 0 64 64" fill="none" className="w-full h-full">
-              <path d="M32 6C18 14 10 30 16 48C20 60 30 62 32 62C34 62 44 60 48 48C54 30 46 14 32 6Z" fill="#78350F" stroke="#D97706" strokeWidth="2.5"/>
-              <path d="M32 6V62" stroke="#B45309" strokeWidth="2" strokeDasharray="3 3"/>
-              <circle cx="32" cy="6" r="3" fill="#15803D"/>
-            </svg>
-          </div>
-          <div>
+          <TrazaCaoLogo variant="dark" size="md" />
+          <div className="border-l border-stone-800 pl-3 hidden sm:block">
             <div className="flex items-center gap-2">
-              <span className="font-bold text-amber-400 text-lg tracking-tight">TrazaCao</span>
-              <span className="text-xs bg-amber-950 text-amber-300 font-medium px-2 py-0.5 rounded border border-amber-800/80">Huila Agro</span>
+              <span className="text-[11px] bg-amber-950/80 text-amber-300 font-semibold px-2 py-0.5 rounded border border-amber-800/80">
+                Huila Agro
+              </span>
               {backendOnline === true && (
-                <span className="text-[11px] text-emerald-400 flex items-center gap-1 font-mono bg-emerald-950/60 border border-emerald-800 px-2 py-0.5 rounded" title="FastAPI respondiendo en 127.0.0.1:8000">
+                <span className="text-[11px] text-emerald-400 flex items-center gap-1.5 bg-emerald-950/60 border border-emerald-800/80 px-2 py-0.5 rounded" title="Base de datos y sistema local en línea">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                  100% Offline (SQLite WAL) · Backend Activo
+                  Operación Local Autónoma · En Línea
                 </span>
               )}
               {backendOnline === false && (
                 <span 
                   onClick={handleRefresh}
-                  className="text-[11px] text-rose-300 flex items-center gap-1 font-mono bg-rose-950 border border-rose-800 px-2 py-0.5 rounded cursor-pointer hover:bg-rose-900 transition-colors" 
-                  title="Backend inactivo en 127.0.0.1:8000. Inicia uvicorn o ejecuta start.bat. Clic para reintentar."
+                  className="text-[11px] text-rose-300 flex items-center gap-1.5 bg-rose-950 border border-rose-800 px-2 py-0.5 rounded cursor-pointer hover:bg-rose-900 transition-colors" 
+                  title="Sistema desconectado. Clic para reintentar."
                 >
                   <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
-                  Backend Desconectado (8000)
+                  Servidor Desconectado
                 </span>
               )}
               {backendOnline === null && (
-                <span className="text-[11px] text-stone-400 flex items-center gap-1 font-mono">
+                <span className="text-[11px] text-stone-400 flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-stone-500"></span>
                   Conectando...
                 </span>
               )}
             </div>
-            <p className="text-[11px] text-stone-400 leading-none">Mesa Nacional de Trazabilidad · NTC 1252 / EUDR</p>
+            <p className="text-[11px] text-stone-400 leading-none mt-1">
+              Plataforma de Trazabilidad Cacaotera y Denominación de Origen · NTC 1252 / EUDR
+            </p>
           </div>
         </div>
 
-        {/* Demo Controls & Juror Action Bar */}
+        {/* Barra de Acciones y Control de Perfil */}
         <div className="flex flex-wrap items-center gap-2">
-          {/* Quick Autocomplete Demo Button */}
+          {/* Botón Volver a la Experiencia Cacao */}
+          {onVolverLanding && (
+            <button
+              onClick={onVolverLanding}
+              className="flex items-center gap-1.5 text-xs bg-[#FAF7F0]/10 hover:bg-[#FAF7F0]/20 text-[#FAF7F0] border border-[#D4AF37]/50 px-3 py-1.5 rounded-full transition-all font-medium cursor-pointer shadow-sm active:scale-95"
+              title="Volver a la landing pública inmersiva y scrollytelling del Cacao"
+            >
+              <Compass className="w-3.5 h-3.5 text-[#D4AF37]" />
+              <span>Experiencia Cacao</span>
+            </button>
+          )}
+
+          {/* Botón Cargar Caso de Demostración */}
           <button
             onClick={onAutocompletarDemo}
             className="flex items-center gap-1.5 text-xs bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-600/50 px-2.5 py-1.5 rounded-md transition-all font-medium cursor-pointer shadow-sm active:scale-95"
-            title="Pre-cargar datos oficiales del caso CAC001 (Rivera 100 kg)"
+            title="Pre-cargar caso comercial de demostración (Lote CAC001 Rivera 100 kg)"
           >
             <Zap className="w-3.5 h-3.5 text-amber-400" />
-            <span>Autocompletar Lote Demo</span>
+            <span>Cargar Caso Demo</span>
           </button>
 
-          {/* RBAC Role Selector */}
+          {/* Selector de Rol Comercial */}
           <div className="flex items-center bg-stone-900 border border-stone-700 rounded-lg p-0.5">
             <button
               onClick={() => alternarRol('OPERADOR')}
@@ -133,22 +144,11 @@ export function TopRoleBar({ auth, setAuth, onAutocompletarDemo, onRefreshAll })
             </button>
           </div>
 
-          {/* Test 403 Button (Juror Proof) */}
-          <button
-            onClick={ejecutarTest403}
-            disabled={testing403}
-            className="flex items-center gap-1.5 text-xs bg-rose-950/40 hover:bg-rose-900/50 text-rose-300 border border-rose-800/60 px-2.5 py-1.5 rounded-md transition-all font-medium cursor-pointer disabled:opacity-50"
-            title="Prueba en vivo ante el jurado de rechazo HTTP 403 Forbidden cuando el rol no es Admin"
-          >
-            <Lock className="w-3.5 h-3.5 text-rose-400" />
-            <span>Probar Acceso Denegado (Test 403)</span>
-          </button>
-
-          {/* Refresh Data */}
+          {/* Refrescar Datos */}
           <button
             onClick={handleRefresh}
             className="p-1.5 text-stone-400 hover:text-stone-200 bg-stone-900 hover:bg-stone-800 border border-stone-700 rounded-md transition-all cursor-pointer"
-            title="Refrescar catálogo, saldos y verificar backend"
+            title="Actualizar datos de bodega y verificar conexión"
           >
             <RefreshCw className="w-3.5 h-3.5" />
           </button>
