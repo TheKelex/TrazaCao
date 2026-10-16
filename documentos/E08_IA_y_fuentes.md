@@ -757,3 +757,58 @@ soluciona rapido para el despliegue, traelo que este en el repositorio y vamos a
 | `vercel.json` (raíz) | 20% | 80% | Configuración de proxy inverso hacia Render Cloud y soporte de rutas SPA. |
 | `src/frontend/vercel.json` | 15% | 85% | Compatibilidad nativa para proyectos con Root Directory configurado en `src/frontend`. |
 | `documentos/GUIA_DESPLIEGUE_VERCEL.md` | 25% | 75% | Documentación detallada del procedimiento de despliegue, configuración de variables de entorno y resolución de errores. |
+
+---
+
+## 20. ITERACIÓN 20: EXPANSIÓN MASIVA DE SEMILLA (SEED) MULTILOTE Y POBLADO DE CATÁLOGO B2B PARA PRUEBAS INTEGRALES DE COMPRADORES
+
+- **Fecha y Hora**: 2026-10-16 11:40 COT
+- **Objetivo**: Expandir la base de datos semilla (`seed.py`) incorporando múltiples lotes de cacao (`CAC001` a `CAC006`), transformaciones agroindustriales con generación trazable de merma (75.00 kg acumulados), activación de 9 referencias botánicas especializadas en el catálogo B2B (cosmética, bioinsumos, fitofármacos) y registro de solicitudes canónicas de cotización B2B en la bitácora inmutable de auditoría para pruebas de compradores internacionales.
+
+### 20.1 Registro Literal de Prompts
+
+#### Prompt 20.1: Solicitud de Expansión de Semillas para Testeo de Compradores
+```text
+tambn quiero que corras una seed, que nos permita tner mas registros de esos productos para testear como compradores si el flujo es el correcto
+```
+
+#### Prompt 20.2: Continuidad y Agilización del Desarrollo
+```text
+continue working, agiliza el desarrollo, si quieres despliega agentes que permitan construir acorde a todas las reglas establecidads para maximizar desarrollo
+```
+
+- **Modelo Receptor**: Gemini 3.8 Flash (High) / Antigravity Agentic Assistant.
+- **Skills Activadas**: `doc-coauthoring`, `webapp-testing`, `frontend-design`.
+- **Resultado Obtenido**:
+  1. **Expansión de la Semilla Relacional (`src/backend/seed.py`)**:
+     - 6 Lotes activos georreferenciados en el Huila (`CAC001` a `CAC006`) con productores de Rivera, Campoalegre y Algeciras, variedades San Vicente 41, Fedecacao Arauquita, Criollo Fino y CCN-51, y certificaciones de calidad NTC 1252.
+     - 5 Transformaciones de beneficio agroindustrial registradas totalizando **75.00 kg de merma limpia recuperada** (cascarilla micronizada, biomasa alta en K y fracciones de polifenoles).
+     - 3 Solicitudes B2B canónicas precargadas en `audit_logs` con folios inmutables `COT-B2B-XXXXXXXX` (BioCosmética Andina S.A.S., FertiOrgánicos del Huila Ltda. y Laboratorios Fitoterapéuticos del Sur) para validar la trazabilidad del comprador.
+  2. **Enriquecimiento del Catálogo B2B Multilote (`src/backend/routers/subproductos.py`)**:
+     - Soporte para 9 referencias comerciales activas:
+       - `SUB-COSM-01`: Cascarilla Micronizada Grado Cosmético (Rivera).
+       - `SUB-AGRO-01`: Biomasa Orgánica para Biofertilizantes y Compostaje (Rivera).
+       - `SUB-BOTA-01`: Cascarilla Seleccionada para Extractos y Tisanas Funcionales (Rivera).
+       - `SUB-COSM-02`: Harina Botánica para Dermocosmética & Mascarillas SPA (Campoalegre).
+       - `SUB-AGRO-02`: Biomasa Alta en Potasio para Biofertilizantes Líquidos (Rivera).
+       - `SUB-BOTA-02`: Cascarilla Tostada para Extractos Polifenólicos (Algeciras).
+       - `SUB-COSM-03`: Micro-Exfoliante Facial 100% Biodegradable (Algeciras).
+       - `SUB-AGRO-03`: Enmienda Orgánica de Biomasa de Cacao (Biochar) (Campoalegre).
+       - `SUB-BOTA-03`: Fracción Botánica Rica en Teobromina para Bebidas Funcionales (Campoalegre).
+     - Compatibilidad total backward con `SUB-COSM-01`, `SUB-AGRO-01` y `SUB-BOTA-01` para preservar la invariante de las pruebas canónicas.
+  3. **Ampliación de Pruebas Automatizadas (`tests/test_subproductos_catalogo.py`)**:
+     - Validación de catálogo enriquecido ($\ge 3$ a 9 referencias), cobertura geográfica en Huila y vinculación genealógica multilote.
+     - Suite global de pruebas aprobada al 100% (38/38 pruebas pasando en 7.09s).
+  4. **Persistencia y Respaldo Atómico**:
+     - Ejecución limpia de `seed.py` sobre `cacao_dev.db` y regeneración del respaldo `datos/respaldo_demo.db`.
+
+### 20.2 Mapeo de Componentes Configurados y Aporte de Autoría
+
+| Componente / Archivo | % Aporte IA | % Aporte Humano | Rol del Estudiante / Justificación de Autoría |
+| :--- | :---: | :---: | :--- |
+| `src/backend/seed.py` | 20% | 80% | Modelado de los 6 lotes cacaoteros del Huila, 5 transformaciones industriales con 75 kg de merma y solicitudes B2B auditadas. |
+| `src/backend/routers/subproductos.py` | 20% | 80% | Despliegue de 6 nuevas referencias industriales B2B (mascarillas, biol, extractos) vinculadas a los lotes reales. |
+| `tests/test_subproductos_catalogo.py` | 15% | 85% | Casos de prueba para validar catálogo multilote, procedencias municipales y radicación de solicitudes. |
+| `datos/respaldo_demo.db` | 10% | 90% | Respaldo atómico de SQLite con el dataset extendido para demostraciones offline y en la nube. |
+| `tasks.md` | 10% | 90% | Actualización del tablero de control con el hito `SEED-EXP-B2B` e integración completa de `INT-DEV2`. |
+| `documentos/E08_IA_y_fuentes.md` | 15% | 85% | Registro cronológico obligatorio de prompts literales, modelos, skills y matrices de autoría. |

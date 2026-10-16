@@ -29,7 +29,7 @@
 ```
 +--------------------------------------------------------------------------------------------------+
 | RESUMEN DE PROGRESO DEL PROYECTO (FASE DESPLIEGUE CLOUD & PRESENTACIÓN)                         |
-| Total Tareas Rastreadas: 25 | Terminadas (DoD): 22 (88.0%) | En Integración: 1 | Backlog: 2      |
+| Total Tareas Rastreadas: 26 | Terminadas (DoD): 24 (92.3%) | En Integración: 0 | Backlog: 2      |
 +--------------------------------------------------------------------------------------------------+
 ```
 
@@ -37,11 +37,11 @@
 +-----------------------+-----------------------+-----------------------+--------------------------+
 | 1. BACKLOG (Pendiente)| 2. EN INTEGRACIÓN     | 3. PRUEBAS & QA       | 4. TERMINADO (DoD Hecho) |
 +-----------------------+-----------------------+-----------------------+--------------------------+
-| • DOC-E06 (Dev 4)     | • INT-DEV2:           | • Verificación en vivo| • DOC-E01 (Problema MNTC)|
-|   Prueba Usabilidad   |   Merge de rama       |   del MVP local       | • DOC-E02 (12 Gherkins)  |
-|   Externa en stand    |   feature/security-qa |   (http://localhost:  | • DOC-E03 (Onion + ADRs) |
-|                       |   (tests 26/26 de     |    5173 / :8000)      | • DOC-API (Contratos)    |
-| • DOC-E09 (Dev 4)     |    Dev 2)             |                       | • PLN-D1 a PLN-D4 (DoR)  |
+| • DOC-E06 (Dev 4)     | (Ninguna en curso)    | • Verificación en vivo| • DOC-E01 (Problema MNTC)|
+|   Prueba Usabilidad   |                       |   del MVP local       | • DOC-E02 (12 Gherkins)  |
+|   Externa en stand    |                       |   (http://localhost:  | • DOC-E03 (Onion + ADRs) |
+|                       |                       |    5173 / :8000)      | • DOC-API (Contratos)    |
+| • DOC-E09 (Dev 4)     |                       |                       | • PLN-D1 a PLN-D4 (DoR)  |
 |   Diapositivas y      |                       |                       | • COD-B01 (SQLite WAL)   |
 |   guion Pitch 5 min   |                       |                       | • COD-B02 (Motor Decimal)|
 |                       |                       |                       | • COD-OPS (Backup/Restore)|
@@ -52,6 +52,9 @@
 |                       |                       |                       | • DOC-E08 (Bitácora IA)  |
 |                       |                       |                       | • FIX-404 / FIX-SCHEMA   |
 |                       |                       |                       | • COD-RF12 (Balance Eco) |
+|                       |                       |                       | • FEAT-CAT-B2B (Catálogo)|
+|                       |                       |                       | • INT-DEV2 (Seguridad QA)|
+|                       |                       |                       | • SEED-EXP-B2B (Seed B2B)|
 +-----------------------+-----------------------+-----------------------+--------------------------+
 ```
 
@@ -143,7 +146,8 @@
 | **OPS-RENDER** | Configuración Integral de Despliegue en Render Cloud (Dockerfile, Blueprint, Healthcheck & Guía) | Equipo Completo | **DONE (DoD)** | `Dockerfile`, `render.yaml`, `build.sh`, `.dockerignore`, `GUIA_DESPLIEGUE_RENDER.md` |
 | **FEAT-CAT-B2B** | Refactorización Estratégica: Catálogo Industrial y Botánico B2B de Mermas | Equipo Completo | **DONE (DoD)** | `subproductos.py`, `calculos.py`, `CatalogoLotesPublico.jsx`, `test_subproductos_catalogo.py`, SDD/ADR-04 |
 | **ANIM-20S** | Calibración de la Animación Cinemática del Landing a 20 Segundos | Equipo Completo | **DONE (DoD)** | `index.html`, `demo-scrollytelling.html`, `CacaoExperienceLanding.jsx` |
-| **INT-DEV2**| Integración de suite de seguridad Dev 2 | Dev 1 & Dev 2 | **EN INTEGRACIÓN** | Rama `feature/security-qa` |
+| **INT-DEV2**| Integración de suite de seguridad Dev 2 | Dev 1 & Dev 2 | **DONE (DoD)** | Merge exitoso de `feature/security-qa`, 38/38 pruebas pytest passing |
+| **SEED-EXP-B2B** | Expansión Masiva de Semillas (6 lotes, 5 transf, 75kg merma, 9 refs B2B) | Dev 1 & Dev 4 | **DONE (DoD)** | `seed.py`, `subproductos.py`, `test_subproductos_catalogo.py`, `respaldo_demo.db` |
 | **DOC-E06** | Informe de Usabilidad Externa en Stand | Dev 4 | **BACKLOG** | Asignado a Dev 4 |
 | **DOC-E09** | Propuesta Comercial y Diapositivas Pitch | Dev 4 | **BACKLOG** | Asignado a Dev 4 |
 

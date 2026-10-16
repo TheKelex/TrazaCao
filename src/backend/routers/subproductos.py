@@ -53,10 +53,12 @@ def consultar_catalogo_industrial_botanico(db: Session = Depends(get_db)):
     fracciones = desglose["fracciones_b2b"]
 
     # Identificar lotes de origen activos
-    primer_lote = db.query(Lote).filter(Lote.id == "CAC001").first()
+    lotes_map = {l.id: l for l in db.query(Lote).all()}
+    primer_lote = lotes_map.get("CAC001")
     lote_id = primer_lote.id if primer_lote else "CAC001"
     muni_origen = f"{primer_lote.origen}, Huila" if primer_lote else "Rivera, Huila"
 
+    # Items canónicos base para CAC001 (compatibilidad estricta con contratos de prueba)
     items: List[SubproductoBotanicoItem] = [
         SubproductoBotanicoItem(
             id="SUB-COSM-01",
@@ -95,6 +97,116 @@ def consultar_catalogo_industrial_botanico(db: Session = Depends(get_db)):
             aplicaciones_industriales=fracciones["botanico_extractos"]["aplicaciones_industriales"],
         ),
     ]
+
+    # Catálogo especializado enriquecido por lote de origen para pruebas de compradores
+    catalogo_extensiones = [
+        {
+            "lote_id": "CAC002",
+            "id": "SUB-COSM-02",
+            "nombre": "Harina Botánica de Cascarilla para Dermocosmética & Mascarillas SPA",
+            "sector": "Industria Cosmética y Dermocosmética",
+            "precio": Decimal("5800.00"),
+            "pureza": "99.8% micronizado fino < 120 micras de cacao seleccionado",
+            "humedad": Decimal("5.50"),
+            "aplicaciones": [
+                "Mascarillas faciales purificantes de cacao y arcilla andina",
+                "Jabonería botánica artesanal grado dermatológico",
+                "Formulación de ungüentos y bálsamos nutritivos",
+            ],
+        },
+        {
+            "lote_id": "CAC004",
+            "id": "SUB-AGRO-02",
+            "nombre": "Biomasa de Cascarilla Alta en Potasio para Biofertilizantes Líquidos",
+            "sector": "Agroquímica Orgánica y Biofertilizantes",
+            "precio": Decimal("2700.00"),
+            "pureza": "100% residuo vegetal de tostión controlada, rico en K y P",
+            "humedad": Decimal("6.20"),
+            "aplicaciones": [
+                "Biol fermentado y lixiviados para fertilización foliar",
+                "Compostaje rápido y bioactivación de microorganismos de montaña",
+                "Acondicionador de suelos para cafetales y frutales del Huila",
+            ],
+        },
+        {
+            "lote_id": "CAC005",
+            "id": "SUB-BOTA-02",
+            "nombre": "Cascarilla Tostada Selección Huila para Extractos Polifenólicos",
+            "sector": "Extractos Botánicos, Fitofármacos y Nutracéutica",
+            "precio": Decimal("6200.00"),
+            "pureza": "Grado alimentario / fitofármaco, alta concentración de flavonoides",
+            "humedad": Decimal("5.10"),
+            "aplicaciones": [
+                "Extracción industrial de polifenoles y teobromina bioactiva",
+                "Tisanas e infusiones funcionales de cacao de origen",
+                "Suplementos nutracéuticos antioxidantes y cápsulas botánicas",
+            ],
+        },
+        {
+            "lote_id": "CAC005",
+            "id": "SUB-COSM-03",
+            "nombre": "Micro-Exfoliante Facial 100% Biodegradable (Sustituto de Microplásticos)",
+            "sector": "Industria Cosmética y Dermocosmética",
+            "precio": Decimal("5400.00"),
+            "pureza": "Granulometría esférica no abrasiva, 99.6% vegetal pura",
+            "humedad": Decimal("5.40"),
+            "aplicaciones": [
+                "Exfoliantes faciales suaves biodegradables (cero microplásticos)",
+                "Mascarillas exfoliantes cremosas con aroma natural a cacao",
+                "Sales de baño botánicas y exfoliación corporal en cabina",
+            ],
+        },
+        {
+            "lote_id": "CAC006",
+            "id": "SUB-AGRO-03",
+            "nombre": "Enmienda Orgánica de Biomasa de Cacao (Biochar y Regeneración de Suelo)",
+            "sector": "Agroquímica Orgánica y Biofertilizantes",
+            "precio": Decimal("2400.00"),
+            "pureza": "Materia orgánica compostable libre de patógenos y agroquímicos",
+            "humedad": Decimal("6.80"),
+            "aplicaciones": [
+                "Producción de biochar y retención hídrica en suelos degradados",
+                "Sustrato orgánico para viveros y propagación de plántulas",
+                "Compostaje en biorreactores y enmienda húmica para agricultura limpia",
+            ],
+        },
+        {
+            "lote_id": "CAC006",
+            "id": "SUB-BOTA-03",
+            "nombre": "Fracción Botánica Rica en Teobromina para Bebidas Funcionales",
+            "sector": "Extractos Botánicos, Fitofármacos y Nutracéutica",
+            "precio": Decimal("6500.00"),
+            "pureza": "Grado alimentario estandarizado, tostión ligera aromática",
+            "humedad": Decimal("4.90"),
+            "aplicaciones": [
+                "Bebidas energizantes naturales a base de teobromina de cacao",
+                "Extractos botánicos concentrados para mixología y repostería",
+                "Fitoterápicos tonificantes y antioxidantes",
+            ],
+        },
+    ]
+
+    for ext in catalogo_extensiones:
+        lote_obj = lotes_map.get(ext["lote_id"])
+        if lote_obj:
+            trans_lote = [t for t in transformaciones if t.lote_id == ext["lote_id"]]
+            merma_lote = sum((t.kg_cascarilla for t in trans_lote), Decimal("0.00"))
+            kg_disp = (merma_lote * Decimal("0.35")).quantize(Decimal("0.01")) if merma_lote > 0 else Decimal("6.00")
+
+            items.append(
+                SubproductoBotanicoItem(
+                    id=ext["id"],
+                    nombre=ext["nombre"],
+                    sector_industrial=ext["sector"],
+                    lote_origen_id=lote_obj.id,
+                    municipio_origen=f"{lote_obj.origen}, Huila",
+                    kg_disponibles=kg_disp,
+                    precio_b2b_kg_cop=ext["precio"],
+                    pureza_botanica=ext["pureza"],
+                    humedad_porcentaje=ext["humedad"],
+                    aplicaciones_industriales=ext["aplicaciones"],
+                )
+            )
 
     return CatalogoSubproductosResponse(
         principio_negocio=desglose["principio_negocio_b2b"],

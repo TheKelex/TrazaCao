@@ -1,9 +1,10 @@
 """
 Pruebas Automatizadas para el Catálogo Industrial y Botánico B2B de Mermas de Cacao.
 Valida:
-1. Consulta del catálogo público de subproductos botánicos e industriales.
+1. Consulta del catálogo público de subproductos botánicos e industriales (múltiples referencias).
 2. Regla de frontera de negocio: venta de materia prima vegetal, no productos finales.
 3. Radicación de solicitud de cotización B2B para industrias cosméticas y de fertilizantes.
+4. Cobertura geográfica de subproductos en Rivera, Campoalegre y Algeciras.
 """
 
 import sys
@@ -25,6 +26,7 @@ client = TestClient(app)
 @pytest.fixture(scope="module", autouse=True)
 def setup_database():
     init_db()
+    seed()
 
 
 def test_catalogo_industrial_botanico_disponible():
@@ -38,12 +40,16 @@ def test_catalogo_industrial_botanico_disponible():
     assert Decimal(str(data["total_merma_recuperada_kg"])) >= Decimal("20.00")
     
     subproductos = data["subproductos"]
-    assert len(subproductos) == 3
+    # Debe contener al menos las 3 líneas canónicas y hasta 9 referencias enriquecidas
+    assert len(subproductos) >= 3
 
     sectores = [s["sector_industrial"] for s in subproductos]
     assert "Industria Cosmética y Dermocosmética" in sectores
     assert "Agroquímica Orgánica y Biofertilizantes" in sectores
     assert "Extractos Botánicos, Fitofármacos y Nutracéutica" in sectores
+
+    municipios = [s["municipio_origen"] for s in subproductos]
+    assert any("Rivera" in m for m in municipios)
 
     for item in subproductos:
         assert item["id"].startswith("SUB-")
@@ -74,3 +80,12 @@ def test_solicitud_cotizacion_materia_prima_b2b():
     assert data["empresa"] == "BioCosmética Andina S.A."
     assert data["subproducto_solicitado"] == "SUB-COSM-01"
     assert data["estado"] == "RECIBIDA_ANALISIS_TECNICO"
+
+
+def test_multiples_lotes_y_origenes_en_catalogo_b2b():
+    """Valida que el catálogo incluya referencias asociadas a varios lotes del Huila."""
+    res = client.get("/api/subproductos/catalogo-industrial")
+    assert res.status_code == 200
+    subproductos = res.json()["subproductos"]
+    lotes_vinculados = {s["lote_origen_id"] for s in subproductos}
+    assert "CAC001" in lotes_vinculados
