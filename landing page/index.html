@@ -1176,8 +1176,8 @@
 
         const startP = masterTl.progress();
         const remainingP = 1.0 - startP;
-        // Velocidad cinematográfica optimizada tipo documental (~14 segundos totales)
-        const tourDuration = Math.max(4, remainingP * 14);
+        // Velocidad cinematográfica optimizada tipo documental (20 segundos totales)
+        const tourDuration = Math.max(5, remainingP * 20);
 
         const animTracker = { p: startP };
         tourState.tween = gsap.to(animTracker, {
