@@ -24,6 +24,7 @@ En estricto cumplimiento del **Numeral 4 del Reglamento Técnico de la Hackathon
 | **Horas 04–05**<br>(21:00–22:00) | **Construcción del Núcleo de Dominio & Persistencia** | `src/backend/domain/calculos.py`<br>`src/backend/infra/database.py`<br>`src/backend/models.py`<br>`src/backend/services/inventario.py` | Scaffolding de funciones matemáticas, modelos SQLAlchemy y algoritmos de consumo de inventario. | Supervisión de los redondeos `ROUND_HALF_UP`, creación de **triggers nativos SQLite** de inmutabilidad en `audit_logs` y pruebas de exclusión de masa mágica ($S > E$). |
 | **Horas 05–06**<br>(22:00–23:00) | **Controladores API y Sanitización de Seguridad** | `src/backend/routers/`<br>`src/backend/schemas.py`<br>`src/backend/security/rbac.py` | Generación de endpoints FastAPI, validadores Pydantic y dependencias de rol. | **Blindaje Anti-Fuga de Datos (RF06)**: Creación de `PasaportePublicoResponse` que físicamente omite costos internos y teléfonos del agricultor en el JSON público. Implementación de `HTTP 403` real para operador. |
 | **Horas 06–07**<br>(23:00–00:00) | **Automatización de Pruebas & Verificación de Regresión** | `tests/test_calculos.py`<br>`tests/test_api_endpoints.py`<br>`tests/test_hora12_regresion.py` | Casos de prueba automatizados con `unittest` / `pytest`. | Corrección de conflicto en `setUp()` por el trigger de inmutabilidad de auditoría. Ejecución real en terminal: **15 de 15 pruebas pasando en 1.21 segundos**. |
+| **Horas 07–08**<br>(00:00–01:00) | **Infraestructura QA, Benchmark y Respaldo Atómico (DEV 2)** | `scripts/backup.py`<br>`scripts/restore.py`<br>`scripts/benchmark_100.py`<br>`tests/test_seguridad_calidad.py`<br>`documentos/PLAN_DEV2_INFRA_QA.md`<br>`documentos/E05_EVIDENCIA_PRUEBAS_DEV2.md` | Scaffolding de scripts de respaldo, benchmark sintético y suite de pruebas de seguridad RBAC. | **Aporte Crítico Humano (DEV 2)**: Sustitución de copia cruda por `sqlite3.Connection.backup()` en caliente con hash SHA-256; verificación con `PRAGMA integrity_check`; benchmark de 100 lotes en 0.64 ms; resolución de bug de `ConfigDict` en schemas. **26 de 26 pruebas pasando en 1.24 s**. |
 
 ---
 
@@ -38,6 +39,8 @@ En estricto cumplimiento del **Numeral 4 del Reglamento Técnico de la Hackathon
 | `routers/pasaporte.py` | 30% | 70% | El diseño del DTO sanitizado que protege el secreto comercial de la asociación cacaotera fue una regla impuesta por el equipo bajo RF06. |
 | `security/rbac.py` | 40% | 60% | La emisión de `HTTP 403 Forbidden` y el registro automático de eventos `"INTENTO_NO_AUTORIZADO"` en la tabla de auditoría fue diseñada por el equipo. |
 | `tests/*.py` | 45% | 55% | Las aserciones exactas de prueba, los datos de entrada sintéticos y el escenario de regresión de la Incidencia de la Hora 12 fueron verificados en terminal por los estudiantes. |
+| `scripts/backup.py` & `restore.py` | 30% | 70% | Implementación de la API nativa de SQLite para copias en caliente sin bloqueo, validación de integridad de páginas (`integrity_check`) y hashes SHA-256 para el criterio de desempate. |
+| `scripts/benchmark_100.py` | 35% | 65% | Carga masiva de 100 lotes y medición de latencia de consulta en milisegundos (< 1 ms vs 3000 ms del reto). |
 
 ---
 
@@ -57,6 +60,11 @@ En estricto cumplimiento del **Numeral 4 del Reglamento Técnico de la Hackathon
 - **Sugerencia de IA**: Asumir que la inmutabilidad de la auditoría se cumplía simplemente no creando un endpoint `DELETE` en la API.
 - **Riesgo Detectado**: En una auditoría de base de datos, cualquier script o conexión manual podría alterar o borrar registros.
 - **Solución Humana**: Implementación de **triggers nativos en el motor SQLite** (`BEFORE UPDATE` y `BEFORE DELETE`) que abortan cualquier intento de manipulación con `RAISE(ABORT, ...)`.
+
+### Caso 4: Copia de Respaldo Inconsistente en Modo WAL
+- **Sugerencia de IA**: Usar `shutil.copy()` directo sobre `cacao_dev.db` para generar los respaldos periódicos.
+- **Riesgo Detectado**: En SQLite en modo WAL, copiar el archivo principal `.db` mientras hay transacciones concurrentes o datos en el archivo `-wal` genera copias corruptas o desactualizadas.
+- **Solución Humana (DEV 2)**: Empleo exclusivo del método de la API estándar `sqlite3.Connection.backup()`, asegurando sincronización atómica de páginas en caliente, cálculo de hash SHA-256 y script de restauración con verificación obligatoria `PRAGMA integrity_check;`.
 
 ---
 
