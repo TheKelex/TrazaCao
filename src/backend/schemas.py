@@ -32,6 +32,49 @@ class LoteBase(BaseModel):
     kg_recibidos: Decimal = Field(
         ..., gt=0, description="Cantidad recibida en kilogramos (estrictamente > 0)"
     )
+    cantidad: Optional[Decimal] = Field(default=None, description="Cantidad en la unidad de medida original")
+    unidad_medida: Optional[str] = Field(default="kg", description="Unidad de medida (kg, lb, @, qq, sacos)")
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalizar_lote_alias(cls, data):
+        if isinstance(data, dict):
+            # Aceptar origen_municipio como alias de origen
+            if "origen" not in data and "origen_municipio" in data:
+                data["origen"] = data["origen_municipio"]
+            
+            # Soporte de cantidad y unidad_medida
+            unidad = str(data.get("unidad_medida") or "kg").lower().strip()
+            factores = {
+                "kg": Decimal("1.0"),
+                "kilogramo": Decimal("1.0"),
+                "kilogramos": Decimal("1.0"),
+                "lb": Decimal("0.5"),
+                "libra": Decimal("0.5"),
+                "libras": Decimal("0.5"),
+                "@": Decimal("12.5"),
+                "arroba": Decimal("12.5"),
+                "arrobas": Decimal("12.5"),
+                "qq": Decimal("50.0"),
+                "quintal": Decimal("50.0"),
+                "quintales": Decimal("50.0"),
+                "saco": Decimal("50.0"),
+                "sacos": Decimal("50.0"),
+                "carga": Decimal("125.0"),
+                "cargas": Decimal("125.0"),
+            }
+            factor = factores.get(unidad, Decimal("1.0"))
+
+            if "kg_recibidos" not in data and "cantidad" in data:
+                try:
+                    cant = Decimal(str(data["cantidad"]))
+                    data["kg_recibidos"] = cant * factor
+                except Exception:
+                    pass
+            elif "kg_recibidos" in data and "cantidad" not in data:
+                data["cantidad"] = data["kg_recibidos"]
+                data["unidad_medida"] = "kg"
+        return data
 
 
 class LoteCreate(LoteBase):
@@ -69,12 +112,25 @@ class LoteEstadoUpdate(BaseModel):
 class TransformacionCreate(BaseModel):
     lote_id: str = Field(..., description="ID del lote de origen")
     etapa: str = Field(default="Tostión y Molienda", min_length=3, max_length=100)
-    responsable: str = Field(..., min_length=2, max_length=150)
+    responsable: str = Field(default="Operador de Planta Rivera", min_length=2, max_length=150)
     kg_entrada: Decimal = Field(..., gt=0, description="Kilogramos a consumir del lote origen")
     kg_salida_vendible: Decimal = Field(..., ge=0, description="Kilogramos vendibles obtenidos")
     costo_etapa_cop: Decimal = Field(default=Decimal("1600000.00"), ge=0, description="Costo total de la etapa")
     precio_venta_estimado: Decimal = Field(default=Decimal("25000.00"), ge=0, description="Precio de venta estimado/kg")
     incidencia_justificacion: Optional[str] = None
+    fecha_transformacion: Optional[datetime] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalizar_campos_alias(cls, data):
+        if isinstance(data, dict):
+            if "kg_salida_vendible" not in data and "kg_salida" in data:
+                data["kg_salida_vendible"] = data["kg_salida"]
+            if not data.get("responsable"):
+                data["responsable"] = "Operador de Planta Rivera"
+            if "fecha_transformacion" not in data and "fecha" in data:
+                data["fecha_transformacion"] = data["fecha"]
+        return data
 
     @model_validator(mode="after")
     def validar_masa_fisica(self) -> "TransformacionCreate":
@@ -143,5 +199,63 @@ class PasaportePublicoResponse(BaseModel):
     es_comercializable: bool
     fecha_acopio: datetime
     etapas: List[EtapaTrazabilidadPublica] = []
-    sello_calidad: str = "Norma Técnica NTC 1252 / Compatible EUDR"
+    sello_calidad: str = "Norma Técnica NTC 1252 / Cero Deforestación"
     contacto_asociacion_wa: str = "https://wa.me/573000000000"
+
+
+# ==============================================================================
+# ESQUEMAS PARA CATÁLOGO INDUSTRIAL Y BOTÁNICO B2B (MERMA & BIOMASA)
+# ==============================================================================
+
+class SubproductoBotanicoItem(BaseModel):
+    """
+    Ficha de subproducto botánico / merma valorizada para compradores corporativos B2B.
+    Muestra especificaciones agroindustriales y deslinde de frontera operativa.
+    """
+    id: str
+    nombre: str
+    sector_industrial: Literal[
+        "Industria Cosmética y Dermocosmética",
+        "Agroquímica Orgánica y Biofertilizantes",
+        "Extractos Botánicos, Fitofármacos y Nutracéutica"
+    ]
+    lote_origen_id: str
+    municipio_origen: str
+    kg_disponibles: Decimal
+    precio_b2b_kg_cop: Decimal
+    pureza_botanica: str
+    humedad_porcentaje: Decimal
+    aplicaciones_industriales: List[str]
+    frontera_negocio: str = (
+        "Materia prima pura. TrazaCao no manufactura mascarillas ni fertilizantes terminados; "
+        "abastecemos a grandes empresas que requieren este insumo certificado."
+    )
+
+
+class CatalogoSubproductosResponse(BaseModel):
+    principio_negocio: str
+    total_merma_recuperada_kg: Decimal
+    subproductos: List[SubproductoBotanicoItem]
+
+
+class SolicitudCotizacionB2BCreate(BaseModel):
+    subproducto_id: str = Field(..., min_length=2)
+    lote_origen_id: str = Field(..., min_length=3)
+    empresa_solicitante: str = Field(..., min_length=3, max_length=150)
+    sector_industrial: str = Field(..., min_length=3, max_length=100)
+    correo_corporativo: str = Field(..., min_length=5, max_length=150)
+    telefono_contacto: Optional[str] = None
+    volumen_requerido_kg: Decimal = Field(..., gt=0)
+    aplicacion_prevista: str = Field(..., min_length=5)
+
+
+class SolicitudCotizacionB2BResponse(BaseModel):
+    id: str
+    mensaje: str
+    folio_solicitud: str
+    subproducto_solicitado: str
+    volumen_solicitado_kg: Decimal
+    empresa: str
+    estado: str = "RECIBIDA_ANALISIS_TECNICO"
+    contacto_comercial_b2b: str
+

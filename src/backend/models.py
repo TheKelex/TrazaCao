@@ -93,3 +93,20 @@ class AuditoriaLog(Base):
     valor_anterior = Column(Text, nullable=True)
     valor_nuevo = Column(Text, nullable=True)
     motivo = Column(Text, nullable=True)
+
+
+class Usuario(Base):
+    """
+    Tabla de usuarios autenticados del sistema TrazaCao Huila.
+    Almacena credenciales con contraseñas encriptadas mediante PBKDF2-HMAC-SHA256.
+    """
+    __tablename__ = "usuarios"
+
+    id = Column(String(36), primary_key=True)  # UUID4
+    username = Column(String(50), unique=True, index=True, nullable=False)  # ej. 'operador', 'admin'
+    password_hash = Column(String(255), nullable=False)
+    nombre_completo = Column(String(150), nullable=False)
+    rol = Column(String(30), nullable=False)  # 'OPERADOR' | 'ADMINISTRADOR'
+    activo = Column(Boolean, default=True, nullable=False)
+    fecha_creacion = Column(DateTime, default=datetime.utcnow, nullable=False)
+

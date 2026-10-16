@@ -6,7 +6,7 @@ Exclusivo para el rol ADMINISTRADOR.
 
 from typing import List, Optional
 from datetime import datetime
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from infra.database import get_db

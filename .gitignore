@@ -13,15 +13,21 @@ __pycache__/
 *.db-wal
 *.db-shm
 cacao_dev.db
-datos/*.db
+datos/backups/
 datos/respaldos/
+datos/cacao*.db
+!datos/respaldo_demo.db
 
 # Variables de entorno
 .env
+.env.local
+.env.*.local
 
 # Node / React / Vite
 node_modules/
+**/node_modules/
 dist/
+**/dist/
 dist-ssr/
 *.local
 

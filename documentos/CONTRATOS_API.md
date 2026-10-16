@@ -154,3 +154,97 @@ Todos los endpoints deben construirse en estricta conformidad con esta especific
   ```
 > **REGLA ESTRICTA DE SANITIZACIÓN**:  
 > Este DTO **NO contiene** los campos `costo_etapa_cop`, `costo_unitario_cop`, `margen_venta_porcentaje`, ni teléfonos personales del agricultor.
+
+---
+
+## 4. ENDPOINTS PÚBLICOS DEL CATÁLOGO INDUSTRIAL & BOTÁNICO B2B (RF13)
+
+### 4.1 Consultar Catálogo Industrial y Botánico de Mermas
+- **Método**: `GET`
+- **Ruta**: `/api/subproductos/catalogo-industrial`
+- **Autenticación**: Ninguna (Acceso público para compradores industriales y corporativos).
+- **Descripción**: Expone las materias primas secundarias y mermas valorizadas del cacao (cascarilla micronizada, biomasa rica en potasio, extractos) con disponibilidad calculada a partir de las transformaciones registradas.
+- **Response DTO (`CatalogoSubproductosResponse`)**:
+  ```json
+  {
+    "principio_negocio": "TrazaCao no compite con sus clientes: no producimos cosméticos ni fertilizantes finales. Vendemos merma y biomasa botánica estandarizada a empresas transformadoras.",
+    "total_merma_recuperada_kg": 20.00,
+    "subproductos": [
+      {
+        "id": "SUB-COSM-01",
+        "nombre": "Cascarilla Micronizada Grado Cosmético",
+        "sector_industrial": "Industria Cosmética y Dermocosmética",
+        "lote_origen_id": "CAC001",
+        "municipio_origen": "Rivera, Huila",
+        "kg_disponibles": 8.00,
+        "precio_b2b_kg_cop": 5500.00,
+        "pureza_botanica": "99.5% materia vegetal limpia de tostión controlada",
+        "humedad_porcentaje": 5.80,
+        "aplicaciones_industriales": [
+          "Formulación de mascarillas faciales purificantes",
+          "Partículas exfoliantes corporales 100% biodegradables",
+          "Jabonería botánica y saponificación artesanal"
+        ],
+        "frontera_negocio": "Materia prima pura. TrazaCao no manufactura mascarillas ni fertilizantes terminados; abastecemos a grandes empresas que requieren este insumo certificado."
+      },
+      {
+        "id": "SUB-AGRO-01",
+        "nombre": "Biomasa Residual de Cacao para Bioinsumos",
+        "sector_industrial": "Agroquímica Orgánica y Biofertilizantes",
+        "lote_origen_id": "CAC001",
+        "municipio_origen": "Rivera, Huila",
+        "kg_disponibles": 8.00,
+        "precio_b2b_kg_cop": 2500.00,
+        "pureza_botanica": "100% residuo orgánico compostable con cenizas < 6%",
+        "humedad_porcentaje": 6.50,
+        "aplicaciones_industriales": [
+          "Biofertilizantes líquidos y lixiviados ricos en potasio (K)",
+          "Compostaje industrial acelerado y enmiendas de suelo",
+          "Biochar y captura de carbono en agricultura regenerativa"
+        ],
+        "frontera_negocio": "Materia prima pura. TrazaCao no manufactura mascarillas ni fertilizantes terminados; abastecemos a grandes empresas que requieren este insumo certificado."
+      },
+      {
+        "id": "SUB-BOTA-01",
+        "nombre": "Cascarilla Seleccionada para Extractos y Nutracéutica",
+        "sector_industrial": "Extractos Botánicos, Fitofármacos y Nutracéutica",
+        "lote_origen_id": "CAC001",
+        "municipio_origen": "Rivera, Huila",
+        "kg_disponibles": 4.00,
+        "precio_b2b_kg_cop": 6000.00,
+        "pureza_botanica": "Grado alimentario / fitoterapéutico, humedad < 7.0%",
+        "humedad_porcentaje": 5.20,
+        "aplicaciones_industriales": [
+          "Extracción estandarizada de polifenoles y flavonoides antioxidantes",
+          "Aislamiento de teobromina para suplementos energéticos",
+          "Infusiones botánicas funcionales y bases para bebidas herbales"
+        ],
+        "frontera_negocio": "Materia prima pura. TrazaCao no manufactura mascarillas ni fertilizantes terminados; abastecemos a grandes empresas que requieren este insumo certificado."
+      }
+    ]
+  }
+  ```
+
+---
+
+### 4.2 Radicar Solicitud de Cotización de Materia Prima B2B
+- **Método**: `POST`
+- **Ruta**: `/api/subproductos/solicitar-cotizacion-b2b`
+- **Autenticación**: Ninguna (Acceso comercial público).
+- **Request Body (JSON)**:
+  ```json
+  {
+    "subproducto_id": "SUB-COSM-01",
+    "lote_origen_id": "CAC001",
+    "empresa_solicitante": "BioCosmética Andina S.A.",
+    "sector_industrial": "Cosmética Natural",
+    "correo_corporativo": "compras@biocosmetica.com",
+    "telefono_contacto": "+57 312 987 6543",
+    "volumen_requerido_kg": 500.0,
+    "aplicacion_prevista": "Formulación de mascarillas exfoliantes de cacao fino de aroma"
+  }
+  ```
+- **Respuestas**:
+  - `201 Created`: Solicitud radicada con folio inmutable `COT-B2B-XXXXXXXX` y guardada en auditoría.
+  - `422 Unprocessable Entity`: Datos obligatorios faltantes o volumen $\le 0$.
+

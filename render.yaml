@@ -1,0 +1,20 @@
+# ==============================================================================
+# Render Blueprint - TrazaCao Huila (Despliegue Continuo Automatizado)
+# II Hackathon de Programación DEVURITY - Universidad Surcolombiana
+# Conexión directa con GitHub: Cada push a 'develop' despliega en vivo
+# ==============================================================================
+services:
+  - type: web
+    name: trazacao-huila
+    env: docker
+    plan: free
+    region: oregon
+    branch: develop
+    dockerfilePath: Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: DATABASE_PATH
+        value: "/app/cacao_dev.db"

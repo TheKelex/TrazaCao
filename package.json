@@ -1,0 +1,15 @@
+{
+  "name": "trazacao",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sistema de Trazabilidad e Inmutabilidad para la Cadena de Cacao Huilense",
+  "scripts": {
+    "install:frontend": "npm install --prefix src/frontend",
+    "dev": "npm run dev --prefix src/frontend",
+    "build": "npm run build --prefix src/frontend",
+    "preview": "npm run preview --prefix src/frontend"
+  },
+  "keywords": ["trazabilidad", "cacao", "huila", "blockchain", "offline-first", "react", "vite"],
+  "author": "TrazaCao Team",
+  "license": "MIT"
+}

@@ -20,15 +20,17 @@ Esta dispersión impide cumplir con los lineamientos técnicos de la **Mesa Naci
   1. Cacao fino de aroma del Huila se comercializa como cacao estándar, perdiendo primas de calidad de hasta un 30% a 50% en mercados especializados.
   2. Mermas no detectadas en tostión y descascarillado generan fugas financieras silenciosas para la asociación.
   3. Desconocimiento del costo unitario real y del margen de ganancia por lote.
-  4. Pérdida del 100% de la merma (cascarilla), desechada como residuo en lugar de valorizarse como subproducto.
+  4. Pérdida del 100% de la merma agroindustrial (cascarilla y biomasa residual), desechada como basura en lugar de monetizarse en mercados corporativos de cosmética y biofertilizantes.
 
 ---
 
 ### 3. Objetivo del MVP y Propuesta de Valor
 Desarrollar **CacaoTrace Huila**, un sistema de software ligero, resiliente y de fácil adopción que centralice los tres ejes de la MNTC:
 - **Hacia atrás**: Registro auditable de lotes por productor y municipio del Huila (Rivera, Campoalegre, Algeciras).
-- **En proceso**: Control de inventario en centro de acopio, cálculo automático de mermas con alertas (>15%), valorización de la cascarilla como subproducto y balance de costos/márgenes.
-- **Hacia adelante**: Emisión del **Pasaporte Digital del Cacao** (Ficha Comercial Pública accesible por QR) con captación de compradores y referidos B2B, protegiendo estrictamente costos internos.
+- **En proceso**: Control de inventario en centro de acopio, cálculo automático de mermas con alertas (>15%), valorización de la cascarilla/merma y balance de costos/márgenes.
+- **Hacia adelante (Doble Catálogo Comercial B2B)**: 
+  1. Emisión del **Pasaporte Digital del Cacao** (Ficha Comercial Pública accesible por QR) para compradores de cacao fino de aroma.
+  2. Despliegue del **Catálogo Industrial & Botánico B2B de Mermas y Biomasa**, permitiendo a laboratorios cosméticos (mascarillas, exfoliantes) y fabricantes de biofertilizantes adquirir la merma estandarizada como materia prima vegetal limpia.
 
 ---
 
@@ -37,12 +39,13 @@ Desarrollar **CacaoTrace Huila**, un sistema de software ligero, resiliente y de
   - Trazabilidad integral de tres lotes base (`CAC001`, `CAC002`, `CAC003`).
   - Transformación unitaria por lote con control estricto de existencias (recibido, consumido, disponible).
   - Cálculo de merma del 20% en CAC001 y activación de alerta automática por superar el 15%.
-  - Recuperación de subproducto (cascarilla de cacao) para economía circular.
-  - Generación de Ficha Comercial con QR y canal de referidos/solicitud de muestras B2B.
+  - Recuperación y clasificación de la merma agroindustrial en el **Catálogo Industrial & Botánico B2B** (línea cosmética, agroquímica/fertilizantes y nutracéutica).
+  - Generación de Ficha Comercial con QR y canal de cotizaciones B2B para materias primas de merma.
   - Auditoría inmutable de cambios (quién, cuándo, valor previo y nuevo).
   - Gestión de estados (Pendiente, Liberado, Bloqueado) y respuesta inmediata a la incidencia de la hora 12.
   - Exportación de resumen de lotes en formato CSV.
-- **Exclusiones**:
+- **Exclusiones y Frontera Clara de Negocio**:
+  - **No Manufactura de Bienes de Consumo Masivo B2C**: La asociación cacaotera se enfoca **exclusivamente en el tratamiento, beneficio y transformación del cacao**. NO producimos ni comercializamos mascarillas faciales terminadas, cremas comerciales ni fertilizantes envasados para retail. El modelo es estrictamente **suministro B2B de materia prima vegetal certificada** a grandes empresas e industrias transformadoras.
   - Pasarelas de pago electrónico con dinero real o facturación DIAN (fuera de las 24h del reto).
   - Dispositivos de hardware o sensores IoT en fincas.
   - Modelos pesados de IA en la nube que vulneren la autonomía offline.

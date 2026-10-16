@@ -229,3 +229,75 @@ def balance_agroindustrial_completo(
             "El margen sobre venta se calcula sobre el precio base de venta declarado."
         ),
     }
+
+
+def clasificar_merma_destinos_industriales(
+    kg_merma_total: Union[Decimal, float, int, str],
+) -> Dict[str, Any]:
+    """
+    Clasifica la merma agroindustrial obtenida en líneas de materias primas
+    para el Catálogo Botánico e Industrial B2B.
+
+    Frontera de Negocio:
+    TrazaCao se enfoca 100% en el tratamiento y transformación del cacao.
+    NO manufactura cosméticos terminados (mascarillas, cremas) ni fertilizantes envasados.
+    Suministra estas fracciones de biomasa vegetal trazable a corporaciones industriales.
+
+    Fracciones estandarizadas:
+    - Grado Cosmético (40%): Cascarilla seleccionada/micronizada para mascarillas y exfoliantes.
+    - Grado Biofertilizantes (40%): Biomasa vegetal orgánica alta en potasio para enmiendas agrícolas.
+    - Grado Botánico/Nutracéutico (20%): Fracción rica en polifenoles y teobromina para extractos e infusiones.
+    """
+    dec_merma = max(Decimal("0.00"), to_decimal(kg_merma_total)).quantize(DOS_DECIMALES)
+
+    kg_cosmetico = (dec_merma * Decimal("0.40")).quantize(DOS_DECIMALES, rounding=ROUND_HALF_UP)
+    kg_fertilizante = (dec_merma * Decimal("0.40")).quantize(DOS_DECIMALES, rounding=ROUND_HALF_UP)
+    # Remanente exacto para evitar descuadres de redondeo
+    kg_botanico = (dec_merma - kg_cosmetico - kg_fertilizante).quantize(DOS_DECIMALES)
+
+    return {
+        "kg_merma_total": dec_merma,
+        "fracciones_b2b": {
+            "cosmetico_mascarillas": {
+                "nombre": "Cascarilla Micronizada Grado Cosmético",
+                "sector": "Industria Cosmética y Dermocosmética",
+                "kg_disponibles": kg_cosmetico,
+                "aplicaciones_industriales": [
+                    "Formulación de mascarillas faciales purificantes",
+                    "Partículas exfoliantes corporales 100% biodegradables",
+                    "Jabonería botánica y saponificación artesanal",
+                ],
+                "precio_sugerido_b2b_kg_cop": Decimal("5500.00"),
+                "pureza_botanica": "99.5% materia vegetal limpia de tostión controlada",
+            },
+            "biofertilizantes_enmiendas": {
+                "nombre": "Biomasa Residual de Cacao para Bioinsumos",
+                "sector": "Agroquímica Orgánica y Biofertilizantes",
+                "kg_disponibles": kg_fertilizante,
+                "aplicaciones_industriales": [
+                    "Biofertilizantes líquidos y lixiviados ricos en potasio (K)",
+                    "Compostaje industrial acelerado y enmiendas de suelo",
+                    "Biochar y captura de carbono en agricultura regenerativa",
+                ],
+                "precio_sugerido_b2b_kg_cop": Decimal("2500.00"),
+                "pureza_botanica": "100% residuo orgánico compostable con cenizas < 6%",
+            },
+            "botanico_extractos": {
+                "nombre": "Cascarilla Seleccionada para Extractos y Nutracéutica",
+                "sector": "Extractos Botánicos, Fitofármacos y Nutracéutica",
+                "kg_disponibles": kg_botanico,
+                "aplicaciones_industriales": [
+                    "Extracción estandarizada de polifenoles y flavonoides antioxidantes",
+                    "Aislamiento de teobromina para suplementos energéticos",
+                    "Infusiones botánicas funcionales y bases para bebidas herbales",
+                ],
+                "precio_sugerido_b2b_kg_cop": Decimal("6000.00"),
+                "pureza_botanica": "Grado alimentario / fitoterapéutico, humedad < 7.0%",
+            },
+        },
+        "principio_negocio_b2b": (
+            "TrazaCao no compite con sus clientes: no producimos cosméticos ni fertilizantes finales. "
+            "Vendemos merma y biomasa botánica estandarizada a empresas transformadoras."
+        ),
+    }
+

@@ -1,0 +1,44 @@
+# ==============================================================================
+# .dockerignore - TrazaCao Huila (Optimización de Contexto de Construcción)
+# ==============================================================================
+
+# Control de Versiones y Metadatos
+.git
+.gitignore
+.github
+
+# Entornos y Pruebas Python
+.pytest_cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.venv
+venv
+env
+tests/
+
+# Bases de datos locales de desarrollo (se inicializan limpias en el build vía seed.py)
+*.db
+*.db-shm
+*.db-wal
+cacao_dev.db*
+cacao_test.db*
+
+# Dependencias y artefactos temporales de Node.js (se compilan en Stage 1)
+node_modules
+src/frontend/node_modules
+src/frontend/dist
+
+# Documentos pesados y presentaciones (no requeridos en el runtime web)
+documentos/
+*.pdf
+*.docx
+*.pptx
+*.xlsx
+
+# Variables de entorno y logs
+.env
+.env.*
+*.log
+*.tmp
