@@ -20,7 +20,7 @@ Para proteger los márgenes comerciales de la asociación y la privacidad de las
 | `humedad_porcentaje` | Cumplimiento NTC 1252 ($\le 7.5\%$) | `auditoria_interna` | Registros internos del sistema |
 | `fermentacion_porcentaje` | Calidad de sabor ($\ge 75\%$) | | |
 | `estado` / `es_comercializable` | Garantía de no cuarentena | | |
-| `sello_calidad` | Certificación NTC 1252 / Compatible EUDR | | |
+| `sello_calidad` | Certificación NTC 1252 / Cero Deforestación | | |
 | `contacto_asociacion_wa` | Canal comercial institucional oficial | | |
 
 ### 1.2 Tratamiento de Lotes en Cuarentena (Incidencia Hora 12)

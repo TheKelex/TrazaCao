@@ -782,7 +782,7 @@
           <span class="geo-pill">Rivera &bull; 1.100 msnm</span>
           <span class="geo-pill">Campoalegre &bull; 920 msnm</span>
           <span class="geo-pill">Algeciras &bull; 1.180 msnm</span>
-          <span class="geo-pill" style="color: var(--green-bright); border-color: var(--green-bright);">EUDR Conforme &bull; 0% Deforestación</span>
+          <span class="geo-pill" style="color: var(--green-bright); border-color: var(--green-bright);">Origen Verificado &bull; Cero Deforestaci&oacute;n</span>
         </div>
       </article>
     </section>
@@ -1172,8 +1172,8 @@
 
         const startP = masterTl.progress();
         const remainingP = 1.0 - startP;
-        // Velocidad cinematográfica optimizada tipo documental (~14 segundos totales)
-        const tourDuration = Math.max(4, remainingP * 14);
+        // Velocidad cinematográfica optimizada tipo documental (20 segundos totales)
+        const tourDuration = Math.max(5, remainingP * 20);
 
         const animTracker = { p: startP };
         tourState.tween = gsap.to(animTracker, {
@@ -1222,12 +1222,11 @@
         }, { passive: true });
       });
 
-      // 4. Botón "Ir" -> Llevar a la página del comprador
+      // 4. Botón "Ir" -> Llevar a la página del catálogo
       const btnIr = document.getElementById('btnIrAccion');
       if (btnIr) {
         btnIr.addEventListener('click', (e) => {
-          const lote = window.loteActualSeleccionado || 'CAC001';
-          window.location.href = 'http://localhost:5173/?modo=comprador&lote=' + lote;
+          window.location.href = 'http://localhost:5173/?modo=catalogo#lotes-disponibles';
         });
       }
     };

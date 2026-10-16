@@ -24,7 +24,7 @@ export function ScrollySceneViewer({ progress, onExplorarLotes, onConsultarTraza
       location: 'Rivera & Campoalegre',
       meta: 'Variedades Criollo & Trinitario Fino de Aroma',
       detail: 'Caulifloria botánica: las mazorcas brotan directamente de los troncos maduros bajo doseles de plátano, guamo y nogal.',
-      badge: 'Cero Deforestación · Compatible EUDR',
+      badge: 'Cero Deforestación · Calidad de Origen',
     },
     {
       id: 'recoleccion',

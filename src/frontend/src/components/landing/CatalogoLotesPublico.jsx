@@ -40,7 +40,7 @@ export function CatalogoLotesPublico({ lotes = [], onVerPasaporte, onSolicitarMu
       estado: 'LIBERADO',
       imagen: '/images/cultivo.jpg',
       notas: 'Aroma floral dulce, cacao intenso, notas cítricas balanceadas.',
-      sello: 'Cero Deforestación · Compatible EUDR',
+      sello: 'Cero Deforestación · Calidad de Origen',
     },
     {
       id: 'CAC003',

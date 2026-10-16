@@ -166,7 +166,7 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
           <span className="text-2xl font-mono font-bold text-emerald-400 mt-1 block">
             {kpis.liberados}
           </span>
-          <span className="text-[11px] text-emerald-500/80 mt-0.5 block">Listos para exportación EUDR</span>
+          <span className="text-[11px] text-emerald-500/80 mt-0.5 block">Listos para exportación</span>
         </div>
 
         <div className="bg-stone-900 border border-rose-950/60 rounded-xl p-4 shadow-md">

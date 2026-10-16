@@ -137,7 +137,7 @@ Diseñada para que el jurado evaluador o un usuario externo verifique la totalid
 2. Selecciona el lote `CAC001`.
 3. Observa que aparece el banner de retención: *"LOTE EN RETENCIÓN PREVENTIVA DE CALIDAD (NO APTO PARA EXPORTACIÓN)"*.
 4. Selecciona el lote `CAC002` o `CAC003` (Liberados).
-5. Observa el código QR vectorial en SVG (`qrcode.react`), el sello de calidad NTC 1252 / Compatible EUDR, y la segregación estricta de información: **no existe ningún campo de costo ni margen**.
+5. Observa el código QR vectorial en SVG (`qrcode.react`), el sello de calidad NTC 1252 / Cero Deforestación, y la segregación estricta de información: **no existe ningún campo de costo ni margen**.
 6. Presiona el botón **"Simular Escaneo QR (Móvil)"**:
    - La pantalla se encuadra en un marco de smartphone (375px), demostrando cómo un comprador en Europa ve el producto desde su celular sin depender de la red Wi-Fi de Oasis Plaza.
 7. Presiona **"Solicitar Muestra o Cotización B2B"** y luego **"Copiar Orden (Modo Offline)"**:

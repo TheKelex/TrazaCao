@@ -71,6 +71,6 @@ def consultar_pasaporte_publico(lote_id: str, db: Session = Depends(get_db)):
         es_comercializable=es_apto_para_venta,
         fecha_acopio=lote.fecha_recepcion,
         etapas=etapas_publicas,
-        sello_calidad="Norma Técnica NTC 1252 / Compatible EUDR Cero Deforestación",
+        sello_calidad="Norma Técnica NTC 1252 / Cero Deforestación",
         contacto_asociacion_wa=f"https://wa.me/573000000000?text=Hola,%20me%20interesa%20el%20lote%20{lote.id}",
     )

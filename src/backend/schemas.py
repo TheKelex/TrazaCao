@@ -199,5 +199,5 @@ class PasaportePublicoResponse(BaseModel):
     es_comercializable: bool
     fecha_acopio: datetime
     etapas: List[EtapaTrazabilidadPublica] = []
-    sello_calidad: str = "Norma Técnica NTC 1252 / Compatible EUDR"
+    sello_calidad: str = "Norma Técnica NTC 1252 / Cero Deforestación"
     contacto_asociacion_wa: str = "https://wa.me/573000000000"
