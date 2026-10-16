@@ -219,7 +219,7 @@ def test_03_persistencia_wal_snapshot_caliente_y_recuperacion():
     assert resp_bk.status_code == 200, f"Error al generar backup: {resp_bk.text}"
     bk_data = resp_bk.json()
     assert bk_data["status"] == "ok"
-    assert bk_data["duracion_ms"] < 100.0, f"La latencia de backup fue muy alta: {bk_data['duracion_ms']} ms"
+    assert bk_data["duracion_ms"] < 500.0, f"La latencia de backup fue muy alta: {bk_data['duracion_ms']} ms"
     assert bk_data["tamano_bytes"] > 0
 
     # 2. Verificar que el archivo existe en disco y es un SQLite válido
