@@ -22,11 +22,12 @@ def seed():
     db = SessionLocal()
 
     try:
-        # 1. Limpiar datos previos si existen
-        db.query(Transformacion).delete()
-        db.query(Lote).delete()
-        db.query(AuditoriaLog).delete()
-        db.commit()
+        # 1. Recrear tablas limpiamente para reset total (evita violar el trigger de inmutabilidad)
+        from models import Base
+        from infra.database import engine
+        Base.metadata.drop_all(bind=engine)
+        init_db()
+        db = SessionLocal()
 
         # 2. Lotes Oficiales de la Guía DEVURITY / USCO
         lotes_base = [

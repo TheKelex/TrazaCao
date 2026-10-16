@@ -6,7 +6,7 @@ Exclusivo para el rol ADMINISTRADOR.
 
 from typing import List, Optional
 from datetime import datetime
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from infra.database import get_db
@@ -26,8 +26,7 @@ class AuditoriaLogResponse(BaseModel):
     valor_nuevo: Optional[str] = None
     motivo: Optional[str] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 @router.get("", response_model=List[AuditoriaLogResponse])
