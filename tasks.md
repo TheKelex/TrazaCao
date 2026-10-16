@@ -1,110 +1,139 @@
 # TABLERO KANBAN & SEGUIMIENTO SDD (tasks.md)
 ## Metodología: Kanban + Specification-Driven Development (SDD)
 ### Proyecto: CacaoTrace Huila / TrazaCao
-### Repositorios:
-- **Upstream (Organización)**: `git@github.com:TheKelex/CacaoSoft.git`
-- **Origin (Fork / Tenedor)**: `git@github.com:Tomasberserk/TrazaCao.git`
+### Repositorio Oficial: `https://github.com/TheKelex/TrazaCao.git` | Rama de Integración: `develop`
 
 ---
 
 ## 1. POLÍTICAS DEL FLUJO KANBAN (WIP LIMITS & GOBERNANZA)
 
 ```
-+-------------------+--------------------+----------------------+--------------------+--------------------+
-| 1. POR ESPECIFICAR| 2. ESPECIFICACIÓN  | 3. LISTO PARA        | 4. EN CONSTRUCCIÓN | 5. PRUEBAS & QA    | 6. TERMINADO (DoD) |
-| (Backlog)         | SDD (WIP: 4)       | CODIFICAR (DoR)      | (WIP: 4)           | (WIP: 4)           | (Commit & Tag)     |
-+-------------------+--------------------+----------------------+--------------------+--------------------+
++--------------------+----------------------+--------------------+--------------------+--------------------+
+| 1. BACKLOG         | 2. ESPECIFICACIÓN    | 3. LISTO PARA      | 4. EN CONSTRUCCIÓN | 5. TERMINADO (DoD) |
+| (Por Iniciar)      | SDD (WIP: 2)         | INTEGRAR / QA      | / AUDITORÍA        | (Merge & Tag)      |
++--------------------+----------------------+--------------------+--------------------+--------------------+
 ```
 
 ### Reglas de Oro de nuestro Kanban:
-1. **Definition of Ready (DoR)**: Ninguna tarea puede pasar a *En Construcción* si su **Plan Técnico / Especificación SDD** no está redactado, commiteado y validado con el equipo.
-2. **WIP Limit (Work In Progress)**: Máximo **1 tarea en construcción activa** por desarrollador a la vez. No se abren nuevas tareas sin cerrar o transferir la anterior.
+1. **Definition of Ready (DoR)**: Ninguna tarea pasa a construcción sin su **Plan Técnico / Especificación SDD** redactado, commiteado y validado en `documentos/`.
+2. **WIP Limit (Work In Progress)**: Máximo **1 tarea en construcción activa** por desarrollador para garantizar foco y evitar cuellos de botella.
 3. **Definition of Done (DoD)**: Una tarea está terminada únicamente cuando tiene:
    - Código en su rama de feature con merge aprobado a `develop`.
-   - Pruebas automatizadas o manuales verificadas con evidencia.
-   - Documentación sincronizada en el Markdown correspondiente.
+   - Pruebas automatizadas (`pytest`) y verificación en consola sin errores (cero advertencias críticas).
+   - Documentación sincronizada en el entregable Markdown correspondiente (`documentos/`) y registrada en `ENTREGA.md`.
 
 ---
 
-## 2. FASE ACTUAL: APERTURA E IDEACIÓN DE PLANES POR DESARROLLADOR (SDD PRIMERO)
+## 2. ESTADO VISUAL ACTUAL DEL FLUJO (SNAPSHOT DE AVANCE)
 
-Antes de escribir código en `src/`, cada desarrollador debe abrir su rama y documentar su plan técnico de ideación:
+```
++--------------------------------------------------------------------------------------------------+
+| RESUMEN DE PROGRESO DEL PROYECTO (FASE E04 / E05 COMPLETADA)                                     |
+| Total Tareas Rastreadas: 24 | Terminadas (DoD): 21 (87.5%) | En Integración: 1 | Backlog: 2      |
++--------------------------------------------------------------------------------------------------+
+```
+
+```
++-----------------------+-----------------------+-----------------------+--------------------------+
+| 1. BACKLOG (Pendiente)| 2. EN INTEGRACIÓN     | 3. PRUEBAS & QA       | 4. TERMINADO (DoD Hecho) |
++-----------------------+-----------------------+-----------------------+--------------------------+
+| • DOC-E06 (Dev 4)     | • INT-DEV2:           | • Verificación en vivo| • DOC-E01 (Problema MNTC)|
+|   Prueba Usabilidad   |   Merge de rama       |   del MVP local       | • DOC-E02 (12 Gherkins)  |
+|   Externa en stand    |   feature/security-qa |   (http://localhost:  | • DOC-E03 (Onion + ADRs) |
+|                       |   (tests 26/26 de     |    5173 / :8000)      | • DOC-API (Contratos)    |
+| • DOC-E09 (Dev 4)     |    Dev 2)             |                       | • PLN-D1 a PLN-D4 (DoR)  |
+|   Diapositivas y      |                       |                       | • COD-B01 (SQLite WAL)   |
+|   guion Pitch 5 min   |                       |                       | • COD-B02 (Motor Decimal)|
+|                       |                       |                       | • COD-OPS (Backup/Restore)|
+|                       |                       |                       | • COD-U01 (Frontend SPA) |
+|                       |                       |                       | • COD-U02 (Ficha QR SVG) |
+|                       |                       |                       | • DOC-E04 (Manual Demo)  |
+|                       |                       |                       | • DOC-E05 (Testeo 1 a 1) |
+|                       |                       |                       | • DOC-E08 (Bitácora IA)  |
+|                       |                       |                       | • FIX-404 / FIX-SCHEMA   |
+|                       |                       |                       | • COD-RF12 (Balance Eco) |
++-----------------------+-----------------------+-----------------------+--------------------------+
+```
 
 ---
 
-### DEV 1: Tech Lead & Dominio Agroindustrial
-- **Rama Asignada**: `feature/backend-core`
-- **Documento Obligatorio a Entregar**: `documentos/PLAN_DEV1_CORE.md`
-- **Requisitos de la Fase de Ideación / Tareas Kanban**:
-  - [x] **KB-D1-01**: Analizar las fórmulas matemáticas oficiales del caso `CAC001` (100 kg entrada, 80 kg salida, merma 20.0%, costo $20.000/kg, margen 20.0%).
-  - [x] **KB-D1-02**: Diseñar la especificación del motor de cálculo en `domain/calculos.py` con `Decimal` de Python, documentando el manejo explícito de las **tres divisiones por cero** (`entrada == 0`, `salida_vendible == 0`, `precio_venta == 0`).
-  - [x] **KB-D1-03**: Especificar el aislamiento del dominio (Onion Architecture): cómo las entidades puras no tendrán dependencias de FastAPI ni de SQLAlchemy.
-  - [x] **KB-D1-04**: Diseñar el algoritmo de **consumo atómico de inventario** para RF08 mediante consulta SQL `UPDATE` condicional (`kg_disponibles >= consumo`) para eliminar condiciones de carrera sin usar `.with_for_update()`.
-  - [x] **KB-D1-05**: Redactar los contratos Pydantic para `POST /api/lotes` y `POST /api/transformaciones` con validaciones de campos no negativos.
+## 3. SEGUIMIENTO DE REQUISITOS POR DESARROLLADOR
+
+### DEV 1: Tech Lead & Dominio Agroindustrial (Nosotros)
+- **Rama Asignada**: `feature/backend-core` $\rightarrow$ Merged to `develop`
+- **Documentos Entregados**: `documentos/PLAN_DEV1_CORE.md`, `documentos/E04_manual.md`, `documentos/E05_TESTEO_EQUIPO_REQUISITOS_MVP.md`
+- **Avance de Tareas**:
+  - [x] **KB-D1-01**: Fórmulas matemáticas oficiales de `CAC001` (100 kg entrada, 80 kg salida, merma 20.0%, costo $20.000/kg, margen 20.0%).
+  - [x] **KB-D1-02**: Motor de cálculo puro con `Decimal` y tratamiento de las **tres divisiones por cero**.
+  - [x] **KB-D1-03**: Aislamiento arquitectural bajo **Onion Architecture** (dominio sin dependencias de frameworks).
+  - [x] **KB-D1-04**: Consumo atómico condicional de existencias (`UPDATE ... WHERE kg_disponibles >= consumo`) para eliminar condiciones de carrera sin usar `.with_for_update()`.
+  - [x] **KB-D1-05**: Contratos Pydantic v2 para lotes y transformaciones con tolerancia a alias y cabecera `X-Idempotency-Key`.
+  - [x] **KB-D1-06**: Subsanación de desalineaciones del MVP preliminar (rutas `/api/pasaporte` y `/lotes-csv` en HTTP 200 OK, validación de responsable y balance RF12).
 
 ---
 
 ### DEV 2: Seguridad, Infraestructura de Datos & QA
-- **Rama Asignada**: `feature/security-qa`
-- **Documento Obligatorio a Entregar**: `documentos/PLAN_DEV2_INFRA_QA.md`
-- **Requisitos de la Fase de Ideación / Tareas Kanban**:
-  - [x] **KB-D2-01**: Documentar la configuración de SQLite en modo `WAL` (`journal_mode=WAL`, `busy_timeout=5000`, `foreign_keys=ON`) para alta concurrencia local.
-  - [x] **KB-D2-02**: Diseñar los scripts DDL en SQL nativo para los **Triggers de Inmutabilidad** de `audit_logs` (`BEFORE UPDATE` y `BEFORE DELETE` con `RAISE(ABORT, ...)` para RF10).
-  - [x] **KB-D2-03**: Especificar la matriz de autorización RBAC (`security/rbac.py`): definir el comportamiento de la dependencia FastAPI que rechazará al Operador con `HTTP 403 Forbidden` al intentar alterar estados.
-  - [x] **KB-D2-04**: Redactar la matriz de los **6 casos de prueba automatizados obligatorios** en `pytest` (caso feliz CAC001, cantidades negativas, sobreconsumo de stock, división por cero, permisos denegados y regresión Hora 12).
-  - [x] **KB-D2-05**: Especificar el protocolo de prueba y scripts de `backup.py` y `restore.py`, definiendo cómo se validará la integridad de registros tras la restauración.
+- **Rama Asignada**: `feature/security-qa` (Avance disponible en remoto)
+- **Documentos Entregados**: `documentos/PLAN_DEV2_INFRA_QA.md`, `documentos/E05_EVIDENCIA_PRUEBAS_DEV2.md`, `documentos/E07_operacion.md`
+- **Avance de Tareas**:
+  - [x] **KB-D2-01**: Configuración SQLite WAL (`busy_timeout=5000`, `foreign_keys=ON`) para alta concurrencia local.
+  - [x] **KB-D2-02**: Triggers nativos DDL de **Inmutabilidad** en `audit_logs` (`RAISE(ABORT)` ante `UPDATE` y `DELETE`).
+  - [x] **KB-D2-03**: Matriz de autorización RBAC (`security/rbac.py`): emisión de `HTTP 403 Forbidden` a operadores que intentan alterar estados.
+  - [x] **KB-D2-04**: Suite automatizada de pruebas en `pytest` (15/15 pruebas de integración y regresión pasando en 1.20s; suite ampliada 26/26 en rama QA).
+  - [x] **KB-D2-05**: Scripts de respaldo atómico (`backup.py` en 15.68 ms) y restauración íntegra (`restore.py` en 18.19 ms).
 
 ---
 
 ### DEV 3: Frontend Interno (Operador Móvil & Dashboard Administrador)
-- **Rama Asignada**: `feature/frontend-ui`
-- **Documento Obligatorio a Entregar**: `documentos/PLAN_DEV3_FRONTEND.md`
-- **Requisitos de la Fase de Ideación / Tareas Kanban**:
-  - [x] **KB-D3-01**: Diseñar el wireframe y flujo de interacción de la vista móvil del Operador (Recepción y Transformación).
-  - [x] **KB-D3-02**: Especificar el mecanismo de prevención de doble submit en el formulario del operador (deshabilitar botón `isSubmitting` y generación de cabecera `X-Idempotency-Key` en UUIDv4).
-  - [x] **KB-D3-03**: Diseñar la lógica visual del **Semáforo de Alertas de Merma**: definir cómo se presentará en verde ($\le 15\%$) y rojo intermitente ($> 15\%$), obligando a ingresar el campo de incidencia antes de guardar.
-  - [x] **KB-D3-04**: Especificar el layout del Dashboard del Administrador: tarjetas de saldo de bodega, tabla filtrable por municipio (`Rivera`, `Campoalegre`, `Algeciras`), botón de descarga CSV (`utf-8-sig`) y visualizador del historial de auditoría.
-  - [x] **KB-D3-05**: Diseñar el modal de acción inmediata para la **Incidencia de la Hora 12** (bloqueo preventivo de CAC001 con motivo mínimo de 10 caracteres).
+- **Rama Asignada**: `feature/frontend-ui` $\rightarrow$ Merged to `develop`
+- **Documento Entregado**: `documentos/PLAN_DEV3_FRONTEND.md`
+- **Avance de Tareas**:
+  - [x] **KB-D3-01**: Wireframe y flujo de pantalla unificada (Command Workspace) para el Operador.
+  - [x] **KB-D3-02**: Prevención de doble clic (`isSubmitting`) y cabecera `X-Idempotency-Key` en UUIDv4.
+  - [x] **KB-D3-03**: Semáforo dinámico de merma con bloqueo de guardado si merma $> 15\%$ hasta ingresar justificación ($\ge 10$ caracteres).
+  - [x] **KB-D3-04**: Dashboard de Administrador con filtros por municipio, exportación CSV con BOM `utf-8-sig` y bitácora de auditoría en hora local de Colombia (`America/Bogota` COT).
+  - [x] **KB-D3-05**: Modal de cuarentena para la **Incidencia de la Hora 12** con motivo obligatorio.
+  - [x] **KB-D3-06**: Incorporación de campos de vereda/ubicación del cultivo y fecha de acopio en la recepción (RF01).
 
 ---
 
 ### DEV 4: Ficha Comercial Pública, Usabilidad & Propuesta de Negocio
 - **Rama Asignada**: `feature/passport-docs`
-- **Documento Obligatorio a Entregar**: `documentos/PLAN_DEV4_COMERCIAL_UX.md`
-- **Requisitos de la Fase de Ideación / Tareas Kanban**:
-  - [x] **KB-D4-01**: Diseñar la estructura del **Pasaporte Digital de Cacao** (Ficha Comercial QR) asegurando que el schema público (`PasaportePublicoResponse`) excluya físicamente costos y teléfonos privados.
-  - [x] **KB-D4-02**: Especificar el componente de renderizado offline del código QR utilizando `qrcode.react` en SVG nativo (sin llamadas a CDNs ni APIs web).
-  - [x] **KB-D4-03**: Diseñar el protocolo de la **Prueba de Usabilidad Externa (E06)**: redactar la guía de observación para una persona ajena al equipo que ejecutará las dos tareas obligatorias (registrar lote y consultar trazabilidad), midiendo tiempo y fricción.
-  - [x] **KB-D4-04**: Estructurar el guion cronometrado del **Pitch de 5 minutos** (Problema $\rightarrow$ Solución $\rightarrow$ Demo en vivo $\rightarrow$ Modelo financiero $\rightarrow$ Cierre) y las 5 diapositivas oficiales.
-  - [x] **KB-D4-05**: Redactar la propuesta del **Piloto Comercial de 30 días** ($1.200.000 COP) justificando cómo la detección de mermas y la valorización de cascarilla pagan la inversión en 15 días.
+- **Documento Entregado**: `documentos/PLAN_DEV4_COMERCIAL_UX.md`
+- **Avance de Tareas**:
+  - [x] **KB-D4-01**: DTO sanitizado `PasaportePublicoResponse` con exclusión estricta de costos y teléfonos personales.
+  - [x] **KB-D4-02**: Renderizado vectorial de código QR en SVG nativo (`qrcode.react`) y contenedor simulador de smartphone (375px) para demostración offline.
+  - [x] **KB-D4-03**: Modal de pedido comercial B2B con botón de copia al portapapeles (resiliente sin internet).
+  - [ ] **KB-D4-04**: Ejecución formal de la **Prueba de Usabilidad Externa (E06)** con usuario ajeno al equipo en el stand.
+  - [ ] **KB-D4-05**: Consolidación final de diapositivas y guion del **Pitch de 5 minutos (E09)**.
 
 ---
 
-## 3. ESTADO VIVO DEL TABLERO KANBAN
+## 4. MATRIZ DE ESTADO VIVO DE TAREAS (SEGUIMIENTO DETALLADO)
 
-| ID Tarea | Descripción Breve | Responsable | Estado Kanban | Rama Git |
+| ID Tarea | Descripción del Entregable / Hito | Responsable | Estado Kanban | Evidencia / Ubicación |
 | :--- | :--- | :--- | :--- | :--- |
-| **DOC-E01** | Comprensión y Marco MNTC | Dev 4 | **DONE** | `develop` |
-| **DOC-E02** | 12 Historias Gherkin + Hora 12 | Dev 4 | **DONE** | `develop` |
-| **DOC-E03** | Arquitectura Onion y ADRs | Dev 1 & Dev 2 | **DONE** | `develop` |
-| **DOC-API** | Contratos de API JSON | Dev 1 | **DONE** | `develop` |
-| **DOC-CTX** | Prompt de Alineación IA | Dev 1 | **DONE** | `develop` |
-| **PLN-D1** | Plan Detallado Core & Matemáticas | Dev 1 | **DONE (DoR Aprobado)** | `feature/backend-core` |
-| **PLN-D2** | Plan Seguridad, Triggers & QA | Dev 2 | **DONE (DoR Aprobado)** | `develop` |
-| **PLN-D3** | Plan Frontend Operador & Admin | Dev 3 | **DONE (DoR Aprobado)** | `develop` |
-| **PLN-D4** | Plan Pasaporte QR, Usabilidad & Pitch | Dev 4 | **DONE (DoR Aprobado)** | `develop` |
-| **COD-B01** | Implementación SQLite WAL & Triggers | Dev 2 | **DONE (Integrado en Core)** | `develop` |
-| **COD-B02** | Motor Decimal de Cálculos y Pytest | Dev 1 | **DONE (15/15 Tests OK)** | `develop` |
-| **COD-OPS** | Scripts Backup, Restore y Benchmark | Dev 2 | **DONE (< 20 ms verificado)**| `develop` |
-| **COD-U01** | Frontend SPA Operador & Admin | Dev 3 | **DONE (Build OK en 1.5s)** | `develop` |
-| **COD-U02** | Pasaporte QR SVG + Simulador Móvil | Dev 4 | **DONE (Offline 100%)** | `develop` |
-| **DOC-E04** | Manual de Usuario y Demo < 120s | Dev 1 / Dev 3 | **DONE (25/25 pts)** | `develop` |
-| **AUD-RF01** | Unidad de medida y cantidad configurable en recepción | Dev 1 & 3 | **DONE (kg, lb, @, qq, saco, carga)** | `develop` |
-| **AUD-RF02** | Fecha transformación, código salida origen y botón activo | Dev 1 & 3 | **DONE (SAL-CAC001 + seed 100kg)** | `develop` |
-| **AUD-RF03** | Vista dedicada de Trazabilidad Integral con latencia < 3s | Dev 3 | **DONE (TrazabilidadView.jsx)** | `develop` |
-| **AUD-RF04** | Panel de alertas: merma > 15%, registro incompleto, retraso | Dev 1 & 3 | **DONE (Alertas visuales activas)** | `develop` |
-| **AUD-RF05** | Supuestos económicos visibles y economía circular cascarilla | Dev 1 | **DONE (Valorización $3.000/kg)** | `develop` |
-| **AUD-RF06** | Diagnóstico conexión backend + Fallback demo en Pasaporte QR | Dev 3 & 4 | **DONE (Badge vivo + Demo offline)** | `develop` |
-| **AUD-RF07** | Panel de persistencia WAL, estadísticas y snapshot caliente | Dev 2 & 3 | **DONE (Snapshot atómico .db)** | `develop` |
-| **AUD-RBAC** | Segregación estricta Operador/Admin con prueba en vivo 403 | Dev 2 & 3 | **DONE (TopRoleBar con Test 403)** | `develop` |
-
+| **DOC-E01** | Comprensión del Problema y Marco MNTC | Dev 4 | **DONE (DoD)** | `documentos/E01_problema.md` |
+| **DOC-E02** | 12 Historias de Usuario Gherkin + Hora 12 | Dev 4 | **DONE (DoD)** | `documentos/E02_requisitos.md` |
+| **DOC-E03** | Arquitectura Onion, Diagramas ER y ADRs | Dev 1 & 2 | **DONE (DoD)** | `documentos/E03_diseno.md` |
+| **DOC-API** | Contratos de API JSON | Dev 1 | **DONE (DoD)** | `documentos/CONTRATOS_API.md` |
+| **DOC-CTX** | Prompt Maestro de Alineación IA | Dev 1 | **DONE (DoD)** | `CONTEXTO_IA_EQUIPO.md` |
+| **PLN-D1** | Plan Técnico Backend Core & Dominio | Dev 1 | **DONE (DoD)** | `documentos/PLAN_DEV1_CORE.md` |
+| **PLN-D2** | Plan Seguridad, Triggers & QA | Dev 2 | **DONE (DoD)** | `documentos/PLAN_DEV2_INFRA_QA.md` |
+| **PLN-D3** | Plan Frontend Operador & Admin | Dev 3 | **DONE (DoD)** | `documentos/PLAN_DEV3_FRONTEND.md` |
+| **PLN-D4** | Plan Ficha Comercial QR & Usabilidad | Dev 4 | **DONE (DoD)** | `documentos/PLAN_DEV4_COMERCIAL_UX.md` |
+| **COD-B01** | SQLite WAL, Concurrencia y Triggers DDL | Dev 2 | **DONE (DoD)** | `src/backend/infra/database.py` |
+| **COD-B02** | Motor Decimal Agroindustrial (CAC001) | Dev 1 | **DONE (DoD)** | `src/backend/domain/calculos.py` |
+| **COD-OPS** | Respaldo, Restauración y Benchmark 100 | Dev 2 | **DONE (DoD)** | `datos/backup.py` / `restore.py` |
+| **COD-U01** | Frontend SPA Operador & Admin | Dev 3 | **DONE (DoD)** | `src/frontend/` (Build en 2.0s) |
+| **COD-U02** | Ficha QR SVG + Simulador Móvil 375px | Dev 4 | **DONE (DoD)** | `PasaportePublico.jsx` |
+| **DOC-E04** | Manual de Usuario y Demo < 120s | Dev 1 / Dev 3 | **DONE (DoD)** | `documentos/E04_manual.md` |
+| **DOC-E05** | Informe de Testeo de Requisitos 1 a 1 | Equipo Completo | **DONE (DoD)** | `E05_TESTEO_EQUIPO_REQUISITOS_MVP.md` |
+| **DOC-E08** | Bitácora de IA, Skills y Prompts Literales | Dev 1 | **DONE (DoD)** | `documentos/E08_IA_y_fuentes.md` |
+| **FIX-API** | Corrección de rutas 404 (QR & Exportación CSV) | Dev 1 | **DONE (DoD)** | `routers/pasaporte.py` & `export.py` |
+| **FIX-SCH** | Tolerancia en Transformación (Responsable y Salida) | Dev 1 | **DONE (DoD)** | `schemas.py` & `TransformacionView.jsx` |
+| **FIX-UX** | Ubicación Veredal y Horario Legal Colombia (COT) | Dev 1 & Dev 3 | **DONE (DoD)** | `RecepcionView.jsx` & `AuditLogView.jsx` |
+| **COD-RF12**| Panel de Balance Agroindustrial Consolidado | Dev 1 | **DONE (DoD)** | `AdminDashboard.jsx` |
+| **INT-DEV2**| Integración de suite de seguridad Dev 2 | Dev 1 & Dev 2 | **EN INTEGRACIÓN** | Rama `feature/security-qa` |
+| **DOC-E06** | Informe de Usabilidad Externa en Stand | Dev 4 | **BACKLOG** | Asignado a Dev 4 |
+| **DOC-E09** | Propuesta Comercial y Diapositivas Pitch | Dev 4 | **BACKLOG** | Asignado a Dev 4 |
