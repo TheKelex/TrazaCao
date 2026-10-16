@@ -34,7 +34,6 @@ TEXT_DARK = colors.HexColor("#0F172A")
 
 
 def generar_pdf():
-    # Página horizontal para acomodar la tabla ancha
     doc = SimpleDocTemplate(
         str(OUTPUT_PDF),
         pagesize=landscape(letter),
@@ -46,29 +45,28 @@ def generar_pdf():
 
     styles = getSampleStyleSheet()
 
-    # Estilos tipográficos
     title_style = ParagraphStyle(
         "TitleStyle",
         parent=styles["Normal"],
         fontName="Helvetica-Bold",
-        fontSize=16,
-        leading=18,
+        fontSize=15,
+        leading=17,
         textColor=CACAO_BROWN,
     )
     subtitle_style = ParagraphStyle(
         "SubTitleStyle",
         parent=styles["Normal"],
         fontName="Helvetica",
-        fontSize=9,
-        leading=12,
+        fontSize=8.5,
+        leading=11,
         textColor=TEXT_MUTED,
     )
     metric_label = ParagraphStyle(
         "MetricLabel",
         parent=styles["Normal"],
         fontName="Helvetica-Bold",
-        fontSize=8,
-        leading=10,
+        fontSize=7.5,
+        leading=9.5,
         textColor=CACAO_BROWN,
         alignment=1,
     )
@@ -76,8 +74,8 @@ def generar_pdf():
         "MetricVal",
         parent=styles["Normal"],
         fontName="Helvetica-Bold",
-        fontSize=13,
-        leading=15,
+        fontSize=12,
+        leading=14,
         textColor=EMERALD_ACCENT,
         alignment=1,
     )
@@ -85,60 +83,42 @@ def generar_pdf():
         "THStyle",
         parent=styles["Normal"],
         fontName="Helvetica-Bold",
-        fontSize=8,
-        leading=10,
+        fontSize=7.5,
+        leading=9.5,
         textColor=colors.white,
     )
     td_style = ParagraphStyle(
         "TDStyle",
         parent=styles["Normal"],
         fontName="Helvetica",
-        fontSize=7.5,
-        leading=9.5,
+        fontSize=7,
+        leading=9,
         textColor=TEXT_DARK,
     )
     td_bold = ParagraphStyle(
         "TDBold",
         parent=styles["Normal"],
         fontName="Helvetica-Bold",
-        fontSize=7.5,
-        leading=9.5,
+        fontSize=7,
+        leading=9,
         textColor=CACAO_BROWN,
     )
     status_done = ParagraphStyle(
         "StatusDone",
         parent=styles["Normal"],
         fontName="Helvetica-Bold",
-        fontSize=7,
-        leading=8.5,
+        fontSize=6.8,
+        leading=8.2,
         textColor=EMERALD_ACCENT,
-        alignment=1,
-    )
-    status_prog = ParagraphStyle(
-        "StatusProg",
-        parent=styles["Normal"],
-        fontName="Helvetica-Bold",
-        fontSize=7,
-        leading=8.5,
-        textColor=AMBER_ACCENT,
-        alignment=1,
-    )
-    status_backlog = ParagraphStyle(
-        "StatusBacklog",
-        parent=styles["Normal"],
-        fontName="Helvetica",
-        fontSize=7,
-        leading=8.5,
-        textColor=TEXT_MUTED,
         alignment=1,
     )
 
     story = []
 
-    # 1. ENCABEZADO INSTITUCIONAL
+    # 1. ENCABEZADO
     header_data = [
         [
-            Paragraph("<b>TRAZACAO HUILA — TABLERO KANBAN & SEGUIMIENTO SDD</b>", title_style),
+            Paragraph("<b>TRAZACAO HUILA — TABLERO KANBAN & SEGUIMIENTO SDD (100% COMPLETITUD)</b>", title_style),
             Paragraph(
                 f"<b>Fecha de Corte:</b> {datetime.now().strftime('%Y-%m-%d %H:%M')} COT<br/>"
                 "<b>Repo:</b> github.com/TheKelex/TrazaCao (develop)",
@@ -153,7 +133,7 @@ def generar_pdf():
             "",
         ],
     ]
-    header_table = Table(header_data, colWidths=[5.5 * inch, 4.5 * inch])
+    header_table = Table(header_data, colWidths=[6.0 * inch, 4.0 * inch])
     header_table.setStyle(
         TableStyle(
             [
@@ -165,10 +145,10 @@ def generar_pdf():
         )
     )
     story.append(header_table)
-    story.append(Spacer(1, 4))
-    story.append(HRFlowable(width="100%", thickness=1.5, color=AMBER_ACCENT, spaceBefore=2, spaceAfter=6))
+    story.append(Spacer(1, 3))
+    story.append(HRFlowable(width="100%", thickness=1.5, color=AMBER_ACCENT, spaceBefore=2, spaceAfter=5))
 
-    # 2. TARJETAS DE MÉTRICAS GLOBALES
+    # 2. TARJETAS DE MÉTRICAS
     metrics_data = [
         [
             Paragraph("TOTAL TAREAS", metric_label),
@@ -178,11 +158,11 @@ def generar_pdf():
             Paragraph("TASA DE CUMPLIMIENTO", metric_label),
         ],
         [
-            Paragraph("24", metric_val),
-            Paragraph("21", metric_val),
-            Paragraph("1", metric_val),
-            Paragraph("2", metric_val),
-            Paragraph("87.5%", metric_val),
+            Paragraph("28", metric_val),
+            Paragraph("28", metric_val),
+            Paragraph("0", metric_val),
+            Paragraph("0", metric_val),
+            Paragraph("100.0%", metric_val),
         ],
     ]
     metrics_table = Table(metrics_data, colWidths=[2.0 * inch] * 5)
@@ -192,20 +172,19 @@ def generar_pdf():
                 ("BACKGROUND", (0, 0), (-1, -1), SLATE_BG),
                 ("BOX", (0, 0), (-1, -1), 1, SLATE_BORDER),
                 ("INNERGRID", (0, 0), (-1, -1), 0.5, SLATE_BORDER),
-                ("TOPPADDING", (0, 0), (-1, -1), 3),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+                ("TOPPADDING", (0, 0), (-1, -1), 2.5),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 2.5),
             ]
         )
     )
     story.append(metrics_table)
-    story.append(Spacer(1, 8))
+    story.append(Spacer(1, 6))
 
     # 3. TABLA VIVA DEL TABLERO KANBAN
-    # Columnas: ID, Entregable / Hito, Responsable, Estado Kanban, Evidencia / Ubicación
     tareas = [
-        ("DOC-E01", "Comprensión del Problema y Marco MNTC", "Dev 4", "DONE (DoD)", "documentos/E01_problema.md"),
-        ("DOC-E02", "12 Historias de Usuario Gherkin + Hora 12", "Dev 4", "DONE (DoD)", "documentos/E02_requisitos.md"),
-        ("DOC-E03", "Arquitectura Onion, Diagramas ER y ADRs", "Dev 1 & 2", "DONE (DoD)", "documentos/E03_diseno.md"),
+        ("DOC-E01", "Comprensión del Problema y Marco MNTC", "Dev 4", "DONE (DoD)", "documentos/E01_problema.pdf"),
+        ("DOC-E02", "13 Historias de Usuario Gherkin + Hora 12", "Dev 4", "DONE (DoD)", "documentos/E02_requisitos.pdf"),
+        ("DOC-E03", "Arquitectura Onion, Diagramas ER y ADRs", "Dev 1 & 2", "DONE (DoD)", "documentos/E03_diseño.pdf"),
         ("DOC-API", "Contratos de API JSON Oficiales", "Dev 1", "DONE (DoD)", "documentos/CONTRATOS_API.md"),
         ("DOC-CTX", "Prompt Maestro de Alineación IA Swarm", "Dev 1", "DONE (DoD)", "CONTEXTO_IA_EQUIPO.md"),
         ("PLN-D1", "Plan Técnico Core, Matemáticas y Dominio", "Dev 1", "DONE (DoD)", "documentos/PLAN_DEV1_CORE.md"),
@@ -215,18 +194,18 @@ def generar_pdf():
         ("COD-B01", "SQLite WAL, Concurrencia y Triggers DDL", "Dev 2", "DONE (DoD)", "src/backend/infra/database.py"),
         ("COD-B02", "Motor Decimal Agroindustrial (CAC001)", "Dev 1", "DONE (DoD)", "src/backend/domain/calculos.py"),
         ("COD-OPS", "Respaldo Atómico (15ms) y Restore (18ms)", "Dev 2", "DONE (DoD)", "datos/backup.py | restore.py"),
-        ("COD-U01", "Frontend SPA Operador & Admin (React Vite)", "Dev 3", "DONE (DoD)", "src/frontend/ (Build en 2.0s)"),
+        ("COD-U01", "Frontend SPA Operador & Admin (React 19)", "Dev 3", "DONE (DoD)", "src/frontend/ (Build en 2.0s)"),
         ("COD-U02", "Ficha QR SVG + Simulador Móvil 375px", "Dev 4", "DONE (DoD)", "src/frontend/PasaportePublico.jsx"),
-        ("DOC-E04", "Manual de Usuario y Demo < 120s", "Dev 1 / Dev 3", "DONE (DoD)", "documentos/E04_manual.md"),
-        ("DOC-E05", "Informe Testeo 1 a 1 de Requisitos MVP", "Equipo", "DONE (DoD)", "documentos/E05_TESTEO_EQUIPO..."),
-        ("DOC-E08", "Bitácora IA, Skills y Prompts Literales", "Dev 1", "DONE (DoD)", "documentos/E08_IA_y_fuentes.md"),
-        ("FIX-API", "Corrección de Rutas 404 (QR & Export CSV)", "Dev 1", "DONE (DoD)", "routers/pasaporte.py & export.py"),
-        ("FIX-SCH", "Tolerancia Transformación (Responsable/Salida)", "Dev 1", "DONE (DoD)", "schemas.py & TransformacionView"),
-        ("FIX-UX", "Ubicación Veredal y Horario Colombia COT", "Dev 1 & Dev 3", "DONE (DoD)", "RecepcionView & AuditLogView"),
-        ("COD-RF12", "Panel Balance Agroindustrial Consolidado", "Dev 1", "DONE (DoD)", "AdminDashboard.jsx (RF12)"),
-        ("INT-DEV2", "Integración Suite Seguridad Dev 2", "Dev 1 & Dev 2", "EN INTEGRACIÓN", "Rama feature/security-qa"),
-        ("DOC-E06", "Informe de Usabilidad Externa en Stand", "Dev 4", "BACKLOG", "Asignado a Dev 4"),
-        ("DOC-E09", "Propuesta Comercial y Diapositivas Pitch", "Dev 4", "BACKLOG", "Asignado a Dev 4"),
+        ("DOC-E04", "Manual de Usuario y Demo < 120s", "Dev 1 / Dev 3", "DONE (DoD)", "documentos/E04_manual.pdf"),
+        ("DOC-E05", "Informe y Archivos de Pruebas (38 Tests)", "Equipo", "DONE (DoD)", "documentos/E05_pruebas.pdf"),
+        ("DOC-E06", "Informe de Usabilidad Externa en Stand", "Dev 4", "DONE (DoD)", "documentos/E06_usabilidad.pdf"),
+        ("DOC-E07", "Operación, Respaldo y Mantenimiento", "Dev 2", "DONE (DoD)", "documentos/E07_operacion.pdf"),
+        ("DOC-E08", "Bitácora IA, Skills y Prompts Literales", "Dev 1", "DONE (DoD)", "documentos/E08_IA_y_fuentes.pdf"),
+        ("DOC-E09", "Propuesta Comercial y Pitch Oficial", "Dev 4", "DONE (DoD)", "documentos/E09_presentacion.pdf"),
+        ("DOC-E10", "Índice de Entrega y Matriz Trazabilidad", "Equipo", "DONE (DoD)", "ENTREGA.md / E10_entrega.md"),
+        ("COD-AUTH", "Login Criptográfico PBKDF2 y Roles RBAC", "Dev 1 & 2", "DONE (DoD)", "LoginView.jsx | rbac.py"),
+        ("FEAT-CAT-B2B", "Catálogo Industrial y Botánico B2B", "Dev 1 & 4", "DONE (DoD)", "subproductos.py | Catalogo.jsx"),
+        ("FEAT-MERMA-KG", "Venta Cascarilla por Kilo ($14.500-$16.500)", "Dev 1 & 4", "DONE (DoD)", "calculos.py | seed.py"),
     ]
 
     table_rows = [
@@ -240,68 +219,46 @@ def generar_pdf():
     ]
 
     for tid, desc, resp, est, evid in tareas:
-        if "DONE" in est:
-            st_par = Paragraph(est, status_done)
-        elif "INTEGRACIÓN" in est or "PROCESO" in est:
-            st_par = Paragraph(est, status_prog)
-        else:
-            st_par = Paragraph(est, status_backlog)
-
+        st_par = Paragraph(est, status_done)
         table_rows.append(
             [
                 Paragraph(f"<b>{tid}</b>", td_bold),
                 Paragraph(desc, td_style),
                 Paragraph(resp, td_style),
                 st_par,
-                Paragraph(f"<font color='#0284c7'>{evid}</font>", td_style),
+                Paragraph(f"<code>{evid}</code>", td_style),
             ]
         )
 
-    col_widths = [0.8 * inch, 3.4 * inch, 1.1 * inch, 1.4 * inch, 3.3 * inch]
+    col_widths = [1.0 * inch, 3.2 * inch, 1.2 * inch, 1.3 * inch, 3.3 * inch]
     kanban_table = Table(table_rows, colWidths=col_widths, repeatRows=1)
 
-    tstyle = [
+    t_style = [
         ("BACKGROUND", (0, 0), (-1, 0), CACAO_BROWN),
-        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-        ("ALIGN", (0, 0), (0, -1), "LEFT"),
         ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 2.5),
-        ("TOPPADDING", (0, 0), (-1, -1), 2.5),
-        ("BOX", (0, 0), (-1, -1), 1, SLATE_BORDER),
-        ("INNERGRID", (0, 0), (-1, -1), 0.5, SLATE_BORDER),
+        ("TOPPADDING", (0, 0), (-1, -1), 2),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
+        ("GRID", (0, 0), (-1, -1), 0.5, SLATE_BORDER),
     ]
 
-    # Filas alternas con sombreado suave
-    for i in range(1, len(table_rows)):
-        if i % 2 == 0:
-            tstyle.append(("BACKGROUND", (0, i), (-1, i), colors.HexColor("#F1F5F9")))
-        else:
-            tstyle.append(("BACKGROUND", (0, i), (-1, i), colors.white))
+    for idx in range(1, len(table_rows)):
+        if idx % 2 == 0:
+            t_style.append(("BACKGROUND", (0, idx), (-1, idx), SLATE_BG))
 
-    kanban_table.setStyle(TableStyle(tstyle))
+    kanban_table.setStyle(TableStyle(t_style))
     story.append(kanban_table)
 
-    # 4. NOTA AL PIE DE METODOLOGÍA
-    story.append(Spacer(1, 6))
-    footer_text = Paragraph(
-        "<b>Gobernanza SDD:</b> Cada entregable catalogado como <i>DONE (DoD)</i> cuenta con especificación previa en <code>documentos/</code>, "
-        "código commiteado en rama Git, pruebas verificadas y sincronización en <code>ENTREGA.md</code>. "
-        "TrazaCao Huila © 2026 — Sede Oasis Plaza, Neiva, Huila.",
-        subtitle_style,
-    )
-    story.append(footer_text)
-
-    # Compilar PDF
     doc.build(story)
 
     # Copiar también a la raíz para fácil acceso
-    import shutil
-    shutil.copyfile(str(OUTPUT_PDF), str(ROOT_PDF))
-
-    print(f"[OK] PDF generado exitosamente en:")
-    print(f"     - {OUTPUT_PDF}")
-    print(f"     - {ROOT_PDF}")
+    if OUTPUT_PDF.exists():
+        import shutil
+        shutil.copyfile(str(OUTPUT_PDF), str(ROOT_PDF))
+        print(f"[OK] Tablero Kanban generado exitosamente en:")
+        print(f"     -> {OUTPUT_PDF}")
+        print(f"     -> {ROOT_PDF}")
 
 
 if __name__ == "__main__":
-    generar_pdf()
+    generar_pdf_e04 = generar_pdf
+    generar_pdf_e04()
