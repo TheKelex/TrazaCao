@@ -149,6 +149,8 @@
 | **COD-AUTH** | Inicio de Sesión Criptográfico, Aislamiento de Roles | Equipo Completo | **DONE (DoD)** | `LoginView.jsx`, `hashing.py`, `routers/auth.py` |
 | **FEAT-CAT-B2B** | Catálogo Industrial y Botánico B2B de Mermas | Equipo Completo | **DONE (DoD)** | `subproductos.py`, `CatalogoLotesPublico.jsx` |
 | **FEAT-MERMA-KG** | Venta Exclusiva de Cascarilla por Kilo ($14.500-$16.500) | Equipo Completo | **DONE (DoD)** | `calculos.py`, `subproductos.py` |
+| **FEAT-LANDING-BRAND** | Rediseño de Identidad de Marca y Narrativa en 5 Pantallas | Equipo Completo | **DONE (DoD)** | `ScrollySceneViewer.jsx`, `CacaoExperienceLanding.jsx`, `demo-scrollytelling.html` |
 
 ---
 *Fin del Tablero Kanban — TrazaCao Huila*
+
