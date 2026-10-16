@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { PackagePlus, Flame, ShieldAlert, QrCode, History, CheckCircle2, ChevronRight, Cpu } from 'lucide-react';
+import { PackagePlus, Flame, ShieldAlert, QrCode, History, CheckCircle2, ChevronRight, Cpu, GitBranch } from 'lucide-react';
 import { api } from './api/client';
 import { TopRoleBar } from './components/TopRoleBar';
 import { RecepcionView } from './components/RecepcionView';
 import { TransformacionView } from './components/TransformacionView';
+import { TrazabilidadView } from './components/TrazabilidadView';
 import { AdminDashboard } from './components/AdminDashboard';
 import { PasaportePublico } from './components/PasaportePublico';
 import { AuditLogView } from './components/AuditLogView';
@@ -64,9 +65,10 @@ export function App() {
   const pestañas = [
     { id: 'recepcion', label: '1. Recepción & Acopio', icon: PackagePlus, tag: 'RF01' },
     { id: 'transformacion', label: '2. Transformación & Merma', icon: Flame, tag: 'RF02, RF04' },
-    { id: 'admin', label: '3. Admin & Control Calidad', icon: ShieldAlert, tag: 'RF09, RF11' },
-    { id: 'pasaporte', label: '4. Pasaporte Digital QR', icon: QrCode, tag: 'RF06' },
-    { id: 'auditoria', label: '5. Auditoría Inmutable', icon: History, tag: 'RF10' },
+    { id: 'trazabilidad', label: '3. Trazabilidad Integral', icon: GitBranch, tag: 'RF03' },
+    { id: 'admin', label: '4. Admin & Control Calidad', icon: ShieldAlert, tag: 'RF07, RF09, RF11, RF12' },
+    { id: 'pasaporte', label: '5. Pasaporte Digital QR', icon: QrCode, tag: 'RF06' },
+    { id: 'auditoria', label: '6. Auditoría Inmutable', icon: History, tag: 'RF10' },
   ];
 
   return (
@@ -80,7 +82,7 @@ export function App() {
       />
 
       {/* Navegación por Pestañas */}
-      <nav className="bg-stone-900 border-b border-stone-800 px-4 py-2">
+      <nav className="bg-stone-900 border-b border-stone-800 px-2 sm:px-4 py-2 sticky top-[57px] z-40 backdrop-blur-md bg-stone-900/95">
         <div className="max-w-7xl mx-auto flex items-center gap-1.5 overflow-x-auto py-1">
           {pestañas.map((p) => {
             const Icon = p.icon;
@@ -124,6 +126,14 @@ export function App() {
             lotes={lotes}
             onTransformacionExitosa={handleTransformacionExitosa}
             defaultLoteId={lotePasaporteId}
+          />
+        )}
+
+        {activeTab === 'trazabilidad' && (
+          <TrazabilidadView
+            lotes={lotes}
+            defaultLoteId={lotePasaporteId}
+            onVerPasaporte={handleSeleccionarParaPasaporte}
           />
         )}
 

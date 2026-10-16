@@ -32,6 +32,43 @@ class LoteBase(BaseModel):
     kg_recibidos: Decimal = Field(
         ..., gt=0, description="Cantidad recibida en kilogramos (estrictamente > 0)"
     )
+    cantidad: Optional[Decimal] = Field(default=None, description="Cantidad en la unidad de medida original")
+    unidad_medida: Optional[str] = Field(default="kg", description="Unidad de medida (kg, lb, @, qq, sacos)")
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalizar_lote_alias(cls, data):
+        if isinstance(data, dict):
+            # Aceptar origen_municipio como alias de origen
+            if "origen" not in data and "origen_municipio" in data:
+                data["origen"] = data["origen_municipio"]
+            
+            # Soporte de cantidad y unidad_medida
+            unidad = str(data.get("unidad_medida") or "kg").lower().strip()
+            factores = {
+                "kg": Decimal("1.0"),
+                "kilogramos": Decimal("1.0"),
+                "lb": Decimal("0.5"),
+                "libras": Decimal("0.5"),
+                "@": Decimal("12.5"),
+                "arrobas": Decimal("12.5"),
+                "qq": Decimal("50.0"),
+                "quintales": Decimal("50.0"),
+                "sacos": Decimal("50.0"),
+                "cargas": Decimal("125.0"),
+            }
+            factor = factores.get(unidad, Decimal("1.0"))
+
+            if "kg_recibidos" not in data and "cantidad" in data:
+                try:
+                    cant = Decimal(str(data["cantidad"]))
+                    data["kg_recibidos"] = cant * factor
+                except Exception:
+                    pass
+            elif "kg_recibidos" in data and "cantidad" not in data:
+                data["cantidad"] = data["kg_recibidos"]
+                data["unidad_medida"] = "kg"
+        return data
 
 
 class LoteCreate(LoteBase):
@@ -75,6 +112,7 @@ class TransformacionCreate(BaseModel):
     costo_etapa_cop: Decimal = Field(default=Decimal("1600000.00"), ge=0, description="Costo total de la etapa")
     precio_venta_estimado: Decimal = Field(default=Decimal("25000.00"), ge=0, description="Precio de venta estimado/kg")
     incidencia_justificacion: Optional[str] = None
+    fecha_transformacion: Optional[datetime] = None
 
     @model_validator(mode="before")
     @classmethod
@@ -84,6 +122,8 @@ class TransformacionCreate(BaseModel):
                 data["kg_salida_vendible"] = data["kg_salida"]
             if not data.get("responsable"):
                 data["responsable"] = "Operador de Planta Rivera"
+            if "fecha_transformacion" not in data and "fecha" in data:
+                data["fecha_transformacion"] = data["fecha"]
         return data
 
     @model_validator(mode="after")

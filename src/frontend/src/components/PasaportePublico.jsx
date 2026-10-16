@@ -41,6 +41,28 @@ export function PasaportePublico({ loteIdSeleccionado, lotes }) {
     }
   };
 
+  const cargarDemoOffline = () => {
+    const loteEncontrado = lotes.find((l) => l.id === loteId);
+    setPasaporte({
+      lote_id: loteId || 'CAC001',
+      productor: loteEncontrado?.productor || 'Carlos Alberto Gómez',
+      finca: 'Finca Villa Esperanza',
+      origen_municipio: loteEncontrado?.origen_municipio || 'Rivera',
+      departamento: 'Huila',
+      variedad: 'Cacao Fino de Aroma (Criollo/Trinitario)',
+      fecha_cosecha: '2024-10-10',
+      humedad_porcentaje: loteEncontrado ? parseFloat(loteEncontrado.humedad_porcentaje) : 6.8,
+      fermentacion_porcentaje: loteEncontrado ? parseFloat(loteEncontrado.fermentacion_porcentaje) : 82.5,
+      sello_calidad: 'Denominación de Origen Huila - Calidad Premium NTC 1252',
+      estado: loteEncontrado?.estado || 'LIBERADO',
+      trazabilidad_completa: true,
+      total_etapas: 2,
+      origen_trazabilidad: `${loteEncontrado?.origen_municipio || 'Rivera'}, Huila · Cosecha 2024-10-10 · ${loteEncontrado?.productor || 'Carlos Alberto Gómez'}`,
+      modo_offline: true,
+    });
+    setError(null);
+  };
+
   const urlQR = typeof window !== 'undefined'
     ? `${window.location.origin}/pasaporte/${loteId}`
     : `http://127.0.0.1:5173/pasaporte/${loteId}`;
@@ -107,8 +129,34 @@ export function PasaportePublico({ loteIdSeleccionado, lotes }) {
       )}
 
       {error && (
-        <div className="p-4 bg-rose-950/60 border border-rose-800 rounded-xl text-rose-200 text-xs">
-          Error al cargar pasaporte: {error}
+        <div className="p-5 bg-rose-950/70 border border-rose-800 rounded-xl text-rose-200 text-xs space-y-3">
+          <div className="flex items-center gap-2 font-bold text-sm text-rose-300">
+            <AlertOctagon className="w-5 h-5 text-rose-400" />
+            <span>Servidor Backend no detectado en el puerto 8000 (127.0.0.1:8000)</span>
+          </div>
+          <p className="text-stone-300">
+            El frontend Vite está activo, pero no se pudo conectar con el servidor local FastAPI.
+          </p>
+          <div className="p-3 bg-stone-900/90 rounded border border-stone-800 font-mono text-[11px] text-amber-300 leading-relaxed">
+            # Para iniciar el backend FastAPI abre una consola y ejecuta:<br/>
+            python -m uvicorn src.backend.main:app --host 127.0.0.1 --port 8000 --reload<br/><br/>
+            # O simplemente ejecuta el lanzador unificado:<br/>
+            .\start.bat
+          </div>
+          <div className="flex items-center gap-3 pt-1">
+            <button
+              onClick={() => cargarPasaporte(loteId)}
+              className="bg-stone-800 hover:bg-stone-700 text-stone-200 px-3.5 py-1.5 rounded-lg font-semibold transition-all cursor-pointer"
+            >
+              Reintentar Conexión
+            </button>
+            <button
+              onClick={cargarDemoOffline}
+              className="bg-amber-600 hover:bg-amber-500 text-stone-950 px-3.5 py-1.5 rounded-lg font-bold transition-all shadow cursor-pointer"
+            >
+              Cargar Ficha Demo Offline (CAC001)
+            </button>
+          </div>
         </div>
       )}
 

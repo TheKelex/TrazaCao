@@ -1,10 +1,27 @@
-import React, { useState } from 'react';
-import { Shield, UserCheck, AlertTriangle, RefreshCw, Zap, CheckCircle2, Lock } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Shield, UserCheck, AlertTriangle, RefreshCw, Zap, CheckCircle2, Lock, Radio } from 'lucide-react';
 import { api } from '../api/client';
 
 export function TopRoleBar({ auth, setAuth, onAutocompletarDemo, onRefreshAll }) {
   const [test403Modal, setTest403Modal] = useState(null);
   const [testing403, setTesting403] = useState(false);
+  const [backendOnline, setBackendOnline] = useState(null);
+
+  const verificarBackend = async () => {
+    const ok = await api.healthCheck();
+    setBackendOnline(ok);
+  };
+
+  useEffect(() => {
+    verificarBackend();
+    const interval = setInterval(verificarBackend, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleRefresh = async () => {
+    await verificarBackend();
+    if (onRefreshAll) onRefreshAll();
+  };
 
   const alternarRol = (nuevoRol) => {
     if (nuevoRol === 'OPERADOR') {
@@ -51,10 +68,28 @@ export function TopRoleBar({ auth, setAuth, onAutocompletarDemo, onRefreshAll })
             <div className="flex items-center gap-2">
               <span className="font-bold text-amber-400 text-lg tracking-tight">TrazaCao</span>
               <span className="text-xs bg-amber-950 text-amber-300 font-medium px-2 py-0.5 rounded border border-amber-800/80">Huila Agro</span>
-              <span className="text-[11px] text-emerald-400 flex items-center gap-1 font-mono">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                100% Offline (SQLite WAL)
-              </span>
+              {backendOnline === true && (
+                <span className="text-[11px] text-emerald-400 flex items-center gap-1 font-mono bg-emerald-950/60 border border-emerald-800 px-2 py-0.5 rounded" title="FastAPI respondiendo en 127.0.0.1:8000">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  100% Offline (SQLite WAL) · Backend Activo
+                </span>
+              )}
+              {backendOnline === false && (
+                <span 
+                  onClick={handleRefresh}
+                  className="text-[11px] text-rose-300 flex items-center gap-1 font-mono bg-rose-950 border border-rose-800 px-2 py-0.5 rounded cursor-pointer hover:bg-rose-900 transition-colors" 
+                  title="Backend inactivo en 127.0.0.1:8000. Inicia uvicorn o ejecuta start.bat. Clic para reintentar."
+                >
+                  <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                  Backend Desconectado (8000)
+                </span>
+              )}
+              {backendOnline === null && (
+                <span className="text-[11px] text-stone-400 flex items-center gap-1 font-mono">
+                  <span className="w-2 h-2 rounded-full bg-stone-500"></span>
+                  Conectando...
+                </span>
+              )}
             </div>
             <p className="text-[11px] text-stone-400 leading-none">Mesa Nacional de Trazabilidad · NTC 1252 / EUDR</p>
           </div>
@@ -111,9 +146,9 @@ export function TopRoleBar({ auth, setAuth, onAutocompletarDemo, onRefreshAll })
 
           {/* Refresh Data */}
           <button
-            onClick={onRefreshAll}
+            onClick={handleRefresh}
             className="p-1.5 text-stone-400 hover:text-stone-200 bg-stone-900 hover:bg-stone-800 border border-stone-700 rounded-md transition-all cursor-pointer"
-            title="Refrescar catálogo y saldos"
+            title="Refrescar catálogo, saldos y verificar backend"
           >
             <RefreshCw className="w-3.5 h-3.5" />
           </button>

@@ -87,6 +87,8 @@ export const api = {
     }, auth),
 
   // Transformaciones (RF02, RF04, RF08)
+  getTransformaciones: (auth) => request('/transformaciones', { method: 'GET' }, auth),
+
   crearTransformacion: (data, auth, idempotencyKey = generarUUID()) =>
     request('/transformaciones', {
       method: 'POST',
@@ -111,6 +113,25 @@ export const api = {
   // Exportar CSV (RF11 - Solo Admin)
   exportarCSV: async (auth) => {
     return request('/admin/export/lotes-csv', { method: 'GET' }, auth);
+  },
+
+  // Respaldo y Persistencia (RF07)
+  generarBackup: async (auth) => {
+    return request('/admin/export/backup', { method: 'POST' }, auth);
+  },
+
+  getPersistenciaInfo: async (auth) => {
+    return request('/admin/export/persistencia-info', { method: 'GET' }, auth);
+  },
+
+  // Health Check Backend
+  healthCheck: async () => {
+    try {
+      const res = await fetch('/api/', { method: 'GET' });
+      return res.ok;
+    } catch {
+      return false;
+    }
   },
 
   // Disparar prueba de 403 Forbidden para el jurado en vivo

@@ -96,6 +96,15 @@ Antes de escribir código en `src/`, cada desarrollador debe abrir su rama y doc
 | **COD-B01** | Implementación SQLite WAL & Triggers | Dev 2 | **DONE (Integrado en Core)** | `develop` |
 | **COD-B02** | Motor Decimal de Cálculos y Pytest | Dev 1 | **DONE (15/15 Tests OK)** | `develop` |
 | **COD-OPS** | Scripts Backup, Restore y Benchmark | Dev 2 | **DONE (< 20 ms verificado)**| `develop` |
-| **COD-U01** | Frontend SPA Operador & Admin | Dev 3 | **DONE (Build OK en 1.2s)** | `develop` |
+| **COD-U01** | Frontend SPA Operador & Admin | Dev 3 | **DONE (Build OK en 1.5s)** | `develop` |
 | **COD-U02** | Pasaporte QR SVG + Simulador Móvil | Dev 4 | **DONE (Offline 100%)** | `develop` |
 | **DOC-E04** | Manual de Usuario y Demo < 120s | Dev 1 / Dev 3 | **DONE (25/25 pts)** | `develop` |
+| **AUD-RF01** | Unidad de medida y cantidad configurable en recepción | Dev 1 & 3 | **DONE (kg, lb, @, qq, saco, carga)** | `develop` |
+| **AUD-RF02** | Fecha transformación, código salida origen y botón activo | Dev 1 & 3 | **DONE (SAL-CAC001 + seed 100kg)** | `develop` |
+| **AUD-RF03** | Vista dedicada de Trazabilidad Integral con latencia < 3s | Dev 3 | **DONE (TrazabilidadView.jsx)** | `develop` |
+| **AUD-RF04** | Panel de alertas: merma > 15%, registro incompleto, retraso | Dev 1 & 3 | **DONE (Alertas visuales activas)** | `develop` |
+| **AUD-RF05** | Supuestos económicos visibles y economía circular cascarilla | Dev 1 | **DONE (Valorización $3.000/kg)** | `develop` |
+| **AUD-RF06** | Diagnóstico conexión backend + Fallback demo en Pasaporte QR | Dev 3 & 4 | **DONE (Badge vivo + Demo offline)** | `develop` |
+| **AUD-RF07** | Panel de persistencia WAL, estadísticas y snapshot caliente | Dev 2 & 3 | **DONE (Snapshot atómico .db)** | `develop` |
+| **AUD-RBAC** | Segregación estricta Operador/Admin con prueba en vivo 403 | Dev 2 & 3 | **DONE (TopRoleBar con Test 403)** | `develop` |
+

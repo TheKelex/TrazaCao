@@ -60,6 +60,7 @@ def crear_transformacion(
         )
 
     # 4. Crear registro de transformación
+    from datetime import datetime
     trans_id = str(uuid.uuid4())
     circular = balance["economia_circular"]
 
@@ -81,6 +82,7 @@ def crear_transformacion(
         ingreso_cascarilla_cop=circular["ingreso_adicional_cop"],
         costo_neto_circular_cop=circular["costo_neto_circular_cop"],
         incidencia_justificacion=trans_in.incidencia_justificacion,
+        fecha_transformacion=trans_in.fecha_transformacion or datetime.utcnow(),
     )
     db.add(nueva_trans)
 
@@ -104,6 +106,15 @@ def crear_transformacion(
     return nueva_trans
 
 
+@router.get("", response_model=List[TransformacionResponse])
+def listar_todas_transformaciones(
+    db: Session = Depends(get_db),
+    auth: dict = Depends(require_operador_or_admin),
+):
+    """Consulta todas las transformaciones registradas en el sistema (trazabilidad de salidas)."""
+    return db.query(Transformacion).order_by(Transformacion.fecha_transformacion.desc()).all()
+
+
 @router.get("/lote/{lote_id}", response_model=List[TransformacionResponse])
 def listar_transformaciones_lote(
     lote_id: str,
@@ -111,4 +122,4 @@ def listar_transformaciones_lote(
     auth: dict = Depends(require_operador_or_admin),
 ):
     """Consulta todas las transformaciones ejecutadas sobre un lote."""
-    return db.query(Transformacion).filter(Transformacion.lote_id == lote_id).all()
+    return db.query(Transformacion).filter(Transformacion.lote_id == lote_id).order_by(Transformacion.fecha_transformacion.desc()).all()

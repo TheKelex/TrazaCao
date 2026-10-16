@@ -33,12 +33,12 @@ def seed():
         lotes_base = [
             Lote(
                 id="CAC001",
-                productor="Productor A",
+                productor="Productor A (Finca La Esperanza)",
                 origen="Rivera",
                 humedad_porcentaje=Decimal("7.50"),
                 fermentacion_porcentaje=Decimal("78.00"),
-                kg_recibidos=Decimal("100.00"),
-                kg_disponibles=Decimal("100.00"),
+                kg_recibidos=Decimal("200.00"),
+                kg_disponibles=Decimal("200.00"),
                 estado="LIBERADO",
             ),
             Lote(
@@ -81,7 +81,7 @@ def seed():
         # 3. Registrar Transformación Oficial de CAC001 (100 kg -> 80 kg)
         # Descontar saldo de CAC001
         lote_cac001 = db.query(Lote).filter(Lote.id == "CAC001").first()
-        lote_cac001.kg_disponibles = Decimal("0.00")  # Se consumieron los 100 kg
+        lote_cac001.kg_disponibles = Decimal("100.00")  # Se consumieron 100 kg y quedan 100 kg disponibles para pruebas del usuario
 
         balance = balance_agroindustrial_completo(
             kg_entrada=Decimal("100.00"),

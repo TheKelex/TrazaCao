@@ -8,16 +8,31 @@ export function RecepcionView({ auth, lotes, onLoteCreado, demoData }) {
       id: 'CAC004',
       productor: 'Finca El Diamante (Rivera)',
       origen_municipio: 'Rivera',
-      kg_recibidos: '120.00',
+      cantidad: '100.00',
+      unidad_medida: 'kg',
       humedad_porcentaje: '7.00',
       fermentacion_porcentaje: '82.00',
       precio_compra_kg: '15000.00',
+      ubicacion_cultivo: 'Vereda El Recreo',
+      fecha_cosecha: new Date().toISOString().slice(0, 10),
     }
   );
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+
+  const factoresConversion = {
+    kg: 1.0,
+    lb: 0.5,
+    arroba: 12.5,
+    quintal: 50.0,
+    saco: 50.0,
+    carga: 125.0,
+  };
+
+  const factorActual = factoresConversion[formData.unidad_medida] || 1.0;
+  const kgCalculados = (parseFloat(formData.cantidad) || 0) * factorActual;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,22 +60,27 @@ export function RecepcionView({ auth, lotes, onLoteCreado, demoData }) {
       const payload = {
         id: formData.id.trim(),
         productor: formData.productor.trim(),
+        origen: formData.origen_municipio,
         origen_municipio: formData.origen_municipio,
-        kg_recibidos: parseFloat(formData.kg_recibidos),
+        cantidad: parseFloat(formData.cantidad),
+        unidad_medida: formData.unidad_medida,
+        kg_recibidos: kgCalculados,
         humedad_porcentaje: parseFloat(formData.humedad_porcentaje),
         fermentacion_porcentaje: parseFloat(formData.fermentacion_porcentaje),
         precio_compra_kg: parseFloat(formData.precio_compra_kg),
+        ubicacion_cultivo: formData.ubicacion_cultivo,
+        fecha_cosecha: formData.fecha_cosecha,
       };
 
       const respuesta = await api.crearLote(payload, auth);
-      setSuccess(`¡Lote ${respuesta.id} recibido con éxito! Stock inicial registrado en bodega.`);
+      setSuccess(`¡Lote ${respuesta.id} recibido con éxito! Stock inicial registrado: ${kgCalculados.toFixed(2)} kg.`);
       if (onLoteCreado) onLoteCreado(respuesta);
       
       // Preparar siguiente ID sugerido
       setFormData((prev) => ({
         ...prev,
         id: `CAC${String(Math.floor(Math.random() * 900) + 100)}`,
-        kg_recibidos: '',
+        cantidad: '',
       }));
     } catch (err) {
       setError(err.message);
@@ -189,24 +209,57 @@ export function RecepcionView({ auth, lotes, onLoteCreado, demoData }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-stone-300 mb-1 flex items-center gap-1">
                 <Scale className="w-3.5 h-3.5 text-amber-400" />
-                Kilos Recibidos (kg) *
+                Cantidad Recibida *
               </label>
               <input
                 type="number"
                 step="0.01"
                 min="0.01"
                 required
-                name="kg_recibidos"
-                value={formData.kg_recibidos}
+                name="cantidad"
+                value={formData.cantidad}
                 onChange={handleChange}
                 placeholder="100.00"
                 className="w-full bg-stone-950 border border-stone-700 rounded-lg px-3 py-2 text-stone-100 text-sm focus:outline-none focus:border-amber-500 font-mono"
               />
             </div>
+
+            <div>
+              <label className="block text-xs font-medium text-stone-300 mb-1">
+                Unidad de Medida (RF01) *
+              </label>
+              <select
+                name="unidad_medida"
+                value={formData.unidad_medida}
+                onChange={handleChange}
+                className="w-full bg-stone-950 border border-stone-700 rounded-lg px-3 py-2 text-stone-100 text-sm focus:outline-none focus:border-amber-500"
+              >
+                <option value="kg">Kilogramos (kg) · Estándar</option>
+                <option value="lb">Libras (lb) · (1 lb = 0.5 kg)</option>
+                <option value="arroba">Arrobas (@) · (1 @ = 12.5 kg)</option>
+                <option value="quintal">Quintales (qq) · (1 qq = 50 kg)</option>
+                <option value="saco">Sacos de Fique · (1 saco = 50 kg)</option>
+                <option value="carga">Cargas Cacaoteras · (1 carga = 125 kg)</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Masa Neta Normalizada Calculada */}
+          <div className="p-2.5 bg-stone-950 rounded-lg border border-stone-800 flex items-center justify-between text-xs">
+            <span className="text-stone-400 flex items-center gap-1.5">
+              <Scale className="w-3.5 h-3.5 text-amber-500" />
+              Masa Neta Normalizada en Bodega:
+            </span>
+            <span className="font-mono font-bold text-amber-400 text-sm">
+              {kgCalculados.toFixed(2)} kg
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
             <div>
               <label className="block text-xs font-medium text-stone-300 mb-1 flex items-center gap-1">
