@@ -1,15 +1,15 @@
 # ==============================================================================
-# Render Blueprint - TrazaCao Huila (Despliegue Continuo Automatizado)
+# Render Blueprint - TrazaCao Huila (Backend API REST & Base de Datos SQLite WAL)
 # II Hackathon de Programación DEVURITY - Universidad Surcolombiana
-# Conexión directa con GitHub: Cada push a 'develop' despliega en vivo
+# Conexión directa con GitHub: Cada push a 'main' despliega en vivo
 # ==============================================================================
 services:
   - type: web
-    name: trazacao-huila
+    name: trazacao-backend
     env: docker
     plan: free
     region: oregon
-    branch: develop
+    branch: main
     dockerfilePath: Dockerfile
     healthCheckPath: /api/health
     autoDeploy: true
