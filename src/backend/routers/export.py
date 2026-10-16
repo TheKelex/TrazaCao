@@ -27,6 +27,7 @@ def sanitizar_celda_csv(valor) -> str:
 
 
 @router.get("/csv")
+@router.get("/lotes-csv")
 def exportar_resumen_csv(
     origen: Optional[str] = Query(None, description="Filtrar por municipio"),
     estado: Optional[str] = Query(None, description="Filtrar por estado"),

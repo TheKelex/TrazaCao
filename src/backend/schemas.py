@@ -69,12 +69,22 @@ class LoteEstadoUpdate(BaseModel):
 class TransformacionCreate(BaseModel):
     lote_id: str = Field(..., description="ID del lote de origen")
     etapa: str = Field(default="Tostión y Molienda", min_length=3, max_length=100)
-    responsable: str = Field(..., min_length=2, max_length=150)
+    responsable: str = Field(default="Operador de Planta Rivera", min_length=2, max_length=150)
     kg_entrada: Decimal = Field(..., gt=0, description="Kilogramos a consumir del lote origen")
     kg_salida_vendible: Decimal = Field(..., ge=0, description="Kilogramos vendibles obtenidos")
     costo_etapa_cop: Decimal = Field(default=Decimal("1600000.00"), ge=0, description="Costo total de la etapa")
     precio_venta_estimado: Decimal = Field(default=Decimal("25000.00"), ge=0, description="Precio de venta estimado/kg")
     incidencia_justificacion: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalizar_campos_alias(cls, data):
+        if isinstance(data, dict):
+            if "kg_salida_vendible" not in data and "kg_salida" in data:
+                data["kg_salida_vendible"] = data["kg_salida"]
+            if not data.get("responsable"):
+                data["responsable"] = "Operador de Planta Rivera"
+        return data
 
     @model_validator(mode="after")
     def validar_masa_fisica(self) -> "TransformacionCreate":

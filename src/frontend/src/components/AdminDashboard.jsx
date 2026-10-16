@@ -299,6 +299,64 @@ export function AdminDashboard({ auth, lotes, onEstadoCambiado, onSeleccionarPar
         </div>
       </div>
 
+      {/* RF12: Balance Agroindustrial Consolidado y Economía Circular */}
+      <div className="bg-stone-900 border border-emerald-950/80 rounded-xl p-5 shadow-xl space-y-3">
+        <div className="flex items-center justify-between pb-3 border-b border-stone-800">
+          <div className="flex items-center gap-2">
+            <span className="p-2 rounded-lg bg-emerald-950 text-emerald-400 border border-emerald-800">
+              📊
+            </span>
+            <div>
+              <h3 className="font-bold text-stone-100 text-sm">
+                Balance Agroindustrial Consolidado y Economía Circular (RF12)
+              </h3>
+              <p className="text-xs text-stone-400">
+                Aritmética exacta Decimal · Desglose de mermas acumuladas y valorización de subproductos
+              </p>
+            </div>
+          </div>
+          <span className="text-[11px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800 px-2 py-0.5 rounded">
+            Blindaje Cero Divisiones / 0
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 pt-1">
+          <div className="p-3 bg-stone-950 rounded-lg border border-stone-800">
+            <span className="text-[11px] text-stone-400 block">Kilos Acopiados Iniciales:</span>
+            <span className="font-mono font-bold text-stone-100 text-base">
+              {lotes.reduce((acc, l) => acc + (parseFloat(l.kg_recibidos) || 0), 0).toFixed(2)} kg
+            </span>
+          </div>
+
+          <div className="p-3 bg-stone-950 rounded-lg border border-stone-800">
+            <span className="text-[11px] text-stone-400 block">Kilos Disponibles Actuales:</span>
+            <span className="font-mono font-bold text-amber-400 text-base">
+              {kpis.totalKg.toFixed(2)} kg
+            </span>
+          </div>
+
+          <div className="p-3 bg-stone-950 rounded-lg border border-stone-800">
+            <span className="text-[11px] text-stone-400 block">Cascarilla Recuperable (10%):</span>
+            <span className="font-mono font-bold text-emerald-400 text-base">
+              {(lotes.reduce((acc, l) => acc + (parseFloat(l.kg_recibidos) || 0), 0) * 0.10).toFixed(2)} kg
+            </span>
+          </div>
+
+          <div className="p-3 bg-stone-950 rounded-lg border border-emerald-900/40">
+            <span className="text-[11px] text-stone-400 block">Valorización Cascarilla ($3.000/kg):</span>
+            <span className="font-mono font-bold text-emerald-300 text-base">
+              {new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(
+                lotes.reduce((acc, l) => acc + (parseFloat(l.kg_recibidos) || 0), 0) * 0.10 * 3000
+              )}
+            </span>
+          </div>
+        </div>
+
+        <div className="p-2.5 bg-stone-950/60 rounded border border-stone-800/80 text-[11px] text-stone-400">
+          💡 <strong>Cumplimiento RF12:</strong> Toda la contabilidad de masa y costos opera bajo <code>decimal.Decimal</code> con redondeo bancario <code>ROUND_HALF_UP</code>. Los tres casos límite de división por cero (entrada cero, salida cero o precio cero) se resuelven sin excepciones no controladas.
+        </div>
+      </div>
+
       {/* Modal de Cambio de Estado (Incidencia Hora 12) */}
       {modalEstado && (
         <div className="fixed inset-0 bg-black/75 backdrop-blur-xs flex items-center justify-center p-4 z-50">

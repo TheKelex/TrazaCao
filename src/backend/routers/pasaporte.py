@@ -11,10 +11,11 @@ from infra.database import get_db
 from models import Lote, Transformacion
 from schemas import PasaportePublicoResponse, EtapaTrazabilidadPublica
 
-router = APIRouter(prefix="/api/public", tags=["Público / Pasaporte QR"])
+router = APIRouter(tags=["Público / Pasaporte QR"])
 
 
-@router.get("/pasaporte/{lote_id}", response_model=PasaportePublicoResponse)
+@router.get("/api/pasaporte/{lote_id}", response_model=PasaportePublicoResponse)
+@router.get("/api/public/pasaporte/{lote_id}", response_model=PasaportePublicoResponse)
 def consultar_pasaporte_publico(lote_id: str, db: Session = Depends(get_db)):
     """
     RF06: Ficha Comercial Pública consultable por QR o enlace directo.

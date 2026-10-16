@@ -1,10 +1,11 @@
 import React, { useState, useMemo } from 'react';
-import { Flame, AlertTriangle, CheckCircle, Scale, Coins, Recycle, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Flame, AlertTriangle, CheckCircle, Scale, Coins, Recycle, ArrowRight, ShieldCheck, UserCheck, Ban } from 'lucide-react';
 import { api, generarUUID } from '../api/client';
 
 export function TransformacionView({ auth, lotes, onTransformacionExitosa, defaultLoteId }) {
   const [loteId, setLoteId] = useState(defaultLoteId || (lotes[0]?.id || 'CAC001'));
   const [etapa, setEtapa] = useState('FERMENTACION_SECADO');
+  const [responsable, setResponsable] = useState('Operador Rivera (Acopio y Fermentación)');
   const [kgEntrada, setKgEntrada] = useState('100.00');
   const [kgSalida, setKgSalida] = useState('80.00');
   const [costoEtapa, setCostoEtapa] = useState('1600000.00');
@@ -20,6 +21,11 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
     return lotes.find((l) => l.id === loteId) || null;
   }, [lotes, loteId]);
 
+  const loteBloqueado = loteSeleccionado?.estado === 'BLOQUEADO';
+  const stockDisponible = parseFloat(loteSeleccionado?.kg_disponibles) || 0;
+  const entradaNum = parseFloat(kgEntrada) || 0;
+  const sobreconsumo = entradaNum > stockDisponible;
+
   // Cálculos reactivos en tiempo real (Espejo exacto del Dominio Python)
   const calculosEnVivo = useMemo(() => {
     const entrada = parseFloat(kgEntrada) || 0;
@@ -30,8 +36,14 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
     if (entrada <= 0) {
       return { mermaPorcentaje: 0, alertaMerma: false, costoUnitario: 0, margen: 0, cascarillaKg: 0, ingresoCascarilla: 0, costoNeto: costo, errorValidacion: 'La entrada debe ser mayor a 0 kg' };
     }
+    if (sobreconsumo) {
+      return { mermaPorcentaje: 0, alertaMerma: false, costoUnitario: 0, margen: 0, cascarillaKg: 0, ingresoCascarilla: 0, costoNeto: costo, errorValidacion: `Stock insuficiente: Kilos de entrada (${entrada.toFixed(2)} kg) superan los disponibles en bodega (${stockDisponible.toFixed(2)} kg)` };
+    }
+    if (loteBloqueado) {
+      return { mermaPorcentaje: 0, alertaMerma: false, costoUnitario: 0, margen: 0, cascarillaKg: 0, ingresoCascarilla: 0, costoNeto: costo, errorValidacion: 'Lote en cuarentena preventiva: No se pueden registrar transformaciones en lotes bloqueados por calidad (RF09)' };
+    }
     if (salida > entrada) {
-      return { mermaPorcentaje: 0, alertaMerma: false, costoUnitario: 0, margen: 0, cascarillaKg: 0, ingresoCascarilla: 0, costoNeto: costo, errorValidacion: 'La salida vendible no puede superar la masa de entrada' };
+      return { mermaPorcentaje: 0, alertaMerma: false, costoUnitario: 0, margen: 0, cascarillaKg: 0, ingresoCascarilla: 0, costoNeto: costo, errorValidacion: 'La salida vendible no puede superar la masa de entrada (Ley de conservación de masa)' };
     }
 
     const kgMerma = entrada - salida;
@@ -56,7 +68,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
       costoNeto,
       errorValidacion: null,
     };
-  }, [kgEntrada, kgSalida, costoEtapa, precioVenta]);
+  }, [kgEntrada, kgSalida, costoEtapa, precioVenta, sobreconsumo, loteBloqueado, stockDisponible]);
 
   const formatearCOP = (valor) => {
     const num = parseFloat(valor);
@@ -70,7 +82,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
 
   const requiereJustificacion = calculosEnVivo.alertaMerma;
   const justificacionValida = !requiereJustificacion || (justificacion && justificacion.trim().length >= 10);
-  const puedeEnviar = !calculosEnVivo.errorValidacion && justificacionValida && !loading;
+  const puedeEnviar = !calculosEnVivo.errorValidacion && justificacionValida && !loading && !loteBloqueado && !sobreconsumo;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,8 +98,10 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
       const payload = {
         lote_id: loteId,
         etapa,
+        responsable: responsable.trim(),
         kg_entrada: parseFloat(kgEntrada),
         kg_salida: parseFloat(kgSalida),
+        kg_salida_vendible: parseFloat(kgSalida),
         costo_etapa_cop: parseFloat(costoEtapa),
         precio_venta_estimado: parseFloat(precioVenta),
         incidencia_justificacion: requiereJustificacion ? justificacion.trim() : null,
@@ -124,6 +138,30 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
           </span>
         </div>
 
+        {/* Banner de Bloqueo Preventivo si el Lote está BLOQUEADO (RF09) */}
+        {loteBloqueado && (
+          <div className="mt-4 p-3.5 bg-rose-950/80 border-2 border-rose-600 rounded-lg text-rose-200 text-xs flex items-start gap-2.5 animate-pulse">
+            <Ban className="w-5 h-5 shrink-0 text-rose-400 mt-0.5" />
+            <div>
+              <p className="font-bold text-sm">⛔ LOTE EN CUARENTENA PREVENTIVA (BLOQUEADO)</p>
+              <p className="mt-0.5 text-rose-300">
+                Este lote fue bloqueado por el Administrador por sospecha de no conformidad de calidad. El sistema impide consumir existencias o registrar etapas hasta que sea formalmente liberado.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Alerta de Sobreconsumo Preventiva (RF08) */}
+        {sobreconsumo && !loteBloqueado && (
+          <div className="mt-4 p-3 bg-amber-950/80 border border-amber-600 rounded-lg text-amber-200 text-xs flex items-start gap-2">
+            <AlertTriangle className="w-4 h-4 shrink-0 text-amber-400 mt-0.5" />
+            <div>
+              <span className="font-bold">Alerta Preventiva de Inventario (RF08): </span>
+              <span>La masa solicitada ({entradaNum.toFixed(2)} kg) supera los kilos disponibles en bodega ({stockDisponible.toFixed(2)} kg).</span>
+            </div>
+          </div>
+        )}
+
         {error && (
           <div className="mt-4 p-3.5 bg-rose-950/60 border border-rose-800/80 rounded-lg text-rose-200 text-xs flex items-start gap-2">
             <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400 mt-0.5" />
@@ -137,7 +175,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
             <div>
               <p className="font-bold">¡Transformación #{resultado.id} registrada exitosamente!</p>
               <p className="text-[11px] text-emerald-300 mt-0.5">
-                Costo Unitario: {formatearCOP(resultado.costo_unitario_cop)}/kg | Margen: {parseFloat(resultado.margen_venta_porcentaje).toFixed(2)}% | Cascarilla Circular: {formatearCOP(resultado.ingreso_cascarilla_cop)}
+                Responsable: {resultado.responsable} | Costo Unitario: {formatearCOP(resultado.costo_unitario_cop)}/kg | Margen: {parseFloat(resultado.margen_venta_porcentaje).toFixed(2)}% | Cascarilla Circular: {formatearCOP(resultado.ingreso_cascarilla_cop)}
               </p>
             </div>
           </div>
@@ -156,15 +194,15 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
               >
                 {lotes.map((lote) => (
                   <option key={lote.id} value={lote.id}>
-                    {lote.id} · {lote.origen_municipio} (Disp: {parseFloat(lote.kg_disponibles).toFixed(2)} kg)
+                    {lote.id} · {lote.origen_municipio} ({lote.estado === 'BLOQUEADO' ? '⛔ BLOQUEADO' : `Disp: ${parseFloat(lote.kg_disponibles).toFixed(2)} kg`})
                   </option>
                 ))}
               </select>
               {loteSeleccionado && (
                 <div className="mt-1 flex items-center justify-between text-[11px] text-stone-400">
                   <span>Productor: {loteSeleccionado.productor}</span>
-                  <span className="font-mono text-emerald-400 font-bold">
-                    Disponible: {parseFloat(loteSeleccionado.kg_disponibles).toFixed(2)} kg
+                  <span className={`font-mono font-bold ${loteBloqueado ? 'text-rose-400' : 'text-emerald-400'}`}>
+                    {loteBloqueado ? 'EN CUARENTENA' : `Disponible: ${stockDisponible.toFixed(2)} kg`}
                   </span>
                 </div>
               )}
@@ -186,11 +224,29 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
             </div>
           </div>
 
+          {/* Selección de Responsable de la Etapa (RF02) */}
+          <div>
+            <label className="block text-xs font-medium text-stone-300 mb-1 flex items-center gap-1.5">
+              <UserCheck className="w-3.5 h-3.5 text-amber-400" />
+              Responsable Encargado de la Etapa (RF02) *
+            </label>
+            <select
+              value={responsable}
+              onChange={(e) => setResponsable(e.target.value)}
+              className="w-full bg-stone-950 border border-stone-700 rounded-lg px-3 py-2 text-stone-100 text-sm focus:outline-none focus:border-amber-500"
+            >
+              <option value="Operador Rivera (Acopio y Fermentación)">Operador Rivera (Acopio y Fermentación)</option>
+              <option value="Maestro Tostador (Planta Campoalegre)">Maestro Tostador (Planta Campoalegre)</option>
+              <option value="Jefe de Planta (Asociación Huila)">Jefe de Planta (Asociación Huila)</option>
+              <option value="Inspector de Calidad (NTC 1252)">Inspector de Calidad (NTC 1252)</option>
+            </select>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-stone-300 mb-1 flex items-center gap-1">
                 <Scale className="w-3.5 h-3.5 text-amber-400" />
-                Masa de Entrada (kg) *
+                Masa de Entrada (kg a consumir) *
               </label>
               <input
                 type="number"
@@ -199,7 +255,9 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
                 required
                 value={kgEntrada}
                 onChange={(e) => setKgEntrada(e.target.value)}
-                className="w-full bg-stone-950 border border-stone-700 rounded-lg px-3 py-2 text-stone-100 text-sm focus:outline-none focus:border-amber-500 font-mono"
+                className={`w-full bg-stone-950 border rounded-lg px-3 py-2 text-stone-100 text-sm focus:outline-none font-mono ${
+                  sobreconsumo ? 'border-rose-500 focus:border-rose-400 text-rose-200' : 'border-stone-700 focus:border-amber-500'
+                }`}
               />
             </div>
 
@@ -293,9 +351,14 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
                   : 'bg-stone-800 text-stone-500 cursor-not-allowed'
               }`}
             >
-              {loading ? 'Procesando Transacción Atómica...' : 'Guardar Transformación y Descontar Stock (RF02)'}
+              {loading ? 'Procesando Transacción Atómica...' : loteBloqueado ? '⛔ Lote Bloqueado (Acción Denegada)' : 'Guardar Transformación y Descontar Stock (RF02)'}
             </button>
-            {!justificacionValida && (
+            {calculosEnVivo.errorValidacion && (
+              <p className="text-[11px] text-center text-rose-400 mt-1.5 font-medium">
+                * {calculosEnVivo.errorValidacion}
+              </p>
+            )}
+            {!justificacionValida && !calculosEnVivo.errorValidacion && (
               <p className="text-[11px] text-center text-rose-400 mt-1.5 font-medium">
                 * Ingresa el motivo de la merma alta (mínimo 10 caracteres) para habilitar el guardado
               </p>
@@ -304,7 +367,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
         </form>
       </div>
 
-      {/* Columna Derecha: Tablero de Cálculos y Semáforo en Tiempo Real */}
+      {/* Columna Derecha: Tablero de Cálculos y Fórmulas Transparentes */}
       <div className="lg:col-span-5 space-y-4">
         {/* Semáforo de Merma (RF04) */}
         <div className={`p-5 rounded-xl border transition-all shadow-xl ${
@@ -314,7 +377,7 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
         }`}>
           <div className="flex items-center justify-between pb-3 border-b border-stone-800">
             <span className="text-xs font-bold uppercase tracking-wider text-stone-400">
-              Semáforo de Merma Agroindustrial
+              Semáforo de Merma Agroindustrial (RF04)
             </span>
             <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
               calculosEnVivo.alertaMerma
@@ -331,44 +394,45 @@ export function TransformacionView({ auth, lotes, onTransformacionExitosa, defau
                 {calculosEnVivo.mermaPorcentaje.toFixed(2)}%
               </span>
               <p className="text-xs text-stone-400 mt-0.5">
-                Pérdida física: {(parseFloat(kgEntrada) - parseFloat(kgSalida)).toFixed(2)} kg
+                Pérdida física: {(parseFloat(kgEntrada || 0) - parseFloat(kgSalida || 0)).toFixed(2)} kg
               </p>
             </div>
             <div className="text-right">
-              <span className="text-xs text-stone-400 block">Umbral de Alerta:</span>
-              <span className="font-mono text-sm font-bold text-amber-400">15.00%</span>
+              <span className="text-xs text-stone-400 block">Fórmula de Tolerancia:</span>
+              <span className="font-mono text-xs text-amber-300">Merma = (Entrada - Salida) / Entrada</span>
             </div>
           </div>
         </div>
 
-        {/* Balance Económico y Margen (RF04) */}
+        {/* Fórmulas Transparentes de Costo Unitario y Margen (RF05) */}
         <div className="bg-stone-900 border border-stone-800 rounded-xl p-5 shadow-xl space-y-3 text-xs">
           <h3 className="font-bold text-stone-200 text-sm flex items-center gap-2 pb-2 border-b border-stone-800">
             <Coins className="w-4 h-4 text-amber-500" />
-            Balance Unitario y Rentabilidad
+            Cálculo Automático y Fórmulas Explicadas (RF05)
           </h3>
 
-          <div className="flex justify-between py-1">
-            <span className="text-stone-400">Costo Unitario Real:</span>
-            <span className="font-mono font-bold text-stone-200">
-              {formatearCOP(calculosEnVivo.costoUnitario)} / kg
-            </span>
+          <div className="p-2.5 bg-stone-950 rounded-lg border border-stone-800 font-mono text-[11px] space-y-1.5">
+            <div className="text-stone-400">
+              <span className="text-amber-400 font-semibold">Fórmula Costo Unitario:</span><br/>
+              <code>Costo = Costo Etapa ({formatearCOP(costoEtapa)}) / Salida ({kgSalida} kg)</code>
+            </div>
+            <div className="flex justify-between pt-1 border-t border-stone-800/80">
+              <span className="text-stone-300 font-sans">Resultado Oficial:</span>
+              <span className="font-bold text-stone-100">{formatearCOP(calculosEnVivo.costoUnitario)} / kg</span>
+            </div>
           </div>
 
-          <div className="flex justify-between py-1">
-            <span className="text-stone-400">Precio de Venta Mercado:</span>
-            <span className="font-mono font-bold text-emerald-400">
-              {formatearCOP(precioVenta)} / kg
-            </span>
-          </div>
-
-          <div className="flex justify-between py-1 pt-2 border-t border-stone-800">
-            <span className="text-stone-300 font-semibold">Margen Comercial Bruto:</span>
-            <span className={`font-mono font-bold text-sm ${
-              calculosEnVivo.margen >= 20 ? 'text-emerald-400' : 'text-amber-400'
-            }`}>
-              {calculosEnVivo.margen.toFixed(2)}%
-            </span>
+          <div className="p-2.5 bg-stone-950 rounded-lg border border-stone-800 font-mono text-[11px] space-y-1.5">
+            <div className="text-stone-400">
+              <span className="text-emerald-400 font-semibold">Fórmula Margen Estimado:</span><br/>
+              <code>Margen = (Precio Venta - Costo Unitario) / Precio Venta</code>
+            </div>
+            <div className="flex justify-between pt-1 border-t border-stone-800/80">
+              <span className="text-stone-300 font-sans">Margen Resultante:</span>
+              <span className={`font-bold ${calculosEnVivo.margen >= 20 ? 'text-emerald-400' : 'text-amber-400'}`}>
+                {calculosEnVivo.margen.toFixed(2)}%
+              </span>
+            </div>
           </div>
         </div>
 

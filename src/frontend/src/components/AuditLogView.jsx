@@ -130,8 +130,16 @@ export function AuditLogView({ auth }) {
               logs.map((log) => (
                 <tr key={log.id} className="hover:bg-stone-800/40 transition-colors">
                   <td className="py-2 px-3 text-stone-500">#{log.id}</td>
-                  <td className="py-2 px-3 text-stone-400 font-sans text-[11px]">
-                    {new Date(log.timestamp).toLocaleString('es-CO')}
+                  <td className="py-2 px-3 text-stone-400 font-sans text-[11px] whitespace-nowrap">
+                    {new Intl.DateTimeFormat('es-CO', {
+                      timeZone: 'America/Bogota',
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      second: '2-digit',
+                    }).format(new Date(log.timestamp.endsWith('Z') ? log.timestamp : log.timestamp + 'Z'))} (COT)
                   </td>
                   <td className="py-2 px-3 font-sans font-medium text-stone-200">
                     {log.usuario}

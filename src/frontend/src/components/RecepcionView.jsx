@@ -140,19 +140,53 @@ export function RecepcionView({ auth, lotes, onLoteCreado, demoData }) {
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs font-medium text-stone-300 mb-1">
-              Nombre de Productor o Finca *
-            </label>
-            <input
-              type="text"
-              name="productor"
-              required
-              value={formData.productor}
-              onChange={handleChange}
-              placeholder="ej. Finca La Esperanza - Pedro Nel"
-              className="w-full bg-stone-950 border border-stone-700 rounded-lg px-3 py-2 text-stone-100 text-sm focus:outline-none focus:border-amber-500"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-medium text-stone-300 mb-1">
+                Nombre de Productor o Finca *
+              </label>
+              <input
+                type="text"
+                name="productor"
+                required
+                value={formData.productor}
+                onChange={handleChange}
+                placeholder="ej. Pedro Nel (Finca La Esperanza)"
+                className="w-full bg-stone-950 border border-stone-700 rounded-lg px-3 py-2 text-stone-100 text-sm focus:outline-none focus:border-amber-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-stone-300 mb-1">
+                Ubicación Específica del Cultivo (Vereda / Sector) *
+              </label>
+              <input
+                type="text"
+                name="ubicacion_cultivo"
+                value={formData.ubicacion_cultivo || 'Vereda El Recreo'}
+                onChange={handleChange}
+                placeholder="ej. Vereda Arenoso, Finca El Porvenir"
+                className="w-full bg-stone-950 border border-stone-700 rounded-lg px-3 py-2 text-stone-100 text-sm focus:outline-none focus:border-amber-500"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-medium text-stone-300 mb-1">
+                Fecha de Acopio / Cosecha *
+              </label>
+              <input
+                type="date"
+                name="fecha_cosecha"
+                value={formData.fecha_cosecha || new Date().toISOString().slice(0, 10)}
+                onChange={handleChange}
+                className="w-full bg-stone-950 border border-stone-700 rounded-lg px-3 py-2 text-stone-100 text-sm focus:outline-none focus:border-amber-500 font-mono"
+              />
+            </div>
+            <div className="flex items-center text-[11px] text-amber-300/80 p-2 bg-amber-950/20 border border-amber-800/40 rounded-lg">
+              <span>🌾 Trazabilidad de origen georreferenciada para cumplimiento de la normativa europea anti-deforestación (EUDR).</span>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

@@ -21,7 +21,7 @@
 | **E02** | Requisitos y Gestión del Cambio | `documentos/E02_requisitos.md` | 12 Historias de Usuario con Gherkin y tarjeta de cambio hora 12. |
 | **E03** | Diseño del Producto y Solución | `documentos/E03_diseno.md` | Diagramas de arquitectura, modelo ER, contratos de API y decisiones técnicas. |
 | **E04** | Producto Mínimo Viable (Código y Manual) | `src/backend/`, `src/frontend/`, `documentos/E04_manual.md` | Software funcional demostrando el flujo completo RF01–RF12 en < 120s. |
-| **E05** | Informe y Archivos de Pruebas | `documentos/E05_pruebas.md` y `tests/` | 15 casos unitarios, integración y regresión automatizados en `pytest`. |
+| **E05** | Informe y Archivos de Pruebas | `documentos/E05_TESTEO_EQUIPO_REQUISITOS_MVP.md` y `tests/` | Testeo 1 a 1 de requisitos del MVP preliminar + 15 pruebas `pytest`. |
 | **E06** | Verificación de Usabilidad (UX) | `documentos/E06_usabilidad.md` | Prueba con usuario externo: registro de lote y trazabilidad con mejoras. |
 | **E07** | Operación, Respaldo y Mantenimiento | `documentos/E07_operacion.md`, `datos/` y `README.md` | Guía de instalación, backup/restore en 15 ms y benchmark de 100 lotes. |
 | **E08** | Declaración de IA y Fuentes Externas | `documentos/E08_IA_y_fuentes.md` | Bitácora de uso ético y transparente de IA y licenciamiento de librerías. |
