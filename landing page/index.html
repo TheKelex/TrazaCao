@@ -3,28 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TRAZACAO • Trazabilidad &amp; Comercio B2B de Cacao de Origen Huila</title>
-  <meta name="description" content="Plataforma tecnológica agroindustrial y comercial B2B para la trazabilidad y pasaporte digital del cacao fino de aroma del Huila, Colombia." />
+  <title>Sobre Nosotros | Cacao Huila Trazable</title>
+  <meta name="description" content="Historia, origen y trazabilidad del cacao fino de aroma del Huila, Colombia. Fotografía documental real y recorrido interactivo." />
   <style>
     /* ==========================================================================
-       DIRECCIÓN DE ARTE: DARK EDITORIAL CACAO & FOTOGRAFÍA REAL B2B
+       DIRECCIÓN DE ARTE: LUXURY EDITORIAL & FOTOGRAFÍA REAL B2B
        ========================================================================== */
     :root {
-      --bg-dark: #0B0907;
-      --bg-card: rgba(18, 14, 10, 0.88);
-      --cacao-deep: #120E0A;
-      --cacao-warm: #1A140F;
-      --gold-pure: #E5B85B;
+      --bg-dark: #0a0705;
+      --bg-card: rgba(16, 12, 9, 0.92);
+      --cacao-deep: #17120e;
+      --cacao-warm: #261d16;
+      --gold-pure: #F5C563;
       --gold-bright: #FFD87A;
-      --gold-deep: #D4A853;
-      --gold-glow: rgba(229, 184, 91, 0.35);
-      --green-native: #132018;
-      --green-bright: #22C55E;
-      --green-glow: rgba(34, 197, 94, 0.3);
-      --ivory: #F5EFE6;
-      --ivory-muted: #E9DCC5;
+      --gold-deep: #D49B35;
+      --gold-glow: rgba(245, 197, 99, 0.35);
+      --green-native: #4a7c3b;
+      --green-bright: #7ED957;
+      --green-glow: rgba(126, 217, 87, 0.3);
+      --ivory: #FFF9EE;
+      --ivory-muted: #D9CEC0;
       --text-dim: #A89D8F;
-      --border-editorial: rgba(212, 168, 83, 0.28);
+      --border-editorial: rgba(245, 197, 99, 0.32);
       --border-subtle: rgba(255, 255, 255, 0.08);
       
       --font-serif: Georgia, 'Playfair Display', Cambria, 'Times New Roman', serif;
@@ -44,7 +44,7 @@
       overflow-x: hidden;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      scroll-behavior: auto;
+      scroll-behavior: auto; /* Dejar que GSAP controle el scroll */
     }
 
     :focus-visible {
@@ -53,21 +53,20 @@
     }
 
     /* ==========================================================================
-       1. CABECERA EDITORIAL Y BRAND HEADER FIJO
+       CABECERA EDITORIAL Y HUD DE CONTROL
        ========================================================================== */
     .cinematic-header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 72px;
+      height: 70px;
       z-index: 1000;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       padding: 0 clamp(1.2rem, 4vw, 3rem);
-      background: linear-gradient(180deg, rgba(11, 9, 7, 0.96) 0%, rgba(11, 9, 7, 0.7) 70%, transparent 100%);
-      border-b: 1px solid rgba(212, 168, 83, 0.15);
+      background: linear-gradient(180deg, rgba(10, 7, 5, 0.96) 0%, rgba(10, 7, 5, 0.6) 70%, transparent 100%);
       pointer-events: none;
     }
 
@@ -78,105 +77,78 @@
       gap: 0.85rem;
       text-decoration: none;
       color: inherit;
-      cursor: pointer;
     }
-    .brand-symbol {
-      color: var(--gold-pure);
-      font-size: 1.35rem;
+    .brand-badge {
+      background: var(--gold-pure);
+      color: #0c0805;
+      font-size: 0.72rem;
       font-weight: 900;
-      line-height: 1;
-      text-shadow: 0 0 12px var(--gold-glow);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.65rem;
+      border-radius: 4px;
     }
     .brand-title {
       font-family: var(--font-serif);
-      font-size: clamp(1.15rem, 2vw, 1.4rem);
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
       font-weight: 700;
-      letter-spacing: 0.08em;
-      color: var(--ivory);
-      line-height: 1.1;
+      letter-spacing: 0.03em;
     }
-    .brand-subtitle-tech {
-      font-family: monospace;
-      font-size: 0.65rem;
-      color: var(--gold-pure);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-weight: 500;
+      letter-spacing: 0.05em;
       display: none;
-      margin-top: 2px;
     }
     @media (min-width: 768px) {
-      .brand-subtitle-tech { display: block; }
+      .brand-subtitle { display: inline-block; }
     }
 
     .header-tools {
       pointer-events: auto;
       display: flex;
       align-items: center;
-      gap: 0.65rem;
+      gap: 0.75rem;
     }
-
-    .live-indicator-pill {
-      display: none;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(19, 32, 24, 0.94);
-      border: 1px solid rgba(34, 197, 94, 0.4);
-      padding: 0.4rem 0.9rem;
-      border-radius: 999px;
-      font-family: monospace;
-      font-size: 0.72rem;
-      color: var(--green-bright);
-    }
-    @media (min-width: 992px) {
-      .live-indicator-pill { display: inline-flex; }
-    }
-    .live-dot-pulse {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--green-bright);
-      box-shadow: 0 0 8px var(--green-bright);
-      animation: recPulse 1.4s infinite ease-in-out;
-    }
-
     .btn-hud {
-      background: rgba(26, 20, 15, 0.9);
-      color: var(--ivory);
+      background: rgba(22, 16, 12, 0.9);
+      color: var(--gold-pure);
       border: 1px solid var(--border-editorial);
-      padding: 0.45rem 1rem;
-      border-radius: 12px;
-      font-size: 0.8rem;
-      font-weight: 600;
+      padding: 0.45rem 1.1rem;
+      border-radius: 30px;
+      font-size: 0.82rem;
+      font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.45rem;
+      gap: 0.5rem;
       backdrop-filter: blur(16px);
       transition: all 0.25s ease;
       text-decoration: none;
-      min-height: 36px;
+      min-height: 38px;
     }
     .btn-hud:hover, .btn-hud.active {
       background: var(--gold-pure);
       color: #0c0805;
       border-color: #fff;
-      box-shadow: 0 0 16px var(--gold-glow);
+      box-shadow: 0 0 20px var(--gold-glow);
     }
 
     /* Badge Flotante para el Modo Video / Tour Guiado */
     .video-tour-badge {
       position: fixed;
-      top: 84px;
+      top: 80px;
       left: 50%;
       transform: translateX(-50%) translateY(-30px);
-      background: rgba(18, 14, 10, 0.96);
+      background: rgba(22, 16, 12, 0.96);
       border: 1.5px solid var(--gold-pure);
       border-radius: 30px;
       padding: 0.45rem 1.4rem;
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      font-size: 0.76rem;
+      font-size: 0.78rem;
       font-weight: 800;
       letter-spacing: 0.08em;
       color: var(--gold-pure);
@@ -221,7 +193,7 @@
       box-shadow: 0 0 10px var(--gold-pure);
     }
 
-    /* Brújula flotante lateral (HUD - 5 Nodos) */
+    /* Brújula flotante lateral (HUD - Botones que muestran texto al pasar el cursor) */
     .hud-compass {
       position: fixed;
       right: 1.25rem;
@@ -251,7 +223,7 @@
     .compass-name {
       position: absolute;
       right: calc(100% + 12px);
-      background: rgba(18, 14, 10, 0.96);
+      background: rgba(22, 16, 12, 0.96);
       border: 1px solid var(--border-editorial);
       padding: 0.4rem 0.85rem;
       border-radius: 6px;
@@ -278,421 +250,439 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background: rgba(245, 239, 230, 0.25);
-      border: 2px solid transparent;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 2px solid var(--gold-pure);
+      background: rgba(10, 7, 5, 0.9);
+      transition: all 0.25s ease;
+      display: block;
+    }
+    .compass-node:hover .compass-dot {
+      background: var(--gold-bright);
+      box-shadow: 0 0 10px var(--gold-pure);
     }
     .compass-node.active .compass-dot {
       background: var(--gold-pure);
-      border-color: #0B0907;
-      transform: scale(1.45);
       box-shadow: 0 0 14px var(--gold-pure);
+      transform: scale(1.35);
     }
 
     /* ==========================================================================
-       CONTENEDORES DE ESCENAS EDITORIALES
+       ESCENARIO CINEMÁTICO FULLSCREEN CON GSAP PIN
        ========================================================================== */
     #scrolly-viewport {
       position: relative;
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      background: var(--bg-dark);
+      background-color: var(--bg-dark);
     }
 
     .scene-viewport {
       position: absolute;
-      top: 0;
-      left: 0;
+      inset: 0;
       width: 100%;
       height: 100%;
       display: flex;
       align-items: center;
-      padding: 0 clamp(1.5rem, 5vw, 6rem);
-      will-change: opacity, transform, visibility;
+      justify-content: center;
+      overflow: hidden;
+      will-change: transform, opacity;
+      pointer-events: none; /* Por defecto ninguna escena inactiva captura clics */
+    }
+    #scene1 {
+      pointer-events: auto;
     }
 
+    /* Capa de atmósfera fotográfica y viñeta editorial */
     .photo-stage {
       position: absolute;
       inset: 0;
-      z-index: 1;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
+      z-index: 1;
     }
     .photo-hero {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
-      filter: brightness(0.62) contrast(1.12) saturate(1.15);
-      transform-origin: center center;
+      object-position: center 40%;
+      transform: scale(1.05);
+      transition: filter 0.5s ease;
       will-change: transform;
     }
     .photo-vignette {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at center, rgba(11, 9, 7, 0.35) 0%, rgba(11, 9, 7, 0.88) 100%),
-                  linear-gradient(180deg, rgba(11, 9, 7, 0.7) 0%, transparent 20%, transparent 80%, rgba(11, 9, 7, 0.95) 100%);
+      background: radial-gradient(circle at 50% 50%, rgba(10, 7, 5, 0.25) 0%, rgba(10, 7, 5, 0.8) 75%, rgba(10, 7, 5, 0.96) 100%),
+                  linear-gradient(180deg, rgba(10, 7, 5, 0.8) 0%, transparent 25%, transparent 75%, rgba(10, 7, 5, 0.96) 100%);
       pointer-events: none;
+      z-index: 2;
     }
 
-    .duo-photo-container {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-    }
-    @media (max-width: 768px) {
-      .duo-photo-container {
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr;
-      }
-    }
-    .duo-photo-main, .duo-photo-sub {
-      position: relative;
-      overflow: hidden;
-      height: 100%;
-    }
-
-    /* Tarjetas Flotantes HUD con Efecto Glassmorphism Dark Cacao */
+    /* ==========================================================================
+       PANELES Y TARJETAS EDITORIALES (ALTO CONTRASTE Y LEGIBILIDAD)
+       ========================================================================== */
     .editorial-hud {
       position: relative;
       z-index: 10;
+      max-width: 620px;
+      padding: clamp(1.5rem, 3.5vw, 2.5rem);
       background: var(--bg-card);
       border: 1px solid var(--border-editorial);
-      border-radius: 24px;
-      padding: clamp(1.5rem, 3.2vw, 2.5rem);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85);
+      border-radius: 16px;
       backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      max-width: 660px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.88), 0 0 30px rgba(0, 0, 0, 0.5);
       pointer-events: auto;
-      will-change: transform, opacity;
     }
     .hud-left {
       margin-right: auto;
+      margin-left: clamp(1.5rem, 6vw, 6rem);
     }
     .hud-center {
       margin: 0 auto;
       text-align: center;
     }
-    .hud-wide {
-      max-width: 780px;
+    .hud-right {
+      margin-left: auto;
+      margin-right: clamp(1.5rem, 6vw, 6rem);
+    }
+
+    @media (max-width: 900px) {
+      .hud-left, .hud-right, .hud-center {
+        margin: 0 1.25rem;
+        max-width: calc(100vw - 2.5rem);
+        padding: 1.4rem;
+      }
     }
 
     .hud-tag {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: rgba(229, 184, 91, 0.15);
-      border: 1px solid rgba(229, 184, 91, 0.35);
-      padding: 0.35rem 0.85rem;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      font-family: monospace;
       color: var(--gold-pure);
-      font-weight: 700;
       margin-bottom: 0.85rem;
+    }
+    .hud-tag::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold-pure);
+      box-shadow: 0 0 8px var(--gold-pure);
     }
 
     .hud-headline {
       font-family: var(--font-serif);
-      font-size: clamp(1.6rem, 3vw, 2.45rem);
+      font-size: clamp(1.65rem, 3.2vw, 2.65rem);
+      line-height: 1.18;
       font-weight: 700;
-      line-height: 1.15;
       color: var(--ivory);
-      margin-bottom: 0.95rem;
+      margin-bottom: 1rem;
       letter-spacing: -0.01em;
     }
     .hud-headline em {
       font-style: italic;
       color: var(--gold-pure);
+      font-weight: 400;
     }
 
     .hud-copy {
-      font-size: clamp(0.85rem, 1.25vw, 0.98rem);
-      line-height: 1.6;
-      color: rgba(245, 239, 230, 0.88);
-      font-weight: 300;
+      font-size: clamp(0.92rem, 1.4vw, 1.05rem);
+      color: var(--ivory-muted);
+      line-height: 1.65;
       margin-bottom: 1.25rem;
+      font-weight: 400;
     }
 
-    /* Píldoras Geográficas */
+    /* Metadatos Georreferenciados (Escena 1) */
     .geo-meta-strip {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.45rem;
-      margin-top: 0.75rem;
+      gap: 0.65rem;
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-subtle);
     }
     .geo-pill {
-      background: var(--cacao-warm);
+      background: rgba(245, 197, 99, 0.08);
       border: 1px solid var(--border-editorial);
-      padding: 0.25rem 0.65rem;
-      border-radius: 999px;
-      font-size: 0.68rem;
-      font-family: monospace;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
       color: var(--gold-pure);
-      font-weight: 600;
+      letter-spacing: 0.03em;
     }
 
-    /* Comparativa Visual Antes vs Con TrazaCao */
-    .comparison-grid-hud {
+    /* Composición Fotográfica Asimétrica (Escena 2 y Escena 3) */
+    .duo-photo-container {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 58% 42%;
+      z-index: 1;
+    }
+    @media (max-width: 900px) {
+      .duo-photo-container {
+        grid-template-columns: 1fr;
+      }
+      .duo-photo-sub { display: none; }
+    }
+    .duo-photo-main {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .duo-photo-sub {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-left: 2px solid var(--border-editorial);
+    }
+
+    /* Métricas climáticas en cascada (Escena 2) */
+    .climate-grid-hud {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 0.75rem;
-      margin-top: 1rem;
-      text-align: left;
+      margin-top: 1.2rem;
     }
-    @media (max-width: 768px) {
-      .comparison-grid-hud {
-        grid-template-columns: 1fr;
-      }
+    .climate-chip-hud {
+      background: rgba(26, 20, 15, 0.94);
+      border: 1px solid var(--border-editorial);
+      padding: 0.75rem 0.9rem;
+      border-radius: 8px;
     }
-    .comp-col-before {
-      background: rgba(45, 15, 15, 0.75);
-      border: 1px solid rgba(255, 90, 54, 0.35);
-      border-radius: 14px;
-      padding: 0.85rem;
-    }
-    .comp-col-after {
-      background: rgba(19, 32, 24, 0.85);
-      border: 1px solid rgba(34, 197, 94, 0.4);
-      border-radius: 14px;
-      padding: 0.85rem;
-    }
-    .comp-title {
+    .climate-chip-hud span {
+      display: block;
       font-size: 0.72rem;
-      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
+      color: var(--text-dim);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.2rem;
     }
-    .comp-list {
-      list-style: none;
-      font-size: 0.72rem;
-      line-height: 1.45;
-      color: rgba(245, 239, 230, 0.82);
-    }
-    .comp-list li {
-      margin-bottom: 0.35rem;
-      position: relative;
-      padding-left: 0.9rem;
-    }
-    .comp-col-before .comp-list li::before {
-      content: "✕";
-      position: absolute;
-      left: 0;
-      color: #FF5A36;
-      font-weight: bold;
-    }
-    .comp-col-after .comp-list li::before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      color: var(--green-bright);
-      font-weight: bold;
+    .climate-chip-hud strong {
+      font-family: var(--font-serif);
+      font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+      color: var(--gold-pure);
+      font-weight: 700;
     }
 
-    /* Medidores Técnicos Flotantes de Proceso */
+    /* Medidores térmicos en tiempo real (Escena 3) */
     .meters-floating-card {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.75rem;
-      margin-top: 1rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-top: 1.25rem;
       text-align: left;
     }
-    @media (max-width: 680px) {
+    @media (max-width: 580px) {
       .meters-floating-card {
         grid-template-columns: 1fr;
       }
     }
     .meter-box-hud {
-      background: var(--cacao-warm);
+      background: rgba(22, 16, 11, 0.95);
       border: 1px solid var(--border-editorial);
-      padding: 0.85rem;
-      border-radius: 14px;
+      border-radius: 10px;
+      padding: 1rem;
     }
     .meter-val-large {
       font-family: var(--font-serif);
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: var(--ivory);
+      font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+      font-weight: 900;
+      color: var(--gold-pure);
       display: block;
       margin: 0.2rem 0;
     }
-
-    /* Cuadrícula de 4 Diferenciadores Clave */
-    .diff-grid-hud {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-      margin-top: 1rem;
-      text-align: left;
+    .bar-track-hud {
+      width: 100%;
+      height: 7px;
+      background: #120e0a;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 0.5rem;
     }
-    @media (max-width: 768px) {
-      .diff-grid-hud {
-        grid-template-columns: 1fr;
-      }
-    }
-    .diff-box-hud {
-      background: var(--cacao-warm);
-      border: 1px solid var(--border-editorial);
-      border-radius: 14px;
-      padding: 0.95rem;
-    }
-    .diff-box-hud h3 {
-      font-family: var(--font-serif);
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--ivory);
-      margin-bottom: 0.35rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .diff-box-hud p {
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      line-height: 1.4;
-      margin: 0;
+    .bar-fill-hud {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
     }
 
-    /* Terminal del Pasaporte Comercial en Pantalla 5 */
+    /* Terminal del Pasaporte Comercial (Escena 4) */
     .passport-modal-hud {
       position: absolute;
+      right: clamp(2.5rem, 6vw, 6rem);
       top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-      background: rgba(18, 14, 10, 0.95);
+      transform: translateY(-50%);
+      width: min(560px, calc(100vw - 5rem));
+      max-height: 88vh;
+      overflow-y: auto;
+      background: var(--bg-card);
       border: 2px solid var(--gold-pure);
-      border-radius: 26px;
-      padding: clamp(1.5rem, 3.2vw, 2.4rem);
-      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.95), 0 0 35px var(--gold-glow);
+      border-radius: 18px;
+      padding: clamp(1.4rem, 3vw, 2.2rem);
       backdrop-filter: blur(24px);
-      width: min(720px, 92vw);
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.92), 0 0 35px var(--gold-glow);
+      z-index: 30;
       pointer-events: auto;
-      will-change: transform, opacity;
+    }
+    @media (max-width: 900px) {
+      .passport-modal-hud {
+        left: 50% !important;
+        right: auto !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: calc(100vw - 2.5rem) !important;
+        padding: 1.3rem !important;
+        max-height: 82vh !important;
+      }
     }
 
     .lot-tabs-hud {
       display: flex;
+      flex-wrap: wrap;
       gap: 0.5rem;
-      margin: 0.9rem 0;
-      overflow-x: auto;
-      padding-bottom: 0.2rem;
+      margin: 1rem 0;
     }
     .lot-tab-hud {
-      background: var(--cacao-warm);
-      color: var(--ivory);
+      background: rgba(28, 21, 16, 0.85);
       border: 1px solid var(--border-editorial);
-      padding: 0.4rem 0.85rem;
-      border-radius: 10px;
-      font-size: 0.75rem;
-      font-weight: 700;
+      color: var(--ivory);
+      padding: 0.45rem 0.9rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 800;
       cursor: pointer;
-      white-space: nowrap;
       transition: all 0.2s ease;
     }
     .lot-tab-hud.selected {
       background: var(--gold-pure);
       color: #0c0805;
       border-color: #fff;
+      box-shadow: 0 0 14px var(--gold-glow);
     }
 
-    .btn-ir-cta {
-      background: var(--gold-pure);
-      color: #0c0805;
-      font-weight: 800;
-      font-size: 0.85rem;
-      border: none;
-      padding: 0.75rem 1.4rem;
-      border-radius: 12px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      box-shadow: 0 4px 18px var(--gold-glow);
-      transition: all 0.25s ease;
-    }
-    .btn-ir-cta:hover {
-      background: #fff;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px var(--gold-glow);
-    }
-
-    .btn-qr-cta {
-      background: var(--cacao-warm);
-      color: var(--gold-pure);
-      font-weight: 700;
-      font-size: 0.82rem;
+    .flavor-tag-hud {
+      background: rgba(245, 197, 99, 0.12);
       border: 1px solid var(--gold-pure);
-      padding: 0.7rem 1.2rem;
-      border-radius: 12px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      text-decoration: none;
-      transition: all 0.25s ease;
-    }
-    .btn-qr-cta:hover {
-      background: rgba(229, 184, 91, 0.15);
-      border-color: #fff;
+      color: var(--gold-pure);
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 700;
     }
 
-    /* Modal Emergente de QR */
-    .qr-modal-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 2000;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
-      display: none;
+    /* ==========================================================================
+       BOTÓN COMERCIAL "IR" (SOLICITUD EXPLÍCITA DEL USUARIO)
+       ========================================================================== */
+    .btn-ir-cta {
+      background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold-deep) 100%);
+      color: #0c0805;
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.7rem 2.2rem;
+      border-radius: 8px;
+      border: 2px solid #FFF8EB;
+      box-shadow: 0 6px 20px var(--gold-glow), 0 0 20px rgba(245, 197, 99, 0.5);
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
+      gap: 0.5rem;
+      min-width: 120px;
     }
-    .qr-modal-box {
-      background: rgba(18, 14, 10, 0.98);
-      border: 2px solid var(--gold-pure);
-      border-radius: 24px;
-      padding: 2rem;
-      max-width: 360px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.9);
-      position: relative;
+    .btn-ir-cta:hover {
+      transform: translateY(-2px) scale(1.03);
+      background: #FFF9EE;
+      color: #000;
+      box-shadow: 0 10px 30px rgba(245, 197, 99, 0.85);
+    }
+    .btn-ir-cta:active {
+      transform: translateY(0);
     }
 
-    /* Indicador de Scroll Inicial */
-    .scroll-guide-prompt {
-      position: absolute;
+    /* Toast Flotante Informativo para el botón "Ir" */
+    .toast-dev-notice {
+      position: fixed;
       bottom: 2.2rem;
       left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(24, 18, 13, 0.97);
+      border: 1.5px solid var(--gold-pure);
+      color: var(--ivory);
+      padding: 0.95rem 1.8rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85);
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast-dev-notice.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Guía de Scroll Inicial */
+    .scroll-guide-prompt {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
       transform: translateX(-50%);
-      z-index: 100;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.5rem;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
       color: var(--gold-pure);
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 800;
+      z-index: 50;
       pointer-events: none;
-      animation: floatPrompt 2.5s infinite ease-in-out;
     }
-    @keyframes floatPrompt {
-      0%, 100% { transform: translate(-50%, 0); }
-      50% { transform: translate(-50%, -8px); }
+    .mouse-wheel-icon {
+      width: 22px;
+      height: 36px;
+      border: 2px solid var(--gold-pure);
+      border-radius: 12px;
+      position: relative;
+    }
+    .mouse-wheel-icon::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 7px;
+      background: var(--gold-pure);
+      border-radius: 2px;
+      animation: wheelMove 1.8s infinite ease-in-out;
+    }
+    @keyframes wheelMove {
+      0% { transform: translate(-50%, 0); opacity: 1; }
+      100% { transform: translate(-50%, 14px); opacity: 0; }
     }
   </style>
 </head>
@@ -709,29 +699,10 @@
     <span>REPRODUCIENDO TOUR &bull; MODO VIDEO</span>
   </div>
 
-  <!-- ========================================================================
-       1. CABECERA EDITORIAL Y BRAND HEADER TRAZACAO
-       ======================================================================== -->
+  <!-- Cabecera Cinemática: únicamente recorrido y botón de ir al catálogo -->
   <header class="cinematic-header">
-    <!-- Izquierda: Identidad TRAZACAO -->
-    <a href="/" class="brand-group" title="TrazaCao • Inicio">
-      <span class="brand-symbol">◆</span>
-      <div>
-        <span class="brand-title">TRAZACAO</span>
-        <span class="brand-subtitle-tech">
-          TRAZABILIDAD &amp; COMERCIO B2B DE CACAO DE ORIGEN &bull; HUILA
-        </span>
-      </div>
-    </a>
-
-    <!-- Centro/Derecha: Indicador en vivo + Botones de Vista y Acceso -->
-    <div class="header-tools">
-      <div class="live-indicator-pill">
-        <span class="live-dot-pulse"></span>
-        <span>MNTC &bull; NTC 1252 &bull; 100% Offline-First</span>
-      </div>
-
-      <button class="btn-hud" id="btnAutoTour" title="Reproducir recorrido guiado de 24 segundos">
+    <div class="header-tools" style="pointer-events: auto; display: flex; gap: 0.75rem;">
+      <button class="btn-hud" id="btnAutoTour" title="Reproducir recorrido guiado">
         <span id="tourIcon" style="display:inline-flex; align-items:center;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
             <polygon points="5 3 19 12 5 21 5 3"></polygon>
@@ -740,7 +711,8 @@
         <span id="tourLabel">Recorrido</span>
       </button>
 
-      <a href="/?modo=catalogo#lotes-disponibles" id="navLinkComprador" class="btn-hud" style="background: rgba(229, 184, 91, 0.15); border-color: var(--gold-pure); color: var(--gold-bright);" title="Ir al Catálogo de Lotes y Residuos B2B">
+      <!-- Botón de ir al final / Catálogo -->
+      <a href="/?modo=catalogo#lotes-disponibles" id="navLinkComprador" class="btn-hud" style="background: rgba(245, 197, 99, 0.2); border-color: var(--gold-pure); color: var(--gold-bright);" title="Ir al Catálogo de Lotes">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="7" height="7"></rect>
           <rect x="14" y="3" width="7" height="7"></rect>
@@ -749,309 +721,224 @@
         </svg>
         <span>Catálogo</span>
       </a>
-
-      <button class="btn-hud" id="btnQuickPassport" onclick="irAEscenaGsap(1.0)" title="Consultar Pasaporte Digital en Tiempo Real">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="6" height="6" rx="1"></rect>
-          <rect x="15" y="3" width="6" height="6" rx="1"></rect>
-          <rect x="3" y="15" width="6" height="6" rx="1"></rect>
-          <path d="M15 15h2v2h-2z"></path>
-          <path d="M19 15h2v2h-2z"></path>
-          <path d="M15 19h2v2h-2z"></path>
-          <path d="M19 19h2v2h-2z"></path>
-        </svg>
-        <span style="color: var(--gold-pure);">Consultar QR</span>
-      </button>
-
-      <a href="/?modo=gestion" class="btn-hud" style="background: var(--gold-pure); color: #0c0805; font-weight: 800; border-color: #fff;" title="Ingresar al Panel de Gestión de la Cooperativa">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-        </svg>
-        <span>Cooperativa</span>
-      </a>
     </div>
   </header>
 
-  <!-- ========================================================================
-       2. BRÚJULA FLOTANTE LATERAL (HUD - 5 NODOS DE NAVEGACIÓN)
-       ======================================================================== -->
+  <!-- Brújula flotante lateral (HUD) -->
   <nav class="hud-compass" aria-label="Capítulos de la experiencia">
     <div class="compass-node active" data-target="0">
-      <span class="compass-name">01 &bull; Quiénes Somos &amp; Origen</span>
+      <span class="compass-name">01 &bull; Territorio &amp; Origen</span>
       <span class="compass-dot"></span>
     </div>
-    <div class="compass-node" data-target="0.25">
-      <span class="compass-name">02 &bull; Nuestro Propósito</span>
+    <div class="compass-node" data-target="0.333">
+      <span class="compass-name">02 &bull; Suelos &amp; Parcela</span>
       <span class="compass-dot"></span>
     </div>
-    <div class="compass-node" data-target="0.5">
-      <span class="compass-name">03 &bull; Qué Hacemos en Planta</span>
-      <span class="compass-dot"></span>
-    </div>
-    <div class="compass-node" data-target="0.75">
-      <span class="compass-name">04 &bull; Qué Nos Distingue</span>
+    <div class="compass-node" data-target="0.666">
+      <span class="compass-name">03 &bull; Beneficio Poscosecha</span>
       <span class="compass-dot"></span>
     </div>
     <div class="compass-node" data-target="1.0">
-      <span class="compass-name">05 &bull; Pasaporte Digital QR</span>
+      <span class="compass-name">04 &bull; Calidad &amp; Pasaporte</span>
       <span class="compass-dot"></span>
     </div>
   </nav>
 
-  <!-- ========================================================================
-       ESCENARIO CINEMÁTICO FULLSCREEN (GSAP PINNED STAGE - 5 ESCENAS)
-       ======================================================================== -->
+  <!-- ==========================================================================
+       ESCENARIO CINEMÁTICO FULLSCREEN (GSAP PINNED STAGE)
+       ========================================================================== -->
   <div id="scrolly-viewport">
 
     <!-- Indicador de Scroll Inicial -->
     <div class="scroll-guide-prompt" id="scrollPrompt">
-      <span>Desplaza para explorar la plataforma</span>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M12 5v14M19 12l-7 7-7-7"/>
-      </svg>
+      <div class="mouse-wheel-icon"></div>
+      <span>Desplaza para explorar</span>
     </div>
 
-    <!-- ======================================================================
-         PANTALLA 1: HERO — QUIÉNES SOMOS Y A QUÉ NOS DEDICAMOS
-         ====================================================================== -->
-    <section class="scene-viewport" id="scene1" aria-label="Quiénes Somos">
+    <!-- ========================================================================
+         ESCENA 1: EL ORIGEN — FOTOGRAFÍA PANORÁMICA REAL DEL HUILA
+         ======================================================================== -->
+    <section class="scene-viewport" id="scene1" aria-label="El Territorio">
       <div class="photo-stage">
+        <!-- Fotografía real: Mirador del Magdalena, Huila, Colombia (Bernard Gagnon, CC BY-SA 4.0) -->
         <img src="assets/images/huila-panoramica.jpg" 
-             alt="Panorámica real del valle del Magdalena y la cordillera oriental en el Huila"
+             alt="Panorámica real de la cordillera y el valle del Magdalena en el departamento del Huila, Colombia"
              class="photo-hero" 
              id="photoHero1" 
-             loading="eager" />
+             loading="eager" 
+             decoding="async" />
         <div class="photo-vignette"></div>
       </div>
 
       <article class="editorial-hud hud-left" id="card1">
-        <div class="hud-tag">◆ TRAZACAO &bull; INFRAESTRUCTURA AGROINDUSTRIAL Y B2B</div>
+        <div class="hud-tag">Panorámica Territorial</div>
         <h1 class="hud-headline">
-          Donde el cacao del Huila deja el papel y se convierte en <em>origen verificable.</em>
+          Donde la cordillera oriental abraza el <em>Valle del Magdalena</em>.
         </h1>
-        
-        <p class="hud-copy" style="margin-bottom: 0.6rem;">
-          <strong style="color: var(--gold-pure);">Quiénes somos:</strong> Somos TrazaCao, el ecosistema tecnológico y comercial que conecta a las asociaciones cacaoteras de Rivera, Campoalegre y Algeciras con compradores exigentes de cacao especial.
+        <p class="hud-copy">
+          Una mirada desde la vertiente andina revela el territorio del cacao fino de aroma. El encuentro entre las corrientes térmicas del valle del río Magdalena y los vientos frescos de la cordillera crea un microclima bimodal de maduración pausada.
         </p>
-
-        <p class="hud-copy" style="font-size: 0.8rem; border-top: 1px solid rgba(212, 168, 83, 0.15); padding-top: 0.6rem;">
-          <strong style="color: var(--green-bright);">A qué nos dedicamos:</strong> Digitalizamos toda la cadena de valor —desde la recepción en finca y el control industrial de mermas hasta la comercialización B2B con Pasaporte Digital QR— protegiendo la calidad del grano y la rentabilidad del productor.
-        </p>
-
         <div class="geo-meta-strip">
           <span class="geo-pill">Rivera &bull; 1.100 msnm</span>
           <span class="geo-pill">Campoalegre &bull; 920 msnm</span>
-          <span class="geo-pill">Algeciras &bull; 1.450 msnm</span>
-          <span class="geo-pill" style="color: var(--green-bright); border-color: rgba(34, 197, 94, 0.4);">Alineado a la MNTC &bull; Cero Deforestación</span>
-        </div>
-
-        <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
-          <button onclick="irAEscenaGsap(1.0)" class="btn-ir-cta" style="padding: 0.65rem 1.2rem; font-size: 0.78rem;">
-            <span>EXPLORAR PASAPORTE DIGITAL</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
-          </button>
-          <a href="/?modo=catalogo#lotes-disponibles" class="btn-qr-cta" style="padding: 0.65rem 1.1rem; font-size: 0.78rem;">
-            <span>IR AL CATÁLOGO B2B</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
+          <span class="geo-pill">Algeciras &bull; 1.180 msnm</span>
+          <span class="geo-pill" style="color: var(--green-bright); border-color: var(--green-bright);">Origen Verificado &bull; Cero Deforestaci&oacute;n</span>
         </div>
       </article>
     </section>
 
-    <!-- ======================================================================
-         PANTALLA 2: POR QUÉ LO HACEMOS — EL PROBLEMA QUE RESOLVEMOS
-         ====================================================================== -->
-    <section class="scene-viewport" id="scene2" style="opacity: 0; visibility: hidden;" aria-label="Nuestro Propósito">
+    <!-- ========================================================================
+         LA TIERRA Y EL CULTIVO — FOTOGRAFÍAS REALES DE CACAO Y SOMBRÍO
+         ======================================================================== -->
+    <section class="scene-viewport" id="scene2" style="opacity: 0; visibility: hidden;" aria-label="La Parcela y los Suelos">
       <div class="duo-photo-container">
+        <!-- Fotografía real 1: Mazorcas maduras en árbol de cacao (Public Domain) -->
         <div class="duo-photo-main">
           <img src="assets/images/cacao-arbol-mazorcas.jpg" 
-               alt="Mazorcas maduras en árbol de cacao bajo sombrío de guamo"
+               alt="Mazorcas maduras de cacao creciendo directamente en el tronco del árbol bajo dosel de sombrío"
                class="photo-hero" 
                id="photoHero2A" 
-               loading="lazy" />
+               loading="lazy" 
+               decoding="async" />
           <div class="photo-vignette"></div>
         </div>
+        <!-- Fotografía real 2: Fruto de cacao abierto con semillas frescas (Amada44, CC BY-SA 4.0) -->
         <div class="duo-photo-sub">
           <img src="assets/images/cacao-mazorca-abierta.jpg" 
-               alt="Detalle macro de fruto de cacao abierto mostrando semillas frescas"
+               alt="Detalle macro de fruto de cacao abierto mostrando la pulpa blanca y semillas frescas"
                class="photo-hero" 
                id="photoHero2B" 
-               loading="lazy" />
+               loading="lazy" 
+               decoding="async" />
           <div class="photo-vignette"></div>
         </div>
       </div>
 
       <article class="editorial-hud hud-left" id="card2">
-        <div class="hud-tag">◆ NUESTRO PROPÓSITO &bull; POR QUÉ EXISTE TRAZACAO</div>
+        <div class="hud-tag">Parcela &amp; Suelos Francos</div>
         <h2 class="hud-headline">
-          El mejor cacao de aroma no puede perder su historia <em>en cuadernos y chats.</em>
+          Bajo el dosel protector: <em>sombrío de guamo y suelos vivos</em>.
         </h2>
-        <p class="hud-copy" style="font-size: 0.82rem; margin-bottom: 0.6rem;">
-          Durante décadas, el cacao cultivado bajo sombrío de guamo en el Huila ha perdido su identidad de origen al acopiarse en cuadernos físicos y mensajes sueltos de WhatsApp. Eso provoca mermas ocultas superiores al 15%, fugas de capital en planta y pérdida de valor comercial para el campesino.
+        <p class="hud-copy">
+          El monocultivo no tiene cabida en este origen. El cacao se cultiva bajo árboles de guamo y plátano que filtran el 40% de la radiación solar. Los suelos francos aluviales garantizan drenaje sin encharcamientos y nutrientes orgánicos autóctonos.
         </p>
 
-        <!-- Comparativa Visual en 2 Columnas -->
-        <div class="comparison-grid-hud">
-          <div class="comp-col-before">
-            <div class="comp-title" style="color: #FF5A36;">Antes (Acopio Tradicional)</div>
-            <ul class="comp-list">
-              <li>Cuadernos físicos vulnerables a pérdida y agua</li>
-              <li>Mezcla ciega de lotes que diluye el origen</li>
-              <li>Mermas invisibles superiores al 15%</li>
-              <li>Cero respaldo verificable ante el comprador</li>
-            </ul>
+        <!-- Matriz de Datos Climáticos de Parcela -->
+        <div class="climate-grid-hud">
+          <div class="climate-chip-hud" id="chipHud1">
+            <span>Altitud Media</span>
+            <strong>1.100 m.s.n.m.</strong>
           </div>
-
-          <div class="comp-col-after">
-            <div class="comp-title" style="color: var(--green-bright);">Con TrazaCao</div>
-            <ul class="comp-list">
-              <li>Identidad única por lote (<strong style="color: var(--gold-pure);">CAC001</strong>)</li>
-              <li>Trazabilidad punta a punta en &lt; 3 segundos</li>
-              <li>Alerta automática de merma al superar 15.0%</li>
-              <li>Respaldo normativo bajo estándar MNTC</li>
-            </ul>
+          <div class="climate-chip-hud" id="chipHud2">
+            <span>Régimen Hídrico</span>
+            <strong>Bimodal Andino</strong>
+          </div>
+          <div class="climate-chip-hud" id="chipHud3">
+            <span>Dosel Agroforestal</span>
+            <strong>40% Sombrío Natural</strong>
+          </div>
+          <div class="climate-chip-hud" id="chipHud4">
+            <span>Suelo Aluvial</span>
+            <strong>Franco &bull; pH 6.2</strong>
           </div>
         </div>
       </article>
     </section>
 
-    <!-- ======================================================================
-         PANTALLA 3: QUÉ HACEMOS — DEL BENEFICIO AL CONTROL DE TRANSFORMACIÓN
-         ====================================================================== -->
-    <section class="scene-viewport" id="scene3" style="opacity: 0; visibility: hidden;" aria-label="Qué Hacemos en Planta">
+    <!-- ========================================================================
+         EL PROCESO POSCOSECHA — FERMENTACIÓN Y SECADO AL SOL
+         ======================================================================== -->
+    <section class="scene-viewport" id="scene3" style="opacity: 0; visibility: hidden;" aria-label="Beneficio Poscosecha">
       <div class="duo-photo-container">
+        <!-- Fotografía real 1: Fermentación en cajones de madera con hojas de plátano (Scot Nelson, CC0) -->
         <div class="duo-photo-main">
           <img src="assets/images/cacao-fermentacion-cajones.jpg" 
-               alt="Fermentación natural de granos de cacao en cajones de madera"
+               alt="Fermentación natural de granos de cacao en cajones de madera con hojas de plátano"
                class="photo-hero" 
                id="photoHero3A" 
-               loading="lazy" />
+               loading="lazy" 
+               decoding="async" />
           <div class="photo-vignette"></div>
         </div>
+        <!-- Fotografía real 2: Secado de cacao al sol en Colombia (Guillermo Ángel, CC BY-SA 3.0) -->
         <div class="duo-photo-sub">
           <img src="assets/images/cacao-secado-solar-colombia.jpg" 
-               alt="Secado solar de cacao en camas elevadas de madera"
+               alt="Secado natural de granos de cacao en camas elevadas de madera al sol en Colombia"
                class="photo-hero" 
                id="photoHero3B" 
-               loading="lazy" />
+               loading="lazy" 
+               decoding="async" />
           <div class="photo-vignette"></div>
         </div>
       </div>
 
-      <article class="editorial-hud hud-center" id="card3" style="max-width: 720px;">
-        <div class="hud-tag">◆ QUÉ HACEMOS &bull; TRAZABILIDAD DE PROCESO Y CALIDAD</div>
+      <article class="editorial-hud hud-center" id="card3">
+        <div class="hud-tag">Beneficio Poscosecha</div>
         <h2 class="hud-headline">
-          Rigurosidad poscosecha y control milimétrico de <em>cada kilogramo transformado.</em>
+          La alquimia poscosecha: <em>cajones de madera y secado solar</em>.
         </h2>
-        <p class="hud-copy" style="font-size: 0.82rem; margin-bottom: 0.8rem;">
-          No solo contamos la historia del campo; auditamos físicamente el proceso agroindustrial. Registramos la fermentación y secado bajo el estándar NTC 1252, vinculamos cada etapa de transformación (tostión, descascarillado, molienda) al lote de origen y calculamos automáticamente el balance de masa.
+        <p class="hud-copy">
+          Durante 6 días de fermentación escalonada con volteos diarios, las levaduras y bacterias acéticas transforman el mucílago en precursores florales y frutales. El secado posterior en camas suspendidas estabiliza la humedad bajo el estándar NTC 1252.
         </p>
 
-        <!-- 3 Métricas Operativas en Tarjeta -->
+        <!-- Medidores Técnicos Animados por Scroll -->
         <div class="meters-floating-card">
           <div class="meter-box-hud">
-            <span style="font-size: 0.68rem; text-transform: uppercase; color: var(--gold-pure); font-weight: 800; letter-spacing: 0.05em;">
-              Curva Térmica &amp; Secado
+            <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--gold-pure); font-weight: 800; letter-spacing: 0.05em;">
+              Curva Térmica Acética
             </span>
-            <span class="meter-val-large">48.5 °C / 7.2%</span>
-            <small style="font-size: 0.7rem; color: var(--text-dim); display: block;">
-              Pico térmico al día 4 y secado solar uniforme NTC 1252.
+            <span class="meter-val-large" id="gsapTempVal">48.5 °C</span>
+            <div class="bar-track-hud">
+              <div class="bar-fill-hud" id="gsapTempBar" style="background: linear-gradient(90deg, var(--gold-pure), #FF5A36);"></div>
+            </div>
+            <small style="font-size: 0.72rem; color: var(--text-dim); display: block; margin-top: 0.4rem;">
+              Pico térmico al día 4. Desarrolla las notas finas de aroma y atenúa astringencia.
             </small>
           </div>
 
           <div class="meter-box-hud">
-            <span style="font-size: 0.68rem; text-transform: uppercase; color: #FF7D7D; font-weight: 800; letter-spacing: 0.05em;">
-              Alerta de Merma
+            <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--green-bright); font-weight: 800; letter-spacing: 0.05em;">
+              Humedad Final NTC 1252
             </span>
-            <span class="meter-val-large" style="color: #FF7D7D;">Umbral 15.0%</span>
-            <small style="font-size: 0.7rem; color: var(--text-dim); display: block;">
-              Disparo automático si la pérdida en transformación excede el límite.
-            </small>
-          </div>
-
-          <div class="meter-box-hud">
-            <span style="font-size: 0.68rem; text-transform: uppercase; color: var(--green-bright); font-weight: 800; letter-spacing: 0.05em;">
-              Inventario Atómico
-            </span>
-            <span class="meter-val-large" style="color: var(--green-bright);">Cero Fugas</span>
-            <small style="font-size: 0.7rem; color: var(--text-dim); display: block;">
-              Existencias exactas (Recibido - Consumido) sin saldos negativos.
+            <span class="meter-val-large" id="gsapMoistVal" style="color: var(--green-bright);">7.2 %</span>
+            <div class="bar-track-hud">
+              <div class="bar-fill-hud" id="gsapMoistBar" style="background: linear-gradient(90deg, var(--green-native), var(--green-bright));"></div>
+            </div>
+            <small style="font-size: 0.72rem; color: var(--text-dim); display: block; margin-top: 0.4rem;">
+              Secado solar uniforme. Cero desarrollo de mohos y apto para exportación internacional.
             </small>
           </div>
         </div>
       </article>
     </section>
 
-    <!-- ======================================================================
-         PANTALLA 4: QUÉ NOS DISTINGUE — NUESTROS 4 DIFERENCIADORES
-         ====================================================================== -->
-    <section class="scene-viewport" id="scene4" style="opacity: 0; visibility: hidden;" aria-label="Qué Nos Distingue">
+    <!-- ========================================================================
+         EL RESULTADO Y LA TRAZABILIDAD — GRANOS TOSTADOS, CHOCOLATE Y PASAPORTE
+         ======================================================================== -->
+    <section class="scene-viewport" id="scene4" style="opacity: 0; visibility: hidden;" aria-label="Calidad y Trazabilidad">
       <div class="photo-stage">
+        <!-- Fotografía real: Granos tostados seleccionados y chocolate fino (The Culinary Geek, CC BY-SA 3.0) -->
         <img src="assets/images/cacao-granos-tostados.jpg" 
-             alt="Granos tostados de cacao de especialidad sobre fondo oscuro"
+             alt="Granos de cacao tostados de alta calidad para chocolate artesanal bean-to-bar"
              class="photo-hero" 
              id="photoHero4" 
-             loading="lazy" />
-        <div class="photo-vignette" style="background: radial-gradient(circle at center, rgba(11, 9, 7, 0.45) 0%, rgba(11, 9, 7, 0.94) 80%);"></div>
+             loading="lazy" 
+             decoding="async" />
+        <div class="photo-vignette" style="background: radial-gradient(circle at 30% 50%, rgba(10, 7, 5, 0.45) 0%, rgba(10, 7, 5, 0.92) 80%);"></div>
       </div>
 
-      <article class="editorial-hud hud-center hud-wide" id="card4">
-        <div class="hud-tag">◆ QUÉ NOS DISTINGUE &bull; VENTAJA COMPETITIVA TRAZACAO</div>
-        <h2 class="hud-headline">
-          Tecnología rural a prueba de fallos y <em>economía circular del cacao.</em>
-        </h2>
-
-        <!-- Cuadrícula Limpia de 4 Diferenciadores Clave -->
-        <div class="diff-grid-hud">
-          <div class="diff-box-hud">
-            <h3><span style="color: var(--gold-pure);">1.</span> 100% Offline-First en Planta Rural</h3>
-            <p>Opera sin internet en centros de acopio de Rivera, Campoalegre o Algeciras con persistencia local SQLite WAL inmediata y cero pérdida de datos.</p>
-          </div>
-
-          <div class="diff-box-hud">
-            <h3><span style="color: var(--green-bright);">2.</span> Auditoría Inmutable &amp; Bloqueo Sanitario</h3>
-            <p>Historial inalterable de quién, cuándo y por qué cambió un lote (PENDIENTE, LIBERADO, BLOQUEADO), aislando partidas con total certidumbre.</p>
-          </div>
-
-          <div class="diff-box-hud">
-            <h3><span style="color: var(--gold-pure);">3.</span> Privacidad Financiera por Diseño</h3>
-            <p>La ficha pública QR demuestra la calidad y origen al comprador ocultando estrictamente costos internos y márgenes de la asociación.</p>
-          </div>
-
-          <div class="diff-box-hud">
-            <h3><span style="color: #FFD87A;">4.</span> Economía Circular B2B (Cero Desperdicio)</h3>
-            <p>Transformamos la merma física (cascarilla tostada sin tratar por kilo) en una nueva línea de ingresos B2B para cosmética, extractos y bioinsumos.</p>
-          </div>
-        </div>
-      </article>
-    </section>
-
-    <!-- ======================================================================
-         PANTALLA 5: DEMO EN VIVO — PASAPORTE DIGITAL QR Y CATÁLOGO B2B
-         ====================================================================== -->
-    <section class="scene-viewport" id="scene5" style="opacity: 0; visibility: hidden;" aria-label="Pasaporte Digital en Vivo">
-      <div class="photo-stage">
-        <img src="assets/images/cacao-chocolate-artesanal.jpg" 
-             alt="Chocolate artesanal fino de origen Huila y pasaporte de trazabilidad"
-             class="photo-hero" 
-             id="photoHero5" 
-             loading="lazy" />
-        <div class="photo-vignette" style="background: radial-gradient(circle at 30% 50%, rgba(11, 9, 7, 0.45) 0%, rgba(11, 9, 7, 0.94) 80%);"></div>
-      </div>
-
-      <!-- Terminal del Pasaporte Comercial -->
+      <!-- Terminal del Pasaporte Comercial con el Botón "Ir al Catálogo" -->
       <div class="passport-modal-hud" id="passportModal">
-        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.65rem; flex-wrap: wrap; gap: 0.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
           <div>
-            <span style="font-size: 0.7rem; text-transform: uppercase; color: var(--gold-pure); font-weight: 800; letter-spacing: 0.12em; font-family: monospace;">
-              ◆ PASAPORTE DIGITAL TRAZACAO &bull; VERIFICACIÓN EN TIEMPO REAL
+            <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--gold-pure); font-weight: 800; letter-spacing: 0.12em;">
+              Pasaporte Digital de Origen
             </span>
             <h3 id="gsapLotHeadline" style="font-family: var(--font-serif); font-size: clamp(1.4rem, 2.2vw, 1.85rem); color: var(--ivory); margin-top: 0.15rem;">
               CAC001 &bull; Rivera, Huila
             </h3>
           </div>
-          <span id="gsapLotBadge" style="background: rgba(34, 197, 94, 0.2); border: 1px solid var(--green-bright); color: var(--green-bright); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.72rem; font-weight: 900; text-transform: uppercase;">
+          <span id="gsapLotBadge" style="background: rgba(126, 217, 87, 0.2); border: 1px solid var(--green-bright); color: var(--green-bright); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.75rem; font-weight: 900; text-transform: uppercase;">
             &bull; Lote Liberado
           </span>
         </div>
@@ -1064,59 +951,45 @@
         </div>
 
         <!-- Matriz de Métricas Técnicas por Lote -->
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem; margin-bottom: 0.95rem;">
-          <div style="background: var(--cacao-warm); border: 1px solid var(--border-editorial); padding: 0.65rem; border-radius: 12px;">
-            <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--gold-pure); font-weight: 800; display: block; font-family: monospace;">Humedad</span>
-            <strong id="gsapLotHumedad" style="font-family: var(--font-serif); font-size: 1.15rem; color: #fff;">7.50%</strong>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem; margin-bottom: 1.25rem;">
+          <div style="background: rgba(28, 20, 15, 0.92); border: 1px solid var(--border-editorial); padding: 0.7rem; border-radius: 8px;">
+            <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--gold-pure); font-weight: 800; display: block;">Humedad</span>
+            <strong id="gsapLotHumedad" style="font-family: var(--font-serif); font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: #fff;">7.50%</strong>
           </div>
-          <div style="background: var(--cacao-warm); border: 1px solid var(--border-editorial); padding: 0.65rem; border-radius: 12px;">
-            <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--gold-pure); font-weight: 800; display: block; font-family: monospace;">Fermentación</span>
-            <strong id="gsapLotFerm" style="font-family: var(--font-serif); font-size: 1.15rem; color: #fff;">78.00%</strong>
+          <div style="background: rgba(28, 20, 15, 0.92); border: 1px solid var(--border-editorial); padding: 0.7rem; border-radius: 8px;">
+            <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--gold-pure); font-weight: 800; display: block;">Fermentación</span>
+            <strong id="gsapLotFerm" style="font-family: var(--font-serif); font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: #fff;">78.00%</strong>
           </div>
-          <div style="background: var(--cacao-warm); border: 1px solid var(--border-editorial); padding: 0.65rem; border-radius: 12px;">
-            <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--green-bright); font-weight: 800; display: block; font-family: monospace;">Disponible</span>
-            <strong id="gsapLotStock" style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--green-bright);">100.00 kg</strong>
+          <div style="background: rgba(28, 20, 15, 0.92); border: 1px solid var(--border-editorial); padding: 0.7rem; border-radius: 8px;">
+            <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--gold-pure); font-weight: 800; display: block;">Disponible</span>
+            <strong id="gsapLotStock" style="font-family: var(--font-serif); font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: #fff;">100.00 kg</strong>
           </div>
         </div>
 
         <!-- Apertura de Nueva Línea B2B: Residuos y Merma del Cacao en Bruto -->
-        <div style="background: rgba(229, 184, 91, 0.08); border: 1px solid rgba(229, 184, 91, 0.35); border-radius: 12px; padding: 0.75rem; margin-bottom: 0.95rem;">
-          <div style="display: flex; align-items: center; gap: 0.45rem; margin-bottom: 0.25rem;">
+        <div style="background: rgba(245, 197, 99, 0.08); border: 1px solid rgba(245, 197, 99, 0.35); border-radius: 8px; padding: 0.85rem; margin-bottom: 1.15rem;">
+          <div style="display: flex; align-items: center; gap: 0.45rem; margin-bottom: 0.35rem;">
             <span style="background: var(--gold-pure); color: #0c0805; font-size: 0.65rem; font-weight: 900; text-transform: uppercase; padding: 0.2rem 0.5rem; border-radius: 4px; letter-spacing: 0.08em;">
               Nueva Línea B2B
             </span>
-            <strong style="font-size: 0.8rem; color: var(--gold-bright); font-family: var(--font-serif);">
-              Residuos y Merma del Cacao en Bruto (Venta por Kilo)
+            <strong style="font-size: 0.82rem; color: var(--gold-bright); font-family: var(--font-serif);">
+              Residuos y Merma del Cacao en Bruto
             </strong>
           </div>
-          <p style="font-size: 0.7rem; color: rgba(245, 239, 230, 0.85); line-height: 1.35; margin: 0;">
-            Suministramos exclusivamente <strong>cascarilla tostada por kilo (sin tratar)</strong> a precios justos ($14.500 - $16.500 COP/kg) para que empresas elaboren cosmética, tisanas y bioinsumos. TrazaCao no manufactura productos finales.
+          <p style="font-size: 0.72rem; color: rgba(245, 240, 235, 0.88); line-height: 1.4; margin: 0;">
+            Además de comercializar el grano y los derivados de la transformación del cacao (licor y chocolate fino de origen), en TrazaCao abrimos una nueva línea para aquellas empresas o personas interesadas en adquirir el <strong>residuo del cacao (la merma / cascarilla en bruto)</strong> y de las cosas que pueden producirse gracias a ella. Suministramos exclusivamente la materia prima residual en bruto; <em>no fabricamos mascarillas ni fertilizantes terminados</em>, permitiendo que cada comprador adquiera la biomasa para producir sus propios desarrollos.
           </p>
         </div>
 
-        <!-- Micro-etiqueta de Confianza y Privacidad Financiera -->
-        <div style="font-size: 0.72rem; color: var(--green-bright); display: flex; align-items: center; gap: 0.4rem; margin-bottom: 1rem; background: rgba(19, 32, 24, 0.8); border: 1px solid rgba(34, 197, 94, 0.3); padding: 0.4rem 0.75rem; border-radius: 10px;">
-          <span>✓ Verificado por TrazaCao &bull; Consulta &lt; 3s &bull; Sin exposición de costos internos</span>
-        </div>
-
-        <!-- Botones de Acción Comercial -->
-        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-editorial); padding-top: 0.9rem; flex-wrap: wrap; gap: 0.75rem;">
-          <button onclick="abrirQrModalGsap()" class="btn-qr-cta" title="Ver código QR público del lote">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="6" height="6" rx="1"></rect>
-              <rect x="15" y="3" width="6" height="6" rx="1"></rect>
-              <rect x="3" y="15" width="6" height="6" rx="1"></rect>
-              <path d="M15 15h2v2h-2z"></path>
-              <path d="M19 15h2v2h-2z"></path>
-              <path d="M15 19h2v2h-2z"></path>
-              <path d="M19 19h2v2h-2z"></path>
-            </svg>
-            <span>VER QR DEL LOTE</span>
-          </button>
-
+        <!-- Zona de Acción Comercial y Botón "Ir al Catálogo" -->
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-editorial); padding-top: 1rem; flex-wrap: wrap; gap: 0.85rem;">
+          <div style="font-size: 0.72rem; color: rgba(233, 220, 197, 0.75); max-width: 380px; line-height: 1.35;">
+            <strong style="color: var(--gold-pure); display: block;">Granos & Línea de Residuos B2B:</strong>
+            Lotes certificados de cacao de origen y suministro de mermas en bruto para cosmética, bioinsumos y extractos.
+          </div>
           <a href="/?modo=catalogo#lotes-disponibles" class="btn-ir-cta" id="btnIrAccion" title="Ir al catálogo de lotes y residuos disponibles">
-            <span>IR AL CATÁLOGO B2B</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <span>Ir al Catálogo</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <line x1="5" y1="12" x2="19" y2="12"></line>
               <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
@@ -1127,69 +1000,62 @@
 
   </div>
 
-  <!-- ========================================================================
-       MODAL DE CÓDIGO QR VECTORIAL (ACCESO RÁPIDO)
-       ======================================================================== -->
-  <div class="qr-modal-overlay" id="qrModalOverlay">
-    <div class="qr-modal-box">
-      <button onclick="cerrarQrModalGsap()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--ivory); font-size: 1.4rem; cursor: pointer;">&times;</button>
-      <span style="font-family: monospace; font-size: 0.68rem; color: var(--gold-pure); text-transform: uppercase; letter-spacing: 0.1em; display: block; font-weight: 800;">
-        Pasaporte Digital &bull; Mesa Nacional MNTC
-      </span>
-      <h3 id="qrModalLotId" style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--ivory); margin: 0.3rem 0;">
-        CAC001
-      </h3>
-      <p id="qrModalLotPlace" style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 1.1rem;">
-        Rivera, Huila &bull; Finca La Esmeralda
-      </p>
-
-      <div style="background: #fff; padding: 1rem; border-radius: 16px; display: inline-block; margin-bottom: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
-        <!-- SVG Vectorial Nítido con patrón QR para CAC001 -->
-        <svg width="180" height="180" viewBox="0 0 29 29" shape-rendering="crispEdges">
-          <path fill="#0c0805" d="M0,0 h7 v7 h-7 z M1,1 v5 h5 v-5 z M2,2 h3 v3 h-3 z" />
-          <path fill="#0c0805" d="M22,0 h7 v7 h-7 z M23,1 v5 h5 v-5 z M24,2 h3 v3 h-3 z" />
-          <path fill="#0c0805" d="M0,22 h7 v7 h-7 z M1,23 v5 h5 v-5 z M2,24 h3 v3 h-3 z" />
-          <path fill="#0c0805" d="M9,2 h2 v3 h-2 z M14,1 h3 v2 h-3 z M18,3 h3 v2 h-3 z M10,6 h4 v2 h-4 z" />
-          <path fill="#0c0805" d="M9,9 h2 v2 h-2 z M13,9 h4 v2 h-4 z M19,9 h3 v2 h-3 z M9,13 h3 v3 h-3 z M14,13 h4 v2 h-4 z" />
-          <path fill="#0c0805" d="M19,13 h2 v3 h-2 z M23,13 h3 v2 h-3 z M9,18 h4 v2 h-4 z M15,18 h2 v3 h-2 z M20,18 h4 v2 h-4 z" />
-          <path fill="#0c0805" d="M9,23 h3 v3 h-3 z M14,24 h4 v2 h-4 z M20,23 h2 v2 h-2 z M24,24 h3 v3 h-3 z" />
-        </svg>
-      </div>
-
-      <div style="font-size: 0.72rem; color: var(--green-bright); display: flex; align-items: center; justify-content: center; gap: 0.4rem; margin-bottom: 1.1rem;">
-        <span>✓ Escaneo público offline &bull; Consulta &lt; 3s</span>
-      </div>
-
-      <a id="qrModalLinkFull" href="/pasaporte/CAC001" style="display: block; width: 100%; padding: 0.75rem; background: var(--gold-pure); color: #0c0805; font-weight: 800; font-size: 0.8rem; border-radius: 12px; text-decoration: none;">
-        Abrir Ficha de Pasaporte
-      </a>
-    </div>
+  <!-- Toast Notificación para el Botón "Ir" -->
+  <div class="toast-dev-notice" id="devToast" role="alert" aria-live="polite">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5C563" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="16" x2="12" y2="12"></line>
+      <line x1="12" y1="8" x2="12.01" y2="8"></line>
+    </svg>
+    <span>Módulo de negociación B2B en fase de desarrollo para el lanzamiento oficial.</span>
   </div>
 
-  <!-- Scripts: GSAP y ScrollTrigger locales -->
+  <!-- ==========================================================================
+       LIBRERÍAS GSAP Y SCROLLTRIGGER (COMPATIBILIDAD TOTAL LOCAL / SERVER)
+       ========================================================================== -->
   <script src="vendor/gsap.min.js"></script>
   <script src="vendor/ScrollTrigger.min.js"></script>
-
   <script>
-    // ========================================================================
-    // MOTOR DE SCROLLYTELLING GSAP (5 ESCENAS ESTRATÉGICAS TRAZACAO)
-    // ========================================================================
+    // Fallback dinámico si los scripts locales tardan en cargarse
+    if (typeof gsap === 'undefined') {
+      const s1 = document.createElement('script');
+      s1.src = '/vendor/gsap.min.js';
+      s1.onload = () => {
+        const s2 = document.createElement('script');
+        s2.src = '/vendor/ScrollTrigger.min.js';
+        s2.onload = () => {
+          if (window.initScrollytellingApp) window.initScrollytellingApp();
+        };
+        document.head.appendChild(s2);
+      };
+      document.head.appendChild(s1);
+    }
+  </script>
+
+  <!-- ==========================================================================
+       CORE SCRIPT: CONTROL CINEMÁTICO GSAP CON FOTOGRAFÍA REAL
+       ========================================================================== -->
+  <script>
     window.initScrollytellingApp = function() {
+      'use strict';
+
       if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-        console.warn('GSAP o ScrollTrigger no disponibles localmente.');
+        console.warn('Esperando carga de GSAP...');
+        setTimeout(window.initScrollytellingApp, 150);
         return;
       }
 
       gsap.registerPlugin(ScrollTrigger);
 
-      // Snapping uniforme para 5 escenas (4 intervalos)
-      const snapPoints = [0, 0.25, 0.5, 0.75, 1.0];
+      // 1. Configuración de Snapping y Timeline Maestro
+      // snapTo asegura que al hacer scroll nunca quede intermedio entre escenas
+      const snapPoints = [0, 0.333, 0.666, 1.0];
 
-      window.masterTl = gsap.timeline({
+      const masterTl = gsap.timeline({
         scrollTrigger: {
           trigger: '#scrolly-viewport',
           start: 'top top',
-          end: '+=2800',
+          end: '+=2000',
           scrub: 1,
           pin: true,
           anticipatePin: 1,
@@ -1203,11 +1069,11 @@
             const prog = self.progress;
             document.getElementById('timelineBar').style.width = (prog * 100) + '%';
 
-            // Actualizar nodos activos de la brújula HUD
+            // Actualizar nodos de la brújula
             const nodes = document.querySelectorAll('.compass-node');
             nodes.forEach((n) => {
               const targetP = parseFloat(n.getAttribute('data-target'));
-              if (Math.abs(prog - targetP) < 0.13) {
+              if (Math.abs(prog - targetP) < 0.16) {
                 n.classList.add('active');
               } else {
                 n.classList.remove('active');
@@ -1217,75 +1083,98 @@
         }
       });
 
-      // SECUENCIAS DEL RELATO (5 CAPÍTULOS LIMPIOS SIN SOLAPAMIENTO)
+      // ========================================================================
+      // SECUENCIAS DEL RELATO (DESAPARICIÓN COMPLETA SIN SOLAPAMIENTO DE TARJETAS)
+      // ========================================================================
+
+      // --- CAPÍTULO 1: TERRITORIO Y ORIGEN (Tiempo 0.0 -> 0.8) ---
       masterTl
-        // --- CAPÍTULO 1: QUIÉNES SOMOS & A QUÉ NOS DEDICAMOS (0.0 -> 0.8) ---
         .to('#scrollPrompt', { opacity: 0, duration: 0.1 }, 0)
-        .to('#photoHero1', { scale: 1.15, y: '-4%', duration: 0.8, ease: 'none' }, 0)
+        .to('#photoHero1', { scale: 1.18, y: '-6%', duration: 0.8, ease: 'none' }, 0)
+        
+        // Transición de salida de Escena 1 (desaparición total de card 1 y scene 1)
         .to('#card1', { autoAlpha: 0, y: -45, duration: 0.25 }, 0.75)
         .to('#scene1', { autoAlpha: 0, duration: 0.25 }, 0.8)
         .set('#scene1', { pointerEvents: 'none' }, 1.0)
 
-        // --- CAPÍTULO 2: NUESTRO PROPÓSITO & EL PROBLEMA (1.0 -> 1.8) ---
+        // --- CAPÍTULO 2: SUELOS FRANCOS Y PARCELA (Tiempo 1.0 -> 1.8) ---
         .set('#scene2', { visibility: 'visible', pointerEvents: 'auto' }, 1.0)
         .to('#scene2', { autoAlpha: 1, duration: 0.3 }, 1.0)
-        .fromTo('#photoHero2A', { scale: 1.18 }, { scale: 1.05, duration: 1.0, ease: 'none' }, 1.0)
-        .fromTo('#photoHero2B', { scale: 1.14 }, { scale: 1.02, duration: 1.0, ease: 'none' }, 1.0)
-        .fromTo('#card2', { autoAlpha: 0, y: 35 }, { autoAlpha: 1, y: 0, duration: 0.35 }, 1.1)
+        .fromTo('#photoHero2A', { scale: 1.2 }, { scale: 1.05, duration: 1.0, ease: 'none' }, 1.0)
+        .fromTo('#photoHero2B', { scale: 1.15 }, { scale: 1.02, duration: 1.0, ease: 'none' }, 1.0)
+        .fromTo('#card2', { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.4 }, 1.1)
+        // Cascada de chips climáticos
+        .fromTo('#chipHud1', { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.18 }, 1.3)
+        .fromTo('#chipHud2', { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.18 }, 1.45)
+        .fromTo('#chipHud3', { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.18 }, 1.6)
+        .fromTo('#chipHud4', { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.18 }, 1.75)
+
+        // Transición de salida de Escena 2 (desaparición total de card 2 y scene 2)
         .to('#card2', { autoAlpha: 0, y: -45, duration: 0.25 }, 1.8)
         .to('#scene2', { autoAlpha: 0, duration: 0.25 }, 1.85)
         .set('#scene2', { pointerEvents: 'none' }, 2.0)
 
-        // --- CAPÍTULO 3: QUÉ HACEMOS EN PLANTA & PROCESO (2.0 -> 2.8) ---
+        // --- CAPÍTULO 3: BENEFICIO POSCOSECHA (Tiempo 2.0 -> 2.8) ---
         .set('#scene3', { visibility: 'visible', pointerEvents: 'auto' }, 2.0)
         .to('#scene3', { autoAlpha: 1, duration: 0.3 }, 2.0)
-        .fromTo('#photoHero3A', { scale: 1.16 }, { scale: 1.04, duration: 1.0, ease: 'none' }, 2.0)
+        .fromTo('#photoHero3A', { scale: 1.18 }, { scale: 1.05, duration: 1.0, ease: 'none' }, 2.0)
         .fromTo('#card3', { autoAlpha: 0, scale: 0.94 }, { autoAlpha: 1, scale: 1, duration: 0.35 }, 2.1)
+        // Medidores térmicos dinámicos
+        .to('#gsapTempBar', { width: '84%', duration: 0.6, ease: 'power2.out' }, 2.3)
+        .to('#gsapMoistBar', { width: '72%', duration: 0.6, ease: 'power2.out' }, 2.4)
+
+        // Transición de salida de Escena 3 (desaparición total de card 3 y scene 3)
         .to('#card3', { autoAlpha: 0, scale: 0.92, y: -30, duration: 0.25 }, 2.8)
         .to('#scene3', { autoAlpha: 0, duration: 0.25 }, 2.85)
         .set('#scene3', { pointerEvents: 'none' }, 3.0)
 
-        // --- CAPÍTULO 4: QUÉ NOS DISTINGUE — 4 DIFERENCIADORES (3.0 -> 3.8) ---
+        // --- CAPÍTULO 4: EL PRODUCTO Y EL PASAPORTE (Tiempo 3.0 -> 4.0) ---
         .set('#scene4', { visibility: 'visible', pointerEvents: 'auto' }, 3.0)
-        .to('#scene4', { autoAlpha: 1, duration: 0.3 }, 3.0)
+        .to('#scene4', { autoAlpha: 1, duration: 0.35 }, 3.0)
         .fromTo('#photoHero4', { scale: 1.15 }, { scale: 1.02, duration: 1.0, ease: 'none' }, 3.0)
-        .fromTo('#card4', { autoAlpha: 0, y: 35 }, { autoAlpha: 1, y: 0, duration: 0.35 }, 3.1)
-        .to('#card4', { autoAlpha: 0, y: -40, duration: 0.25 }, 3.8)
-        .to('#scene4', { autoAlpha: 0, duration: 0.25 }, 3.85)
-        .set('#scene4', { pointerEvents: 'none' }, 4.0)
+        // El pasaporte entra en escena limpia, centrado verticalmente sin caerse abajo
+        .fromTo('#passportModal', { autoAlpha: 0, scale: 0.94, yPercent: -50, y: 25 }, { autoAlpha: 1, scale: 1, yPercent: -50, y: 0, duration: 0.5, ease: 'power3.out' }, 3.1);
 
-        // --- CAPÍTULO 5: PASAPORTE DIGITAL QR Y CATÁLOGO B2B (4.0 -> 5.0) ---
-        .set('#scene5', { visibility: 'visible', pointerEvents: 'auto' }, 4.0)
-        .to('#scene5', { autoAlpha: 1, duration: 0.35 }, 4.0)
-        .fromTo('#photoHero5', { scale: 1.14 }, { scale: 1.02, duration: 1.0, ease: 'none' }, 4.0)
-        .fromTo('#passportModal', { autoAlpha: 0, scale: 0.94, yPercent: -50, y: 25 }, { autoAlpha: 1, scale: 1, yPercent: -50, y: 0, duration: 0.5, ease: 'power3.out' }, 4.1);
-
-      // Salto interactivo desde los nodos de la brújula
+      // 2. Salto interactivo desde los nodos de la brújula
       document.querySelectorAll('.compass-node').forEach(node => {
         node.addEventListener('click', () => {
           if (tourState.isPlaying) pausarTour();
           const targetProgress = parseFloat(node.getAttribute('data-target'));
-          irAEscenaGsap(targetProgress);
+          const maxScroll = ScrollTrigger.maxScroll(window);
+          window.scrollTo({
+            top: targetProgress * maxScroll,
+            behavior: 'smooth'
+          });
         });
       });
 
-      // TOUR GUIADO (24 SEGUNDOS TOTALES PARA LAS 5 ESCENAS)
+      // ========================================================================
+      // 3. TOUR GUIADO TIPO VIDEO (REPRODUCCIÓN CONTINUA AUTÓNOMA)
+      // ========================================================================
       const btnAutoTour = document.getElementById('btnAutoTour');
       const tourIcon = document.getElementById('tourIcon');
       const tourLabel = document.getElementById('tourLabel');
       const videoTourBadge = document.getElementById('videoTourBadge');
 
-      const tourState = { isPlaying: false, isPaused: false, tween: null };
+      const tourState = {
+        isPlaying: false,
+        isPaused: false,
+        tween: null
+      };
 
       btnAutoTour.addEventListener('click', () => {
-        if (tourState.isPlaying) pausarTour();
-        else iniciarTour();
+        if (tourState.isPlaying) {
+          pausarTour();
+        } else {
+          iniciarTour();
+        }
       });
 
       function iniciarTour() {
         const maxScroll = ScrollTrigger.maxScroll(window);
         const currentP = masterTl.progress();
 
+        // Si ya está al final, reiniciar desde el principio
         if (currentP >= 0.97) {
           masterTl.progress(0);
           window.scrollTo(0, 0);
@@ -1297,12 +1186,13 @@
         if (tourIcon) {
           tourIcon.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
         }
-        tourLabel.textContent = 'Pausar';
+        tourLabel.textContent = 'Pausar Video';
         videoTourBadge.classList.add('show');
 
         const startP = masterTl.progress();
         const remainingP = 1.0 - startP;
-        const tourDuration = Math.max(5, remainingP * 24);
+        // Velocidad cinematográfica optimizada tipo documental (20 segundos totales)
+        const tourDuration = Math.max(5, remainingP * 20);
 
         const animTracker = { p: startP };
         tourState.tween = gsap.to(animTracker, {
@@ -1327,7 +1217,7 @@
         if (tourIcon) {
           tourIcon.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
         }
-        tourLabel.textContent = 'Reanudar';
+        tourLabel.textContent = 'Reanudar Video';
         videoTourBadge.classList.remove('show');
       }
 
@@ -1338,59 +1228,71 @@
         if (tourIcon) {
           tourIcon.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>';
         }
-        tourLabel.textContent = 'Reiniciar';
+        tourLabel.textContent = 'Reiniciar Tour';
         videoTourBadge.classList.remove('show');
       }
 
+      // Si el usuario interactúa manualmente con la rueda o teclado, pausar el tour suavemente
       ['wheel', 'touchmove'].forEach(evt => {
         window.addEventListener(evt, () => {
-          if (tourState.isPlaying) pausarTour();
+          if (tourState.isPlaying) {
+            pausarTour();
+          }
         }, { passive: true });
       });
+
+      // 4. Botón "Ir" -> Llevar a la página del comprador
+      const btnIr = document.getElementById('btnIrAccion');
+      if (btnIr) {
+        btnIr.addEventListener('click', (e) => {
+          const lote = window.loteActualSeleccionado || 'CAC001';
+          window.location.href = '/?modo=comprador&lote=' + lote;
+        });
+      }
     };
 
-    // Navegación rápida por progreso GSAP
-    window.irAEscenaGsap = function(progressFraction) {
-      const maxScroll = ScrollTrigger.maxScroll(window);
-      window.scrollTo({
-        top: progressFraction * maxScroll,
-        behavior: 'smooth'
-      });
-    };
+    // Inicializar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', window.initScrollytellingApp);
+    } else {
+      window.initScrollytellingApp();
+    }
 
-    // DATOS DE LOS LOTES INTERACTIVOS
+    // ==========================================================================
+    // DATOS DE LOS LOTES PARA EL PASAPORTE COMERCIAL (ESCENA 4)
+    // ==========================================================================
     window.loteActualSeleccionado = 'CAC001';
 
     const LOTES_GSAP = {
       'CAC001': {
         title: 'CAC001 \u2022 Rivera, Huila',
         badge: '\u2022 Lote Liberado',
-        badgeBg: 'rgba(34, 197, 94, 0.2)',
-        badgeColor: '#22C55E',
+        badgeBg: 'rgba(126, 217, 87, 0.2)',
+        badgeColor: '#7ED957',
         humedad: '7.50%',
         ferm: '78.00%',
         stock: '100.00 kg',
-        place: 'Rivera, Huila \u2022 Finca La Esmeralda'
+        desc: '\u201cCacao con balance sedoso, notas dulces de panela y final prolongado de frutos secos. Cero notas violetas de astringencia.\u201d'
       },
       'CAC002': {
         title: 'CAC002 \u2022 Campoalegre, Huila',
         badge: '\u2022 Lote Liberado',
-        badgeBg: 'rgba(34, 197, 94, 0.2)',
-        badgeColor: '#22C55E',
-        humedad: '7.10%',
-        ferm: '82.00%',
-        stock: '85.00 kg',
-        place: 'Campoalegre, Huila \u2022 Finca El Paraíso'
+        badgeBg: 'rgba(126, 217, 87, 0.2)',
+        badgeColor: '#7ED957',
+        humedad: '7.20%',
+        ferm: '82.50%',
+        stock: '150.00 kg',
+        desc: '\u201cPerfil brillante con notas c\u00edtricas de mandarina y flor de cafeto. Alta solubilidad de manteca en tueste medio.\u201d'
       },
       'CAC003': {
         title: 'CAC003 \u2022 Algeciras, Huila',
-        badge: '\u2022 Lote Liberado',
-        badgeBg: 'rgba(34, 197, 94, 0.2)',
-        badgeColor: '#22C55E',
-        humedad: '6.90%',
-        ferm: '85.00%',
-        stock: '120.00 kg',
-        place: 'Algeciras, Huila \u2022 Finca Villa Esperanza'
+        badge: '\u26a0 Congelado Preventivo (Incidencia)',
+        badgeBg: 'rgba(217, 67, 67, 0.25)',
+        badgeColor: '#FF7D7D',
+        humedad: '8.90%',
+        ferm: '68.00%',
+        stock: '0.00 kg',
+        desc: '\u201cLote bajo revisi\u00f3n t\u00e9cnica. Humedad superior al l\u00edmite de la norma NTC 1252. Retenido preventivamente.\u201d'
       }
     };
 
@@ -1401,6 +1303,16 @@
         else btn.classList.remove('selected');
       });
 
+      // Mantener URLs dirigidas al catálogo de lotes disponibles
+      const btnIr = document.getElementById('btnIrAccion');
+      if (btnIr) {
+        btnIr.setAttribute('href', '/?modo=catalogo#lotes-disponibles');
+      }
+      const navLink = document.getElementById('navLinkComprador');
+      if (navLink) {
+        navLink.setAttribute('href', '/?modo=catalogo#lotes-disponibles');
+      }
+
       const d = LOTES_GSAP[loteId];
       if (!d) return;
 
@@ -1408,33 +1320,13 @@
       document.getElementById('gsapLotHumedad').textContent = d.humedad;
       document.getElementById('gsapLotFerm').textContent = d.ferm;
       document.getElementById('gsapLotStock').textContent = d.stock;
+      const descEl = document.getElementById('gsapLotDesc');
+      if (descEl) descEl.textContent = d.desc;
 
       const badge = document.getElementById('gsapLotBadge');
       badge.textContent = d.badge;
       badge.style.background = d.badgeBg;
       badge.style.color = d.badgeColor;
-
-      // Actualizar modal QR
-      document.getElementById('qrModalLotId').textContent = loteId;
-      document.getElementById('qrModalLotPlace').textContent = d.place;
-      document.getElementById('qrModalLinkFull').setAttribute('href', '/pasaporte/' + loteId);
-    }
-
-    function abrirQrModalGsap() {
-      const modal = document.getElementById('qrModalOverlay');
-      if (modal) modal.style.display = 'flex';
-    }
-
-    function cerrarQrModalGsap() {
-      const modal = document.getElementById('qrModalOverlay');
-      if (modal) modal.style.display = 'none';
-    }
-
-    // Inicializar al cargar el DOM
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', window.initScrollytellingApp);
-    } else {
-      window.initScrollytellingApp();
     }
   </script>
 </body>
