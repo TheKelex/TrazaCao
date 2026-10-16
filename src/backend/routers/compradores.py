@@ -8,7 +8,7 @@ from typing import List, Optional
 import uuid
 from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, status
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from infra.database import get_db
 from models import Comprador, AuditoriaLog
@@ -18,7 +18,7 @@ router = APIRouter(prefix="/api/compradores", tags=["Compradores y Clientes B2B"
 
 
 class CompradorRegistroRequest(BaseModel):
-    email: EmailStr = Field(..., description="Correo electrónico institucional o de la empresa")
+    email: str = Field(..., pattern=r"^[^@]+@[^@]+\.[^@]+$", description="Correo electrónico institucional o de la empresa")
     password: str = Field(..., min_length=4, description="Contraseña de acceso seguro")
     nombre_contacto: str = Field(..., min_length=3, max_length=150, description="Nombre de la persona de contacto")
     empresa_o_razon_social: str = Field(..., min_length=2, max_length=150, description="Razón social o nombre comercial")
@@ -27,7 +27,7 @@ class CompradorRegistroRequest(BaseModel):
 
 
 class CompradorLoginRequest(BaseModel):
-    email: EmailStr = Field(..., description="Correo electrónico del comprador registrado")
+    email: str = Field(..., pattern=r"^[^@]+@[^@]+\.[^@]+$", description="Correo electrónico del comprador registrado")
     password: str = Field(..., description="Contraseña")
 
 
