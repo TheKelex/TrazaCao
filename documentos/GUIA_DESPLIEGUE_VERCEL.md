@@ -81,3 +81,23 @@ Verifica que los siguientes parámetros coincidan:
 ## 3. ACTUALIZACIONES AUTOMÁTICAS (CI/CD)
 
 * Cada vez que realices cambios en tu fork o sincronices con el repositorio principal (`git push origin develop`), Vercel detectará el commit automáticamente y actualizará la aplicación en vivo en segundos sin caídas de servicio.
+
+---
+
+## 4. RESOLUCIÓN DE ERRORES FRECUENTES
+
+### Error: `[FASTAPI_ENTRYPOINT_NOT_FOUND]`
+**Causa:** Vercel intentó compilar el backend en Python en lugar del frontend de Vite porque la rama conectada (`main`) estaba atrasada o Vercel analizó la raíz buscando Python.
+
+**Solución 1 (Recomendada - 100% limpia):**
+1. En tu proyecto de Vercel ve a **Settings** $\rightarrow$ **General**.
+2. En **Root Directory**, haz clic en **Edit** y escribe: `src/frontend`.
+3. Haz clic en **Save**.
+4. Ve a **Deployments** $\rightarrow$ en el último despliegue haz clic en los 3 puntos $(\dots)$ $\rightarrow$ **Redeploy**.
+5. Vercel compilará directamente el frontend de Vite en menos de 30 segundos sin tocar Python.
+
+**Solución 2 (Compilación desde Raíz):**
+1. En tu fork de GitHub (`github.com/TU_USUARIO/TrazaCao`), haz clic en **"Sync fork"** $\rightarrow$ **"Update branch"**.
+2. Esto traerá a tu fork los archivos `pyproject.toml`, `package.json` raíz y `vercel.json` ya subidos al repositorio oficial.
+3. En Vercel, haz clic en **Redeploy**. Vercel detectará el framework Vite y compilará automáticamente.
+
