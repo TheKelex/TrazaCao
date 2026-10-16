@@ -93,7 +93,7 @@ Antes de escribir código en `src/`, cada desarrollador debe abrir su rama y doc
 | **PLN-D2** | Plan Seguridad, Triggers & QA | Dev 2 | **EN ESPECIFICACIÓN** | `feature/security-qa` |
 | **PLN-D3** | Plan Frontend Operador & Admin | Dev 3 | **EN ESPECIFICACIÓN** | `feature/frontend-ui` |
 | **PLN-D4** | Plan Pasaporte QR, Usabilidad & Pitch | Dev 4 | **EN ESPECIFICACIÓN** | `feature/passport-docs` |
-| **COD-B01** | Implementación SQLite WAL & Triggers | Dev 2 | Backlog (Bloqueado por PLN-D2) | `feature/security-qa` |
-| **COD-B02** | Motor Decimal de Cálculos y Pytest | Dev 1 | **LISTO PARA CODIFICAR** | `feature/backend-core` |
+| **COD-B01** | Implementación SQLite WAL & Triggers | Dev 2 | **DONE (Integrado en Core)** | `feature/backend-core` |
+| **COD-B02** | Motor Decimal de Cálculos y Pytest | Dev 1 | **DONE (15/15 Tests OK)** | `feature/backend-core` |
 | **COD-U01** | Setup React + Vite Offline | Dev 3 | Backlog (Bloqueado por PLN-D3) | `feature/frontend-ui` |
 | **COD-U02** | Ficha QR y WhatsApp Lead | Dev 4 | Backlog (Bloqueado por PLN-D4) | `feature/passport-docs` |
