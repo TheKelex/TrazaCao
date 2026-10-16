@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sobre Nosotros | Cacao Huila Trazable</title>
+  <meta name="description" content="Historia, origen y trazabilidad del cacao fino de aroma del Huila, Colombia. Fotografía documental real y recorrido interactivo." />
+  <style>
+    /* ==========================================================================
+       DIRECCIÓN DE ARTE: LUXURY EDITORIAL & FOTOGRAFÍA REAL B2B
+       ========================================================================== */
+    :root {
+      --bg-dark: #0a0705;
+      --bg-card: rgba(16, 12, 9, 0.92);
+      --cacao-deep: #17120e;
+      --cacao-warm: #261d16;
+      --gold-pure: #F5C563;
+      --gold-bright: #FFD87A;
+      --gold-deep: #D49B35;
+      --gold-glow: rgba(245, 197, 99, 0.35);
+      --green-native: #4a7c3b;
+      --green-bright: #7ED957;
+      --green-glow: rgba(126, 217, 87, 0.3);
+      --ivory: #FFF9EE;
+      --ivory-muted: #D9CEC0;
+      --text-dim: #A89D8F;
+      --border-editorial: rgba(245, 197, 99, 0.32);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      
+      --font-serif: Georgia, 'Playfair Display', Cambria, 'Times New Roman', serif;
+      --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: var(--bg-dark);
+      color: var(--ivory);
+      font-family: var(--font-sans);
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: auto; /* Dejar que GSAP controle el scroll */
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--gold-pure);
+      outline-offset: 3px;
+    }
+
+    /* ==========================================================================
+       CABECERA EDITORIAL Y HUD DE CONTROL
+       ========================================================================== */
+    .cinematic-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      z-index: 1000;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0 clamp(1.2rem, 4vw, 3rem);
+      background: linear-gradient(180deg, rgba(10, 7, 5, 0.96) 0%, rgba(10, 7, 5, 0.6) 70%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .brand-group {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand-badge {
+      background: var(--gold-pure);
+      color: #0c0805;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.65rem;
+      border-radius: 4px;
+    }
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      display: none;
+    }
+    @media (min-width: 768px) {
+      .brand-subtitle { display: inline-block; }
+    }
+
+    .header-tools {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .btn-hud {
+      background: rgba(22, 16, 12, 0.9);
+      color: var(--gold-pure);
+      border: 1px solid var(--border-editorial);
+      padding: 0.45rem 1.1rem;
+      border-radius: 30px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      backdrop-filter: blur(16px);
+      transition: all 0.25s ease;
+      text-decoration: none;
+      min-height: 38px;
+    }
+    .btn-hud:hover, .btn-hud.active {
+      background: var(--gold-pure);
+      color: #0c0805;
+      border-color: #fff;
+      box-shadow: 0 0 20px var(--gold-glow);
+    }
+
+    /* Badge Flotante para el Modo Video / Tour Guiado */
+    .video-tour-badge {
+      position: fixed;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-30px);
+      background: rgba(22, 16, 12, 0.96);
+      border: 1.5px solid var(--gold-pure);
+      border-radius: 30px;
+      padding: 0.45rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--gold-pure);
+      box-shadow: 0 10px 35px rgba(0,0,0,0.85), 0 0 20px var(--gold-glow);
+      z-index: 1200;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .video-tour-badge.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .rec-dot {
+      width: 9px;
+      height: 9px;
+      background: #FF3B30;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #FF3B30;
+      animation: recPulse 1.2s infinite ease-in-out;
+    }
+    @keyframes recPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.75); }
+    }
+
+    /* Barra de progreso global del scroll */
+    .timeline-progress-track {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: 1100;
+    }
+    .timeline-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold-deep), var(--gold-pure), var(--green-bright));
+      box-shadow: 0 0 10px var(--gold-pure);
+    }
+
+    /* Brújula flotante lateral (HUD - Botones que muestran texto al pasar el cursor) */
+    .hud-compass {
+      position: fixed;
+      right: 1.25rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      pointer-events: auto;
+    }
+    @media (max-width: 900px) {
+      .hud-compass { display: none; }
+    }
+    .compass-node {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 6px;
+      transition: transform 0.25s ease;
+    }
+    .compass-node:hover {
+      transform: scale(1.15);
+    }
+    .compass-name {
+      position: absolute;
+      right: calc(100% + 12px);
+      background: rgba(22, 16, 12, 0.96);
+      border: 1px solid var(--border-editorial);
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--gold-pure);
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateX(10px);
+      transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.85);
+      backdrop-filter: blur(16px);
+    }
+    .compass-node:hover .compass-name {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+    .compass-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-pure);
+      background: rgba(10, 7, 5, 0.9);
+      transition: all 0.25s ease;
+      display: block;
+    }
+    .compass-node:hover .compass-dot {
+      background: var(--gold-bright);
+      box-shadow: 0 0 10px var(--gold-pure);
+    }
+    .compass-node.active .compass-dot {
+      background: var(--gold-pure);
+      box-shadow: 0 0 14px var(--gold-pure);
+      transform: scale(1.35);
+    }
+
+    /* ==========================================================================
+       ESCENARIO CINEMÁTICO FULLSCREEN CON GSAP PIN
+       ========================================================================== */
+    #scrolly-viewport {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: var(--bg-dark);
+    }
+
+    .scene-viewport {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      will-change: transform, opacity;
+      pointer-events: none; /* Por defecto ninguna escena inactiva captura clics */
+    }
+    #scene1 {
+      pointer-events: auto;
+    }
+
+    /* Capa de atmósfera fotográfica y viñeta editorial */
+    .photo-stage {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .photo-hero {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      transform: scale(1.05);
+      transition: filter 0.5s ease;
+      will-change: transform;
+    }
+    .photo-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(10, 7, 5, 0.25) 0%, rgba(10, 7, 5, 0.8) 75%, rgba(10, 7, 5, 0.96) 100%),
+                  linear-gradient(180deg, rgba(10, 7, 5, 0.8) 0%, transparent 25%, transparent 75%, rgba(10, 7, 5, 0.96) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ==========================================================================
+       PANELES Y TARJETAS EDITORIALES (ALTO CONTRASTE Y LEGIBILIDAD)
+       ========================================================================== */
+    .editorial-hud {
+      position: relative;
+      z-index: 10;
+      max-width: 620px;
+      padding: clamp(1.5rem, 3.5vw, 2.5rem);
+      background: var(--bg-card);
+      border: 1px solid var(--border-editorial);
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.88), 0 0 30px rgba(0, 0, 0, 0.5);
+      pointer-events: auto;
+    }
+    .hud-left {
+      margin-right: auto;
+      margin-left: clamp(1.5rem, 6vw, 6rem);
+    }
+    .hud-center {
+      margin: 0 auto;
+      text-align: center;
+    }
+    .hud-right {
+      margin-left: auto;
+      margin-right: clamp(1.5rem, 6vw, 6rem);
+    }
+
+    @media (max-width: 900px) {
+      .hud-left, .hud-right, .hud-center {
+        margin: 0 1.25rem;
+        max-width: calc(100vw - 2.5rem);
+        padding: 1.4rem;
+      }
+    }
+
+    .hud-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-pure);
+      margin-bottom: 0.85rem;
+    }
+    .hud-tag::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold-pure);
+      box-shadow: 0 0 8px var(--gold-pure);
+    }
+
+    .hud-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(1.65rem, 3.2vw, 2.65rem);
+      line-height: 1.18;
+      font-weight: 700;
+      color: var(--ivory);
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+    .hud-headline em {
+      font-style: italic;
+      color: var(--gold-pure);
+      font-weight: 400;
+    }
+
+    .hud-copy {
+      font-size: clamp(0.92rem, 1.4vw, 1.05rem);
+      color: var(--ivory-muted);
+      line-height: 1.65;
+      margin-bottom: 1.25rem;
+      font-weight: 400;
+    }
+
+    /* Metadatos Georreferenciados (Escena 1) */
+    .geo-meta-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .geo-pill {
+      background: rgba(245, 197, 99, 0.08);
+      border: 1px solid var(--border-editorial);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--gold-pure);
+      letter-spacing: 0.03em;
+    }
+
+    /* Composición Fotográfica Asimétrica (Escena 2 y Escena 3) */
+    .duo-photo-container {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 58% 42%;
+      z-index: 1;
+    }
+    @media (max-width: 900px) {
+      .duo-photo-container {
+        grid-template-columns: 1fr;
+      }
+      .duo-photo-sub { display: none; }
+    }
+    .duo-photo-main {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .duo-photo-sub {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-left: 2px solid var(--border-editorial);
+    }
+
+    /* Métricas climáticas en cascada (Escena 2) */
+    .climate-grid-hud {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-top: 1.2rem;
+    }
+    .climate-chip-hud {
+      background: rgba(26, 20, 15, 0.94);
+      border: 1px solid var(--border-editorial);
+      padding: 0.75rem 0.9rem;
+      border-radius: 8px;
+    }
+    .climate-chip-hud span {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.2rem;
+    }
+    .climate-chip-hud strong {
+      font-family: var(--font-serif);
+      font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+      color: var(--gold-pure);
+      font-weight: 700;
+    }
+
+    /* Medidores térmicos en tiempo real (Escena 3) */
+    .meters-floating-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-top: 1.25rem;
+      text-align: left;
+    }
+    @media (max-width: 580px) {
+      .meters-floating-card {
+        grid-template-columns: 1fr;
+      }
+    }
+    .meter-box-hud {
+      background: rgba(22, 16, 11, 0.95);
+      border: 1px solid var(--border-editorial);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    .meter-val-large {
+      font-family: var(--font-serif);
+      font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+      font-weight: 900;
+      color: var(--gold-pure);
+      display: block;
+      margin: 0.2rem 0;
+    }
+    .bar-track-hud {
+      width: 100%;
+      height: 7px;
+      background: #120e0a;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+    .bar-fill-hud {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+    }
+
+    /* Terminal del Pasaporte Comercial (Escena 4) */
+    .passport-modal-hud {
+      position: absolute;
+      right: clamp(2.5rem, 6vw, 6rem);
+      top: 50%;
+      transform: translateY(-50%);
+      width: min(560px, calc(100vw - 5rem));
+      max-height: 88vh;
+      overflow-y: auto;
+      background: var(--bg-card);
+      border: 2px solid var(--gold-pure);
+      border-radius: 18px;
+      padding: clamp(1.4rem, 3vw, 2.2rem);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.92), 0 0 35px var(--gold-glow);
+      z-index: 30;
+      pointer-events: auto;
+    }
+    @media (max-width: 900px) {
+      .passport-modal-hud {
+        left: 50% !important;
+        right: auto !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: calc(100vw - 2.5rem) !important;
+        padding: 1.3rem !important;
+        max-height: 82vh !important;
+      }
+    }
+
+    .lot-tabs-hud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+    .lot-tab-hud {
+      background: rgba(28, 21, 16, 0.85);
+      border: 1px solid var(--border-editorial);
+      color: var(--ivory);
+      padding: 0.45rem 0.9rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .lot-tab-hud.selected {
+      background: var(--gold-pure);
+      color: #0c0805;
+      border-color: #fff;
+      box-shadow: 0 0 14px var(--gold-glow);
+    }
+
+    .flavor-tag-hud {
+      background: rgba(245, 197, 99, 0.12);
+      border: 1px solid var(--gold-pure);
+      color: var(--gold-pure);
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       BOTÓN COMERCIAL "IR" (SOLICITUD EXPLÍCITA DEL USUARIO)
+       ========================================================================== */
+    .btn-ir-cta {
+      background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold-deep) 100%);
+      color: #0c0805;
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.7rem 2.2rem;
+      border-radius: 8px;
+      border: 2px solid #FFF8EB;
+      box-shadow: 0 6px 20px var(--gold-glow), 0 0 20px rgba(245, 197, 99, 0.5);
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-width: 120px;
+    }
+    .btn-ir-cta:hover {
+      transform: translateY(-2px) scale(1.03);
+      background: #FFF9EE;
+      color: #000;
+      box-shadow: 0 10px 30px rgba(245, 197, 99, 0.85);
+    }
+    .btn-ir-cta:active {
+      transform: translateY(0);
+    }
+
+    /* Toast Flotante Informativo para el botón "Ir" */
+    .toast-dev-notice {
+      position: fixed;
+      bottom: 2.2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(24, 18, 13, 0.97);
+      border: 1.5px solid var(--gold-pure);
+      color: var(--ivory);
+      padding: 0.95rem 1.8rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85);
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast-dev-notice.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Guía de Scroll Inicial */
+    .scroll-guide-prompt {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gold-pure);
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 800;
+      z-index: 50;
+      pointer-events: none;
+    }
+    .mouse-wheel-icon {
+      width: 22px;
+      height: 36px;
+      border: 2px solid var(--gold-pure);
+      border-radius: 12px;
+      position: relative;
+    }
+    .mouse-wheel-icon::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 7px;
+      background: var(--gold-pure);
+      border-radius: 2px;
+      animation: wheelMove 1.8s infinite ease-in-out;
+    }
+    @keyframes wheelMove {
+      0% { transform: translate(-50%, 0); opacity: 1; }
+      100% { transform: translate(-50%, 14px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de Progreso Global Superior -->
+  <div class="timeline-progress-track">
+    <div class="timeline-progress-bar" id="timelineBar"></div>
+  </div>
+
+  <!-- Badge Flotante para el Modo Video / Tour Guiado -->
+  <div class="video-tour-badge" id="videoTourBadge">
+    <span class="rec-dot"></span>
+    <span>REPRODUCIENDO TOUR &bull; MODO VIDEO</span>
+  </div>
+
+  <!-- Cabecera Cinemática: únicamente recorrido y botón de ir al catálogo -->
+  <header class="cinematic-header">
+    <div class="header-tools" style="pointer-events: auto; display: flex; gap: 0.75rem;">
+      <button class="btn-hud" id="btnAutoTour" title="Reproducir recorrido guiado">
+        <span id="tourIcon" style="display:inline-flex; align-items:center;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+        </span>
+        <span id="tourLabel">Recorrido</span>
+      </button>
+
+      <!-- Botón de ir al final / Catálogo -->
+      <a href="/?modo=catalogo#lotes-disponibles" id="navLinkComprador" class="btn-hud" style="background: rgba(245, 197, 99, 0.2); border-color: var(--gold-pure); color: var(--gold-bright);" title="Ir al Catálogo de Lotes">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>Catálogo</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Brújula flotante lateral (HUD) -->
+  <nav class="hud-compass" aria-label="Capítulos de la experiencia">
+    <div class="compass-node active" data-target="0">
+      <span class="compass-name">01 &bull; Territorio &amp; Origen</span>
+      <span class="compass-dot"></span>
+    </div>
+    <div class="compass-node" data-target="0.333">
+      <span class="compass-name">02 &bull; Suelos &amp; Parcela</span>
+      <span class="compass-dot"></span>
+    </div>
+    <div class="compass-node" data-target="0.666">
+      <span class="compass-name">03 &bull; Beneficio Poscosecha</span>
+      <span class="compass-dot"></span>
+    </div>
+    <div class="compass-node" data-target="1.0">
+      <span class="compass-name">04 &bull; Calidad &amp; Pasaporte</span>
+      <span class="compass-dot"></span>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       ESCENARIO CINEMÁTICO FULLSCREEN (GSAP PINNED STAGE)
+       ========================================================================== -->
+  <div id="scrolly-viewport">
+
+    <!-- Indicador de Scroll Inicial -->
+    <div class="scroll-guide-prompt" id="scrollPrompt">
+      <div class="mouse-wheel-icon"></div>
+      <span>Desplaza para explorar</span>
+    </div>
+
+    <!-- ========================================================================
+         ESCENA 1: EL ORIGEN — FOTOGRAFÍA PANORÁMICA REAL DEL HUILA
+         ======================================================================== -->
+    <section class="scene-viewport" id="scene1" aria-label="El Territorio">
+      <div class="photo-stage">
+        <!-- Fotografía real: Mirador del Magdalena, Huila, Colombia (Bernard Gagnon, CC BY-SA 4.0) -->
+        <img src="assets/images/huila-panoramica.jpg" 
+             alt="Panorámica real de la cordillera y el valle del Magdalena en el departamento del Huila, Colombia"
+             class="photo-hero" 
+             id="photoHero1" 
+             loading="eager" 
+             decoding="async" />
+        <div class="photo-vignette"></div>
+      </div>
+
+      <article class="editorial-hud hud-left" id="card1">
+        <div class="hud-tag">Panorámica Territorial</div>
+        <h1 class="hud-headline">
+          Donde la cordillera oriental abraza el <em>Valle del Magdalena</em>.
+        </h1>
+        <p class="hud-copy">
+          Una mirada desde la vertiente andina revela el territorio del cacao fino de aroma. El encuentro entre las corrientes térmicas del valle del río Magdalena y los vientos frescos de la cordillera crea un microclima bimodal de maduración pausada.
+        </p>
+        <div class="geo-meta-strip">
+          <span class="geo-pill">Rivera &bull; 1.100 msnm</span>
+          <span class="geo-pill">Campoalegre &bull; 920 msnm</span>
+          <span class="geo-pill">Algeciras &bull; 1.180 msnm</span>
+          <span class="geo-pill" style="color: var(--green-bright); border-color: var(--green-bright);">Origen Verificado &bull; Cero Deforestaci&oacute;n</span>
+        </div>
+      </article>
+    </section>
+
+    <!-- ========================================================================
+         LA TIERRA Y EL CULTIVO — FOTOGRAFÍAS REALES DE CACAO Y SOMBRÍO
+         ======================================================================== -->
+    <section class="scene-viewport" id="scene2" style="opacity: 0; visibility: hidden;" aria-label="La Parcela y los Suelos">
+      <div class="duo-photo-container">
+        <!-- Fotografía real 1: Mazorcas maduras en árbol de cacao (Public Domain) -->
+        <div class="duo-photo-main">
+          <img src="assets/images/cacao-arbol-mazorcas.jpg" 
+               alt="Mazorcas maduras de cacao creciendo directamente en el tronco del árbol bajo dosel de sombrío"
+               class="photo-hero" 
+               id="photoHero2A" 
+               loading="lazy" 
+               decoding="async" />
+          <div class="photo-vignette"></div>
+        </div>
+        <!-- Fotografía real 2: Fruto de cacao abierto con semillas frescas (Amada44, CC BY-SA 4.0) -->
+        <div class="duo-photo-sub">
+          <img src="assets/images/cacao-mazorca-abierta.jpg" 
+               alt="Detalle macro de fruto de cacao abierto mostrando la pulpa blanca y semillas frescas"
+               class="photo-hero" 
+               id="photoHero2B" 
+               loading="lazy" 
+               decoding="async" />
+          <div class="photo-vignette"></div>
+        </div>
+      </div>
+
+      <article class="editorial-hud hud-left" id="card2">
+        <div class="hud-tag">Parcela &amp; Suelos Francos</div>
+        <h2 class="hud-headline">
+          Bajo el dosel protector: <em>sombrío de guamo y suelos vivos</em>.
+        </h2>
+        <p class="hud-copy">
+          El monocultivo no tiene cabida en este origen. El cacao se cultiva bajo árboles de guamo y plátano que filtran el 40% de la radiación solar. Los suelos francos aluviales garantizan drenaje sin encharcamientos y nutrientes orgánicos autóctonos.
+        </p>
+
+        <!-- Matriz de Datos Climáticos de Parcela -->
+        <div class="climate-grid-hud">
+          <div class="climate-chip-hud" id="chipHud1">
+            <span>Altitud Media</span>
+            <strong>1.100 m.s.n.m.</strong>
+          </div>
+          <div class="climate-chip-hud" id="chipHud2">
+            <span>Régimen Hídrico</span>
+            <strong>Bimodal Andino</strong>
+          </div>
+          <div class="climate-chip-hud" id="chipHud3">
+            <span>Dosel Agroforestal</span>
+            <strong>40% Sombrío Natural</strong>
+          </div>
+          <div class="climate-chip-hud" id="chipHud4">
+            <span>Suelo Aluvial</span>
+            <strong>Franco &bull; pH 6.2</strong>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ========================================================================
+         EL PROCESO POSCOSECHA — FERMENTACIÓN Y SECADO AL SOL
+         ======================================================================== -->
+    <section class="scene-viewport" id="scene3" style="opacity: 0; visibility: hidden;" aria-label="Beneficio Poscosecha">
+      <div class="duo-photo-container">
+        <!-- Fotografía real 1: Fermentación en cajones de madera con hojas de plátano (Scot Nelson, CC0) -->
+        <div class="duo-photo-main">
+          <img src="assets/images/cacao-fermentacion-cajones.jpg" 
+               alt="Fermentación natural de granos de cacao en cajones de madera con hojas de plátano"
+               class="photo-hero" 
+               id="photoHero3A" 
+               loading="lazy" 
+               decoding="async" />
+          <div class="photo-vignette"></div>
+        </div>
+        <!-- Fotografía real 2: Secado de cacao al sol en Colombia (Guillermo Ángel, CC BY-SA 3.0) -->
+        <div class="duo-photo-sub">
+          <img src="assets/images/cacao-secado-solar-colombia.jpg" 
+               alt="Secado natural de granos de cacao en camas elevadas de madera al sol en Colombia"
+               class="photo-hero" 
+               id="photoHero3B" 
+               loading="lazy" 
+               decoding="async" />
+          <div class="photo-vignette"></div>
+        </div>
+      </div>
+
+      <article class="editorial-hud hud-center" id="card3">
+        <div class="hud-tag">Beneficio Poscosecha</div>
+        <h2 class="hud-headline">
+          La alquimia poscosecha: <em>cajones de madera y secado solar</em>.
+        </h2>
+        <p class="hud-copy">
+          Durante 6 días de fermentación escalonada con volteos diarios, las levaduras y bacterias acéticas transforman el mucílago en precursores florales y frutales. El secado posterior en camas suspendidas estabiliza la humedad bajo el estándar NTC 1252.
+        </p>
+
+        <!-- Medidores Técnicos Animados por Scroll -->
+        <div class="meters-floating-card">
+          <div class="meter-box-hud">
+            <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--gold-pure); font-weight: 800; letter-spacing: 0.05em;">
+              Curva Térmica Acética
+            </span>
+            <span class="meter-val-large" id="gsapTempVal">48.5 °C</span>
+            <div class="bar-track-hud">
+              <div class="bar-fill-hud" id="gsapTempBar" style="background: linear-gradient(90deg, var(--gold-pure), #FF5A36);"></div>
+            </div>
+            <small style="font-size: 0.72rem; color: var(--text-dim); display: block; margin-top: 0.4rem;">
+              Pico térmico al día 4. Desarrolla las notas finas de aroma y atenúa astringencia.
+            </small>
+          </div>
+
+          <div class="meter-box-hud">
+            <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--green-bright); font-weight: 800; letter-spacing: 0.05em;">
+              Humedad Final NTC 1252
+            </span>
+            <span class="meter-val-large" id="gsapMoistVal" style="color: var(--green-bright);">7.2 %</span>
+            <div class="bar-track-hud">
+              <div class="bar-fill-hud" id="gsapMoistBar" style="background: linear-gradient(90deg, var(--green-native), var(--green-bright));"></div>
+            </div>
+            <small style="font-size: 0.72rem; color: var(--text-dim); display: block; margin-top: 0.4rem;">
+              Secado solar uniforme. Cero desarrollo de mohos y apto para exportación internacional.
+            </small>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ========================================================================
+         EL RESULTADO Y LA TRAZABILIDAD — GRANOS TOSTADOS, CHOCOLATE Y PASAPORTE
+         ======================================================================== -->
+    <section class="scene-viewport" id="scene4" style="opacity: 0; visibility: hidden;" aria-label="Calidad y Trazabilidad">
+      <div class="photo-stage">
+        <!-- Fotografía real: Granos tostados seleccionados y chocolate fino (The Culinary Geek, CC BY-SA 3.0) -->
+        <img src="assets/images/cacao-granos-tostados.jpg" 
+             alt="Granos de cacao tostados de alta calidad para chocolate artesanal bean-to-bar"
+             class="photo-hero" 
+             id="photoHero4" 
+             loading="lazy" 
+             decoding="async" />
+        <div class="photo-vignette" style="background: radial-gradient(circle at 30% 50%, rgba(10, 7, 5, 0.45) 0%, rgba(10, 7, 5, 0.92) 80%);"></div>
+      </div>
+
+      <!-- Terminal del Pasaporte Comercial con el Botón "Ir al Catálogo" -->
+      <div class="passport-modal-hud" id="passportModal">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+          <div>
+            <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--gold-pure); font-weight: 800; letter-spacing: 0.12em;">
+              Pasaporte Digital de Origen
+            </span>
+            <h3 id="gsapLotHeadline" style="font-family: var(--font-serif); font-size: clamp(1.4rem, 2.2vw, 1.85rem); color: var(--ivory); margin-top: 0.15rem;">
+              CAC001 &bull; Rivera, Huila
+            </h3>
+          </div>
+          <span id="gsapLotBadge" style="background: rgba(126, 217, 87, 0.2); border: 1px solid var(--green-bright); color: var(--green-bright); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.75rem; font-weight: 900; text-transform: uppercase;">
+            &bull; Lote Liberado
+          </span>
+        </div>
+
+        <!-- Selector Interactivo de Lotes Reales -->
+        <div class="lot-tabs-hud">
+          <button class="lot-tab-hud selected" onclick="cambiarLoteGsap('CAC001')">CAC001 (Rivera)</button>
+          <button class="lot-tab-hud" onclick="cambiarLoteGsap('CAC002')">CAC002 (Campoalegre)</button>
+          <button class="lot-tab-hud" onclick="cambiarLoteGsap('CAC003')">CAC003 (Algeciras)</button>
+        </div>
+
+        <!-- Matriz de Métricas Técnicas por Lote -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem; margin-bottom: 1.25rem;">
+          <div style="background: rgba(28, 20, 15, 0.92); border: 1px solid var(--border-editorial); padding: 0.7rem; border-radius: 8px;">
+            <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--gold-pure); font-weight: 800; display: block;">Humedad</span>
+            <strong id="gsapLotHumedad" style="font-family: var(--font-serif); font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: #fff;">7.50%</strong>
+          </div>
+          <div style="background: rgba(28, 20, 15, 0.92); border: 1px solid var(--border-editorial); padding: 0.7rem; border-radius: 8px;">
+            <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--gold-pure); font-weight: 800; display: block;">Fermentación</span>
+            <strong id="gsapLotFerm" style="font-family: var(--font-serif); font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: #fff;">78.00%</strong>
+          </div>
+          <div style="background: rgba(28, 20, 15, 0.92); border: 1px solid var(--border-editorial); padding: 0.7rem; border-radius: 8px;">
+            <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--gold-pure); font-weight: 800; display: block;">Disponible</span>
+            <strong id="gsapLotStock" style="font-family: var(--font-serif); font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: #fff;">100.00 kg</strong>
+          </div>
+        </div>
+
+        <!-- Zona de Acción Comercial y Botón "Ir al Catálogo" -->
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-editorial); padding-top: 1rem; flex-wrap: wrap; gap: 0.85rem;">
+          <div style="font-size: 0.72rem; color: rgba(233, 220, 197, 0.75); max-width: 380px; line-height: 1.35;">
+            <strong style="color: var(--gold-pure); display: block;">Granos & Catálogo Botánico B2B:</strong>
+            Disponibilidad de lotes certificados y mermas valorizadas para industrias cosméticas y biofertilizantes.
+          </div>
+          <a href="/?modo=catalogo#lotes-disponibles" class="btn-ir-cta" id="btnIrAccion" title="Ir al catálogo de lotes disponibles">
+            <span>Ir al Catálogo</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Toast Notificación para el Botón "Ir" -->
+  <div class="toast-dev-notice" id="devToast" role="alert" aria-live="polite">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5C563" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="16" x2="12" y2="12"></line>
+      <line x1="12" y1="8" x2="12.01" y2="8"></line>
+    </svg>
+    <span>Módulo de negociación B2B en fase de desarrollo para el lanzamiento oficial.</span>
+  </div>
+
+  <!-- ==========================================================================
+       LIBRERÍAS GSAP Y SCROLLTRIGGER (COMPATIBILIDAD TOTAL LOCAL / SERVER)
+       ========================================================================== -->
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
+  <script>
+    // Fallback dinámico si los scripts locales tardan en cargarse
+    if (typeof gsap === 'undefined') {
+      const s1 = document.createElement('script');
+      s1.src = '/vendor/gsap.min.js';
+      s1.onload = () => {
+        const s2 = document.createElement('script');
+        s2.src = '/vendor/ScrollTrigger.min.js';
+        s2.onload = () => {
+          if (window.initScrollytellingApp) window.initScrollytellingApp();
+        };
+        document.head.appendChild(s2);
+      };
+      document.head.appendChild(s1);
+    }
+  </script>
+
+  <!-- ==========================================================================
+       CORE SCRIPT: CONTROL CINEMÁTICO GSAP CON FOTOGRAFÍA REAL
+       ========================================================================== -->
+  <script>
+    window.initScrollytellingApp = function() {
+      'use strict';
+
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        console.warn('Esperando carga de GSAP...');
+        setTimeout(window.initScrollytellingApp, 150);
+        return;
+      }
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // 1. Configuración de Snapping y Timeline Maestro
+      // snapTo asegura que al hacer scroll nunca quede intermedio entre escenas
+      const snapPoints = [0, 0.333, 0.666, 1.0];
+
+      const masterTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#scrolly-viewport',
+          start: 'top top',
+          end: '+=2000',
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          snap: {
+            snapTo: snapPoints,
+            duration: { min: 0.2, max: 0.45 },
+            delay: 0.04,
+            ease: 'power2.inOut'
+          },
+          onUpdate: (self) => {
+            const prog = self.progress;
+            document.getElementById('timelineBar').style.width = (prog * 100) + '%';
+
+            // Actualizar nodos de la brújula
+            const nodes = document.querySelectorAll('.compass-node');
+            nodes.forEach((n) => {
+              const targetP = parseFloat(n.getAttribute('data-target'));
+              if (Math.abs(prog - targetP) < 0.16) {
+                n.classList.add('active');
+              } else {
+                n.classList.remove('active');
+              }
+            });
+          }
+        }
+      });
+
+      // ========================================================================
+      // SECUENCIAS DEL RELATO (DESAPARICIÓN COMPLETA SIN SOLAPAMIENTO DE TARJETAS)
+      // ========================================================================
+
+      // --- CAPÍTULO 1: TERRITORIO Y ORIGEN (Tiempo 0.0 -> 0.8) ---
+      masterTl
+        .to('#scrollPrompt', { opacity: 0, duration: 0.1 }, 0)
+        .to('#photoHero1', { scale: 1.18, y: '-6%', duration: 0.8, ease: 'none' }, 0)
+        
+        // Transición de salida de Escena 1 (desaparición total de card 1 y scene 1)
+        .to('#card1', { autoAlpha: 0, y: -45, duration: 0.25 }, 0.75)
+        .to('#scene1', { autoAlpha: 0, duration: 0.25 }, 0.8)
+        .set('#scene1', { pointerEvents: 'none' }, 1.0)
+
+        // --- CAPÍTULO 2: SUELOS FRANCOS Y PARCELA (Tiempo 1.0 -> 1.8) ---
+        .set('#scene2', { visibility: 'visible', pointerEvents: 'auto' }, 1.0)
+        .to('#scene2', { autoAlpha: 1, duration: 0.3 }, 1.0)
+        .fromTo('#photoHero2A', { scale: 1.2 }, { scale: 1.05, duration: 1.0, ease: 'none' }, 1.0)
+        .fromTo('#photoHero2B', { scale: 1.15 }, { scale: 1.02, duration: 1.0, ease: 'none' }, 1.0)
+        .fromTo('#card2', { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.4 }, 1.1)
+        // Cascada de chips climáticos
+        .fromTo('#chipHud1', { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.18 }, 1.3)
+        .fromTo('#chipHud2', { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.18 }, 1.45)
+        .fromTo('#chipHud3', { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.18 }, 1.6)
+        .fromTo('#chipHud4', { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.18 }, 1.75)
+
+        // Transición de salida de Escena 2 (desaparición total de card 2 y scene 2)
+        .to('#card2', { autoAlpha: 0, y: -45, duration: 0.25 }, 1.8)
+        .to('#scene2', { autoAlpha: 0, duration: 0.25 }, 1.85)
+        .set('#scene2', { pointerEvents: 'none' }, 2.0)
+
+        // --- CAPÍTULO 3: BENEFICIO POSCOSECHA (Tiempo 2.0 -> 2.8) ---
+        .set('#scene3', { visibility: 'visible', pointerEvents: 'auto' }, 2.0)
+        .to('#scene3', { autoAlpha: 1, duration: 0.3 }, 2.0)
+        .fromTo('#photoHero3A', { scale: 1.18 }, { scale: 1.05, duration: 1.0, ease: 'none' }, 2.0)
+        .fromTo('#card3', { autoAlpha: 0, scale: 0.94 }, { autoAlpha: 1, scale: 1, duration: 0.35 }, 2.1)
+        // Medidores térmicos dinámicos
+        .to('#gsapTempBar', { width: '84%', duration: 0.6, ease: 'power2.out' }, 2.3)
+        .to('#gsapMoistBar', { width: '72%', duration: 0.6, ease: 'power2.out' }, 2.4)
+
+        // Transición de salida de Escena 3 (desaparición total de card 3 y scene 3)
+        .to('#card3', { autoAlpha: 0, scale: 0.92, y: -30, duration: 0.25 }, 2.8)
+        .to('#scene3', { autoAlpha: 0, duration: 0.25 }, 2.85)
+        .set('#scene3', { pointerEvents: 'none' }, 3.0)
+
+        // --- CAPÍTULO 4: EL PRODUCTO Y EL PASAPORTE (Tiempo 3.0 -> 4.0) ---
+        .set('#scene4', { visibility: 'visible', pointerEvents: 'auto' }, 3.0)
+        .to('#scene4', { autoAlpha: 1, duration: 0.35 }, 3.0)
+        .fromTo('#photoHero4', { scale: 1.15 }, { scale: 1.02, duration: 1.0, ease: 'none' }, 3.0)
+        // El pasaporte entra en escena limpia, centrado verticalmente sin caerse abajo
+        .fromTo('#passportModal', { autoAlpha: 0, scale: 0.94, yPercent: -50, y: 25 }, { autoAlpha: 1, scale: 1, yPercent: -50, y: 0, duration: 0.5, ease: 'power3.out' }, 3.1);
+
+      // 2. Salto interactivo desde los nodos de la brújula
+      document.querySelectorAll('.compass-node').forEach(node => {
+        node.addEventListener('click', () => {
+          if (tourState.isPlaying) pausarTour();
+          const targetProgress = parseFloat(node.getAttribute('data-target'));
+          const maxScroll = ScrollTrigger.maxScroll(window);
+          window.scrollTo({
+            top: targetProgress * maxScroll,
+            behavior: 'smooth'
+          });
+        });
+      });
+
+      // ========================================================================
+      // 3. TOUR GUIADO TIPO VIDEO (REPRODUCCIÓN CONTINUA AUTÓNOMA)
+      // ========================================================================
+      const btnAutoTour = document.getElementById('btnAutoTour');
+      const tourIcon = document.getElementById('tourIcon');
+      const tourLabel = document.getElementById('tourLabel');
+      const videoTourBadge = document.getElementById('videoTourBadge');
+
+      const tourState = {
+        isPlaying: false,
+        isPaused: false,
+        tween: null
+      };
+
+      btnAutoTour.addEventListener('click', () => {
+        if (tourState.isPlaying) {
+          pausarTour();
+        } else {
+          iniciarTour();
+        }
+      });
+
+      function iniciarTour() {
+        const maxScroll = ScrollTrigger.maxScroll(window);
+        const currentP = masterTl.progress();
+
+        // Si ya está al final, reiniciar desde el principio
+        if (currentP >= 0.97) {
+          masterTl.progress(0);
+          window.scrollTo(0, 0);
+        }
+
+        tourState.isPlaying = true;
+        tourState.isPaused = false;
+        btnAutoTour.classList.add('active');
+        if (tourIcon) {
+          tourIcon.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+        }
+        tourLabel.textContent = 'Pausar Video';
+        videoTourBadge.classList.add('show');
+
+        const startP = masterTl.progress();
+        const remainingP = 1.0 - startP;
+        // Velocidad cinematográfica optimizada tipo documental (20 segundos totales)
+        const tourDuration = Math.max(5, remainingP * 20);
+
+        const animTracker = { p: startP };
+        tourState.tween = gsap.to(animTracker, {
+          p: 1.0,
+          duration: tourDuration,
+          ease: 'none',
+          onUpdate: () => {
+            masterTl.progress(animTracker.p);
+            window.scrollTo(0, animTracker.p * maxScroll);
+          },
+          onComplete: () => {
+            finalizarTour();
+          }
+        });
+      }
+
+      function pausarTour() {
+        if (tourState.tween) tourState.tween.pause();
+        tourState.isPlaying = false;
+        tourState.isPaused = true;
+        btnAutoTour.classList.remove('active');
+        if (tourIcon) {
+          tourIcon.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+        }
+        tourLabel.textContent = 'Reanudar Video';
+        videoTourBadge.classList.remove('show');
+      }
+
+      function finalizarTour() {
+        tourState.isPlaying = false;
+        tourState.isPaused = false;
+        btnAutoTour.classList.remove('active');
+        if (tourIcon) {
+          tourIcon.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>';
+        }
+        tourLabel.textContent = 'Reiniciar Tour';
+        videoTourBadge.classList.remove('show');
+      }
+
+      // Si el usuario interactúa manualmente con la rueda o teclado, pausar el tour suavemente
+      ['wheel', 'touchmove'].forEach(evt => {
+        window.addEventListener(evt, () => {
+          if (tourState.isPlaying) {
+            pausarTour();
+          }
+        }, { passive: true });
+      });
+
+      // 4. Botón "Ir" -> Llevar a la página del comprador
+      const btnIr = document.getElementById('btnIrAccion');
+      if (btnIr) {
+        btnIr.addEventListener('click', (e) => {
+          const lote = window.loteActualSeleccionado || 'CAC001';
+          window.location.href = '/?modo=comprador&lote=' + lote;
+        });
+      }
+    };
+
+    // Inicializar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', window.initScrollytellingApp);
+    } else {
+      window.initScrollytellingApp();
+    }
+
+    // ==========================================================================
+    // DATOS DE LOS LOTES PARA EL PASAPORTE COMERCIAL (ESCENA 4)
+    // ==========================================================================
+    window.loteActualSeleccionado = 'CAC001';
+
+    const LOTES_GSAP = {
+      'CAC001': {
+        title: 'CAC001 \u2022 Rivera, Huila',
+        badge: '\u2022 Lote Liberado',
+        badgeBg: 'rgba(126, 217, 87, 0.2)',
+        badgeColor: '#7ED957',
+        humedad: '7.50%',
+        ferm: '78.00%',
+        stock: '100.00 kg',
+        desc: '\u201cCacao con balance sedoso, notas dulces de panela y final prolongado de frutos secos. Cero notas violetas de astringencia.\u201d'
+      },
+      'CAC002': {
+        title: 'CAC002 \u2022 Campoalegre, Huila',
+        badge: '\u2022 Lote Liberado',
+        badgeBg: 'rgba(126, 217, 87, 0.2)',
+        badgeColor: '#7ED957',
+        humedad: '7.20%',
+        ferm: '82.50%',
+        stock: '150.00 kg',
+        desc: '\u201cPerfil brillante con notas c\u00edtricas de mandarina y flor de cafeto. Alta solubilidad de manteca en tueste medio.\u201d'
+      },
+      'CAC003': {
+        title: 'CAC003 \u2022 Algeciras, Huila',
+        badge: '\u26a0 Congelado Preventivo (Incidencia)',
+        badgeBg: 'rgba(217, 67, 67, 0.25)',
+        badgeColor: '#FF7D7D',
+        humedad: '8.90%',
+        ferm: '68.00%',
+        stock: '0.00 kg',
+        desc: '\u201cLote bajo revisi\u00f3n t\u00e9cnica. Humedad superior al l\u00edmite de la norma NTC 1252. Retenido preventivamente.\u201d'
+      }
+    };
+
+    function cambiarLoteGsap(loteId) {
+      window.loteActualSeleccionado = loteId;
+      document.querySelectorAll('.lot-tab-hud').forEach(btn => {
+        if (btn.textContent.includes(loteId)) btn.classList.add('selected');
+        else btn.classList.remove('selected');
+      });
+
+      // Mantener URLs dirigidas al catálogo de lotes disponibles
+      const btnIr = document.getElementById('btnIrAccion');
+      if (btnIr) {
+        btnIr.setAttribute('href', '/?modo=catalogo#lotes-disponibles');
+      }
+      const navLink = document.getElementById('navLinkComprador');
+      if (navLink) {
+        navLink.setAttribute('href', '/?modo=catalogo#lotes-disponibles');
+      }
+
+      const d = LOTES_GSAP[loteId];
+      if (!d) return;
+
+      document.getElementById('gsapLotHeadline').textContent = d.title;
+      document.getElementById('gsapLotHumedad').textContent = d.humedad;
+      document.getElementById('gsapLotFerm').textContent = d.ferm;
+      document.getElementById('gsapLotStock').textContent = d.stock;
+      const descEl = document.getElementById('gsapLotDesc');
+      if (descEl) descEl.textContent = d.desc;
+
+      const badge = document.getElementById('gsapLotBadge');
+      badge.textContent = d.badge;
+      badge.style.background = d.badgeBg;
+      badge.style.color = d.badgeColor;
+    }
+  </script>
+</body>
+</html>

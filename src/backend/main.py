@@ -146,6 +146,9 @@ def root_spa(request: Request):
     dist_index = os.path.join(frontend_dist, "index.html")
     if os.path.exists(dist_index):
         return FileResponse(dist_index, media_type="text/html")
+    index_landing = os.path.join(landing_page_dir, "index.html")
+    if os.path.exists(index_landing):
+        return FileResponse(index_landing, media_type="text/html")
     return {
         "status": "online",
         "sistema": "TrazaCao Huila",
